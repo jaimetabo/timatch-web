@@ -492,3 +492,113 @@ footer {
 .mitte h1 { font-size: clamp(2rem, 6vw, 3.4rem); letter-spacing: -0.03em; margin: 0; }
 .mitte .vorspann { margin: 0; }
 .zweitsprache { color: var(--text-faint); }
+
+/* ---------------------------------------------------------------- Textseiten
+ *
+ * Hilfe und Datenschutz. Bewusst dieselbe Grundlage wie die Landingpage — dieselben Farben,
+ * dieselbe Kopfleiste, dieselbe Fußzeile —, aber eine ruhige, schmale Spalte statt Bühnenbild.
+ * Wer auf einer Rechtsseite landet, will lesen und nicht bewundert werden.
+ */
+
+.blatt {
+  max-width: 74ch;
+  padding: clamp(50px, 8vw, 90px) 0 clamp(60px, 9vw, 110px);
+}
+.blatt h1 {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  margin-bottom: 10px;
+}
+.blatt .stand {
+  color: var(--text-faint);
+  font-size: 0.92rem;
+  margin: 0 0 40px;
+}
+.blatt h2 {
+  font-size: clamp(1.3rem, 2.6vw, 1.7rem);
+  margin: 52px 0 14px;
+  scroll-margin-top: 80px;
+}
+.blatt h3 {
+  font-size: 1.08rem;
+  margin: 32px 0 8px;
+  color: var(--text);
+}
+.blatt p, .blatt li {
+  color: var(--text-dim);
+  font-size: 1.02rem;
+}
+.blatt p { margin: 0 0 16px; }
+.blatt ul { margin: 0 0 18px; padding-left: 22px; }
+.blatt li { margin-bottom: 8px; }
+.blatt strong, .blatt b { color: var(--text); font-weight: 620; }
+.blatt code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9em;
+  background: rgba(255, 255, 255, 0.07);
+  padding: 2px 6px; border-radius: 6px;
+  color: var(--text);
+}
+
+/* Der Kasten mit der Kurzfassung ganz oben — das Wichtigste zuerst, für alle, die nicht die
+   ganze Erklärung lesen. */
+.merkkasten {
+  border: 1px solid rgba(255, 167, 73, 0.3);
+  border-radius: var(--radius);
+  padding: 24px 26px;
+  margin: 0 0 44px;
+  background:
+    radial-gradient(90% 140% at 100% 0%, rgba(255, 167, 73, 0.1), transparent 62%),
+    linear-gradient(170deg, var(--ink-3), var(--ink-2));
+}
+.merkkasten p:last-child { margin-bottom: 0; }
+
+.blatt table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 8px 0 24px;
+  font-size: 0.96rem;
+}
+.blatt th, .blatt td {
+  text-align: left;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+.blatt th {
+  color: var(--text);
+  font-weight: 640;
+  font-size: 0.86rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.blatt td { color: var(--text-dim); }
+.blatt tr:last-child td { border-bottom: none; }
+
+/* Auf schmalen Fenstern wird aus der Tabelle eine Liste — zwei Spalten mit Fließtext werden
+   sonst zu zwei unlesbar schmalen Säulen. */
+@media (max-width: 620px) {
+  .blatt table, .blatt tbody, .blatt tr, .blatt td { display: block; width: 100%; }
+  .blatt thead { display: none; }
+  .blatt tr {
+    border-bottom: 1px solid var(--line);
+    padding: 12px 0;
+  }
+  .blatt td { border: none; padding: 2px 0; }
+  .blatt td:first-child { color: var(--text); font-weight: 620; }
+}
+
+/* Sprungliste am Anfang langer Seiten. */
+.sprungliste {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin: 0 0 46px;
+}
+.sprungliste p {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-faint); margin: 0 0 12px;
+}
+.sprungliste ol { margin: 0; padding-left: 20px; display: grid; gap: 7px; }
+.sprungliste li { color: var(--text-faint); font-size: 0.95rem; }
+.sprungliste a { color: var(--text-dim); }
+.sprungliste a:hover { color: var(--orange); }

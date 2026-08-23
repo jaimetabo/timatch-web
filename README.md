@@ -13,13 +13,17 @@ der App selbst; sie bleiben unangetastet. Diese Seite hier verlinkt nur dorthin.
 ## Was hier drin ist
 
 ```
-index.html            deutsche Fassung
-en/index.html         englische Fassung
+index.html            deutsche Landingpage
+en/index.html         englische Landingpage
+hilfe/                Hilfe & FAQ (deutsch)
+datenschutz/          Datenschutzerklärung (deutsch)
+en/support/           Support & FAQ (englisch)
+en/privacy/           Privacy Policy (englisch)
 404.html              Fehlerseite (zweisprachig)
 assets/css/site.css   das gesamte Aussehen — eine Datei, kein Framework
 assets/js/site.js     Einblenden beim Scrollen, Videos nur im Bild abspielen
 assets/js/scene.js    die 3D-Szene im Kopfbereich
-assets/vendor/        Three.js, lokal (siehe unten)
+assets/vendor/        Three.js + Zusatzmodule, lokal (siehe unten)
 assets/video/         vier Videos aus der App + je ein Standbild als Poster
 assets/img/           App-Symbol (Favicon, Vorschaubild fürs Teilen)
 robots.txt, sitemap.xml, .well-known/security.txt
@@ -74,6 +78,14 @@ Im Modul ist genau eine Zeile geändert: der Import zeigt auf die versionierte K
 (`./three.core-0.185.1.min.js` statt `./three.core.min.js`). Beim Aktualisieren beide Dateien
 tauschen, den Import erneut umbiegen und die Prüfsummen hier nachtragen.
 
+Unter `assets/vendor/three-addons/` liegen sechs Zusatzmodule aus demselben Paket
+(`examples/jsm`): `RoomEnvironment`, `RoundedBoxGeometry`, `EffectComposer`, `RenderPass`,
+`UnrealBloomPass`, `OutputPass` samt ihren Abhängigkeiten. Sie importieren im Original `from
+'three'` bzw. `from 'three/addons/…'`; beides zeigt hier auf relative Pfade. **Eine Importkarte
+(`<script type="importmap">`) wäre der übliche Weg gewesen — sie ist ein Inline-Skript und würde
+eine Ausnahme in der Inhaltsrichtlinie erzwingen.** Umgebogene Pfade kosten nichts und lassen die
+Richtlinie streng.
+
 ## Fassungsnummern an CSS und JS
 
 Die Verweise tragen `?v=N`. **Beim Ausliefern einer Änderung an `site.css`, `site.js` oder
@@ -122,19 +134,20 @@ Zwischenspeicher neu laden.
 
 GitHub Pages baut aus dem Zweig `main`, Wurzel `/`. Ein `git push` genügt.
 
-**Die eigene Domain braucht einen DNS-Eintrag bei STRATO** (dort liegt `timatch.de`). Solange der
-fehlt, ist die Seite nur unter der `github.io`-Adresse erreichbar. Nötig sind vier A-Einträge auf
-die Adressen von GitHub Pages:
+**DNS bei STRATO — am 23. August 2026 gesetzt.** Im Kundenbereich, Paket TIMATCH (7070811),
+Domainverwaltung → timatch.de → DNS:
 
-```
-185.199.108.153
-185.199.109.153
-185.199.110.153
-185.199.111.153
-```
+| Typ | Name | Ziel |
+|---|---|---|
+| A | `timatch.de` | `185.199.108.153` |
+| CNAME | `www` | `jaimetabo.github.io.` |
+| CNAME | `app` | `jaimetabo.github.io.` (bestand bereits, unangetastet) |
 
-Danach in diesem Repo eine Datei `CNAME` mit dem Inhalt `timatch.de` anlegen und pushen; GitHub
-stellt daraufhin automatisch ein Let's-Encrypt-Zertifikat aus (kann eine Stunde dauern).
+STRATO erlaubt in diesem Paket **genau einen** A-Eintrag; GitHub empfiehlt vier, einer genügt aber.
+Der Eintrag ersetzt die vorherige „Umleitung Intern".
+
+`app.timatch.de` bleibt bestehen und leitet auf die neuen Adressen um (Repo `timatch-website`) —
+die alten URLs stehen in App Store Connect und in älteren App-Fassungen.
 
 **Das Repo muss öffentlich bleiben** — GitHub Pages veröffentlicht im kostenlosen Tarif nur aus
 öffentlichen Repos. Das ist derselbe Grund, aus dem `timatch-website` öffentlich ist.
