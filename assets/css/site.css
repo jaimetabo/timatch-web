@@ -1,0 +1,494 @@
+/* Timatch — Landingpage
+ *
+ * Bewusst ohne Framework und ohne Webfont: Die Seite lädt NICHTS von fremden Servern. Das ist
+ * nicht nur schnell, sondern erlaubt die strenge Inhaltsrichtlinie in den HTML-Köpfen
+ * (`default-src 'self'`) — und passt zu einer App, die im Store mit „Data Not Collected" steht.
+ * Eine Landingpage, die drei Tracker mitbringt, würde dieses Versprechen an der Haustür brechen.
+ *
+ * Die Schrift ist die des Systems. Auf iPhone und Mac ist das San Francisco — dieselbe Schrift wie
+ * in der App, ohne ein einziges Byte Download.
+ */
+
+:root {
+  --ink: #08080c;
+  --ink-2: #101017;
+  --ink-3: #17171f;
+  --line: rgba(255, 255, 255, 0.09);
+  --text: #f4f2ef;
+  --text-dim: rgba(244, 242, 239, 0.62);
+  --text-faint: rgba(244, 242, 239, 0.38);
+
+  /* Die Akzentfarbe der App (AccentColor.colorset: 1.000 / 0.655 / 0.286). */
+  --orange: #ffa749;
+  --orange-warm: #ff8a2b;
+
+  /* Die Spielerfarben aus der App — sie tauchen in der 3D-Szene und in den Akzenten wieder auf. */
+  --spieler-1: #ff9500;
+  --spieler-2: #34c759;
+  --spieler-3: #af52de;
+  --spieler-4: #5ac8fa;
+
+  --breite: 1180px;
+  --radius: 22px;
+  --schrift: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto,
+             "Helvetica Neue", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--text);
+  font-family: var(--schrift);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img, video, canvas { max-width: 100%; display: block; }
+
+a { color: var(--orange); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.huelle {
+  width: min(100% - 44px, var(--breite));
+  margin-inline: auto;
+}
+
+/* Nur für Screenreader — z. B. der Sprunglink ganz oben. */
+.nur-vorlesen {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.sprunglink:focus {
+  position: fixed; top: 12px; left: 12px;
+  width: auto; height: auto; clip-path: none;
+  z-index: 100;
+  background: var(--orange); color: #10100c;
+  padding: 10px 16px; border-radius: 10px; font-weight: 600;
+}
+
+/* ---------------------------------------------------------------- Kopfleiste */
+
+.kopfleiste {
+  position: sticky; top: 0; z-index: 50;
+  backdrop-filter: saturate(180%) blur(18px);
+  -webkit-backdrop-filter: saturate(180%) blur(18px);
+  background: rgba(8, 8, 12, 0.62);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s, background 0.3s;
+}
+.kopfleiste.gescrollt {
+  border-bottom-color: var(--line);
+  background: rgba(8, 8, 12, 0.85);
+}
+.kopfleiste .huelle {
+  display: flex; align-items: center; gap: 18px;
+  height: 62px;
+}
+.marke {
+  display: flex; align-items: center; gap: 10px;
+  color: var(--text); font-weight: 650; letter-spacing: -0.01em;
+}
+.marke:hover { text-decoration: none; }
+.marke img { width: 28px; height: 28px; border-radius: 7px; }
+
+.kopf-nav {
+  margin-left: auto;
+  display: flex; align-items: center; gap: 22px;
+}
+.kopf-nav a {
+  color: var(--text-dim); font-size: 15px; font-weight: 500;
+}
+.kopf-nav a:hover { color: var(--text); text-decoration: none; }
+
+.sprachwahl {
+  display: inline-flex; gap: 2px;
+  border: 1px solid var(--line); border-radius: 999px; padding: 3px;
+}
+.sprachwahl a {
+  font-size: 13px; font-weight: 600; padding: 3px 10px; border-radius: 999px;
+  color: var(--text-faint);
+}
+.sprachwahl a:hover { color: var(--text); text-decoration: none; }
+.sprachwahl a[aria-current="true"] { background: rgba(255, 255, 255, 0.1); color: var(--text); }
+
+@media (max-width: 800px) {
+  .kopf-nav a.nav-abschnitt { display: none; }
+}
+
+/* ---------------------------------------------------------------- Bühne (3D) */
+
+.buehne {
+  position: relative;
+  min-height: min(100svh, 900px);
+  display: grid; align-items: center;
+  padding: 40px 0 90px;
+  isolation: isolate;
+}
+
+/* Das WebGL-Bild liegt HINTER dem Text und deckt die ganze Bühne ab. */
+#szene {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  z-index: -2;
+}
+/* Zwei Schleier über der Szene.
+ *
+ * Nach unten, damit die Szene in den Seitengrund übergeht statt abzureißen — und nach LINKS, wo
+ * der Text steht. Ohne den zweiten liefen die schwebenden Spielsteine quer durch die Überschrift;
+ * hübsch anzusehen, aber die Überschrift ist wichtiger als die Deko. Auf schmalen Fenstern steht
+ * der Text über der ganzen Breite, dort deckt der Schleier entsprechend alles ab. */
+.buehne::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    linear-gradient(97deg, rgba(8, 8, 12, 0.93) 0%, rgba(8, 8, 12, 0.86) 26%,
+                    rgba(8, 8, 12, 0.45) 48%, transparent 66%),
+    radial-gradient(130% 90% at 62% 12%, transparent 52%, rgba(8, 8, 12, 0.4) 100%),
+    linear-gradient(180deg, transparent 55%, var(--ink) 100%);
+}
+@media (max-width: 860px) {
+  .buehne::after {
+    background:
+      linear-gradient(180deg, rgba(8, 8, 12, 0.62) 0%, rgba(8, 8, 12, 0.88) 45%, var(--ink) 100%);
+  }
+}
+
+.buehne-text { max-width: 660px; }
+
+.plakette {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1px solid var(--line); border-radius: 999px;
+  padding: 6px 14px; margin-bottom: 22px;
+  font-size: 13px; font-weight: 600; letter-spacing: 0.01em;
+  color: var(--text-dim);
+  background: rgba(255, 255, 255, 0.03);
+}
+.plakette .punkt {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--orange);
+  box-shadow: 0 0 0 4px rgba(255, 167, 73, 0.16);
+}
+
+h1 {
+  font-size: clamp(2.5rem, 7vw, 4.6rem);
+  line-height: 1.03;
+  letter-spacing: -0.035em;
+  font-weight: 700;
+  margin: 0 0 20px;
+}
+h1 em {
+  font-style: normal;
+  background: linear-gradient(105deg, var(--orange) 10%, var(--orange-warm) 90%);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+}
+
+.vorspann {
+  font-size: clamp(1.05rem, 2.1vw, 1.3rem);
+  color: var(--text-dim);
+  max-width: 52ch;
+  margin: 0 0 32px;
+}
+
+.knopfreihe { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+
+.knopf {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 13px 22px; border-radius: 14px;
+  font-size: 16px; font-weight: 600; letter-spacing: -0.01em;
+  border: 1px solid transparent;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+.knopf:hover { text-decoration: none; transform: translateY(-2px); }
+.knopf-haupt {
+  background: linear-gradient(160deg, var(--orange), var(--orange-warm));
+  color: #180f04;
+  box-shadow: 0 10px 30px -10px rgba(255, 138, 43, 0.7);
+}
+.knopf-haupt:hover { box-shadow: 0 16px 40px -12px rgba(255, 138, 43, 0.85); }
+.knopf-still {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--line);
+  color: var(--text);
+}
+.knopf-still:hover { background: rgba(255, 255, 255, 0.1); }
+
+/* „Bald im App Store" ist KEIN Knopf, sondern eine Angabe — deshalb ohne Zeigefinger-Cursor und
+   ohne Schweben. Etwas, das aussieht wie ein Knopf und nichts tut, ärgert jeden. */
+.hinweis-store {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 13px 20px; border-radius: 14px;
+  border: 1px dashed var(--line);
+  color: var(--text-faint);
+  font-size: 15px; font-weight: 550;
+}
+
+.buehne-fuss {
+  margin-top: 30px;
+  display: flex; flex-wrap: wrap; gap: 8px 20px;
+  font-size: 14px; color: var(--text-faint);
+}
+.buehne-fuss span { display: inline-flex; align-items: center; gap: 7px; }
+
+/* ---------------------------------------------------------------- Abschnitte */
+
+section { padding: clamp(70px, 11vw, 130px) 0; position: relative; }
+
+.abschnitt-kopf { max-width: 640px; margin-bottom: 54px; }
+.ueberschrift-klein {
+  display: block; margin-bottom: 14px;
+  font-size: 13px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase;
+  color: var(--orange);
+}
+h2 {
+  font-size: clamp(1.9rem, 4.2vw, 3rem);
+  line-height: 1.08; letter-spacing: -0.03em; font-weight: 700;
+  margin: 0 0 16px;
+}
+h3 { font-size: 1.22rem; letter-spacing: -0.02em; margin: 0 0 8px; font-weight: 650; }
+.abschnitt-kopf p, .lang { color: var(--text-dim); font-size: 1.06rem; margin: 0; }
+
+/* Wechselnde Anordnung: Text und Gerät tauschen je Abschnitt die Seite. */
+.paar {
+  display: grid; gap: clamp(36px, 6vw, 80px);
+  grid-template-columns: 1fr;
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .paar { grid-template-columns: 1fr 1fr; }
+  .paar.gedreht .paar-text { order: 2; }
+}
+.paar-text h2 { margin-bottom: 18px; }
+
+.merkmale { list-style: none; padding: 0; margin: 26px 0 0; display: grid; gap: 14px; }
+.merkmale li {
+  display: grid; grid-template-columns: 22px 1fr; gap: 12px;
+  color: var(--text-dim); font-size: 1rem;
+}
+.merkmale li b { color: var(--text); font-weight: 600; }
+.haken {
+  width: 20px; height: 20px; margin-top: 2px; border-radius: 50%;
+  background: rgba(255, 167, 73, 0.14);
+  display: grid; place-items: center;
+}
+.haken svg { width: 11px; height: 11px; stroke: var(--orange); }
+
+/* ---------------------------------------------------------------- Gerät */
+
+/* Der Rahmen ist mit CSS gezeichnet und KEIN Produktfoto von Apple. Zwei Gründe: Er bleibt bei
+   jeder Auflösung scharf und kostet kein einziges Byte — und Apples Produktbilder unterliegen
+   eigenen Nutzungsbedingungen, an denen eine Landingpage nichts gewinnt. */
+.geraet {
+  position: relative;
+  width: min(300px, 78vw);
+  margin-inline: auto;
+  aspect-ratio: 414 / 900;
+  border-radius: 46px;
+  padding: 11px;
+  background: linear-gradient(150deg, #3a3a44, #16161c 42%, #2c2c34);
+  box-shadow:
+    0 2px 0 rgba(255, 255, 255, 0.12) inset,
+    0 50px 90px -40px rgba(0, 0, 0, 0.95),
+    0 0 0 1px rgba(0, 0, 0, 0.6);
+  transform-style: preserve-3d;
+}
+.geraet::before {
+  /* Die Pille oben — nicht als Nachbau eines bestimmten Geräts, sondern damit der Rahmen nicht
+     wie ein leeres Rechteck wirkt. */
+  content: ""; position: absolute; z-index: 3;
+  top: 22px; left: 50%; transform: translateX(-50%);
+  width: 31%; height: 15px; border-radius: 999px;
+  background: #05050a;
+}
+.geraet video, .geraet img {
+  width: 100%; height: 100%;
+  border-radius: 36px;
+  object-fit: cover;
+  background: var(--ink-2);
+}
+.geraet-schein {
+  position: absolute; inset: -14% -22%;
+  z-index: -1; pointer-events: none;
+  background: radial-gradient(50% 45% at 50% 50%, rgba(255, 138, 43, 0.28), transparent 70%);
+  filter: blur(28px);
+}
+
+/* Sanftes Kippen beim Scrollen — reine Zugabe, deshalb hinter einer Abfrage auf Bewegungswunsch. */
+@media (prefers-reduced-motion: no-preference) {
+  .geraet { transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+  .paar:not(.gedreht) .geraet { transform: perspective(1400px) rotateY(-11deg) rotateX(3deg); }
+  .paar.gedreht .geraet { transform: perspective(1400px) rotateY(11deg) rotateX(3deg); }
+  .paar:hover .geraet { transform: perspective(1400px) rotateY(0deg) rotateX(0deg) translateY(-6px); }
+}
+
+/* ---------------------------------------------------------------- Karten */
+
+.karten {
+  display: grid; gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+}
+.karte {
+  background: linear-gradient(170deg, var(--ink-3), var(--ink-2));
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 28px 26px;
+  position: relative; overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s;
+}
+.karte:hover { transform: translateY(-4px); border-color: rgba(255, 167, 73, 0.35); }
+.karte p { color: var(--text-dim); margin: 0; font-size: 0.99rem; }
+.karten-zeichen {
+  width: 42px; height: 42px; border-radius: 12px;
+  display: grid; place-items: center; margin-bottom: 18px;
+  background: rgba(255, 167, 73, 0.12);
+}
+.karten-zeichen svg { width: 21px; height: 21px; stroke: var(--orange); fill: none; stroke-width: 1.7; }
+
+/* ---------------------------------------------------------------- Geräte-Reihe */
+
+.geraetereihe {
+  display: grid; gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+}
+.geraetekachel {
+  border: 1px solid var(--line); border-radius: 18px; padding: 22px;
+  background: rgba(255, 255, 255, 0.02);
+}
+.geraetekachel h3 { font-size: 1.02rem; margin-bottom: 5px; }
+.geraetekachel p { color: var(--text-faint); font-size: 0.92rem; margin: 0; }
+.geraetekachel svg { width: 26px; height: 26px; stroke: var(--orange); fill: none; stroke-width: 1.6; margin-bottom: 14px; }
+
+/* ---------------------------------------------------------------- Preise */
+
+.preise { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+.preis {
+  border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 30px 26px;
+  background: linear-gradient(170deg, var(--ink-3), var(--ink-2));
+  display: flex; flex-direction: column;
+}
+.preis.hervor { border-color: rgba(255, 167, 73, 0.5); }
+.preis .etikett {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--orange); margin-bottom: 12px;
+}
+.preis .zahl { font-size: 2.3rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+.preis .zahl small { font-size: 0.95rem; font-weight: 500; color: var(--text-faint); letter-spacing: 0; }
+.preis ul { list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 10px; }
+.preis li { color: var(--text-dim); font-size: 0.96rem; padding-left: 20px; position: relative; }
+.preis li::before {
+  content: "·"; position: absolute; left: 6px; color: var(--orange); font-weight: 700;
+}
+
+/* ---------------------------------------------------------------- Datenschutz-Block */
+
+.ruhe {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: clamp(30px, 5vw, 56px);
+  background:
+    radial-gradient(90% 120% at 100% 0%, rgba(255, 167, 73, 0.09), transparent 60%),
+    linear-gradient(170deg, var(--ink-3), var(--ink-2));
+}
+.ruhe-liste { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-top: 34px; }
+.ruhe-liste h3 { font-size: 1rem; }
+.ruhe-liste p { color: var(--text-faint); font-size: 0.93rem; margin: 0; }
+
+/* ---------------------------------------------------------------- Fußzeile */
+
+footer {
+  border-top: 1px solid var(--line);
+  padding: 56px 0 44px;
+  color: var(--text-faint); font-size: 0.93rem;
+}
+.fuss-oben { display: flex; flex-wrap: wrap; gap: 30px; justify-content: space-between; margin-bottom: 34px; }
+.fuss-spalten { display: flex; flex-wrap: wrap; gap: 44px; }
+.fuss-spalte h4 {
+  font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text-dim); margin: 0 0 12px; font-weight: 700;
+}
+.fuss-spalte ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 9px; }
+.fuss-spalte a { color: var(--text-faint); }
+.fuss-spalte a:hover { color: var(--text); }
+.fuss-unten { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; align-items: center; }
+.fuss-hinweis { max-width: 62ch; line-height: 1.5; }
+
+/* ---------------------------------------------------------------- Einblenden */
+
+@media (prefers-reduced-motion: no-preference) {
+  .auftritt {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .auftritt.sichtbar { opacity: 1; transform: none; }
+}
+
+/* ---------------------------------------------------------------- Nachträge
+ *
+ * Diese Klassen ersetzen `style`-Attribute, die vorher direkt im HTML standen. Sie MUSSTEN hier
+ * her: Die Inhaltsrichtlinie der Seite erlaubt Stile nur aus eigenen Dateien (`style-src 'self'`),
+ * und ein `style`-Attribut ist für den Browser ein Inline-Stil wie jeder andere. Er wird dann
+ * ersatzlos ignoriert — beim ersten Aufruf lag deshalb das Video, das eigentlich nur die Textur
+ * für die 3D-Szene liefert, in voller Größe über dem Kopfbereich.
+ *
+ * Die Regel gelockert zu haben (`'unsafe-inline'`) wäre der bequeme Weg gewesen und hätte genau
+ * die Lücke aufgemacht, gegen die die Richtlinie schützt.
+ */
+
+/* Liefert nur die Textur für das Gerät in der 3D-Szene. Es muss im Dokument stehen, damit der
+   Browser es lädt und abspielt — sichtbar sein muss es nicht. Bewusst NICHT `display:none`:
+   Ein ausgeblendetes Video dekodiert in manchen Browsern nicht, und die Textur bliebe schwarz. */
+.szene-quelle {
+  position: absolute;
+  width: 1px; height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.marke-zeile { margin: 12px 0 0; max-width: 34ch; }
+.preis-hinweis {
+  margin-top: 26px;
+  color: var(--text-faint);
+  font-size: 0.92rem;
+  max-width: 70ch;
+}
+.eng { max-width: 56ch; }
+
+/* 404 */
+.mitte {
+  min-height: 100svh;
+  display: grid; align-content: center; gap: 20px;
+  padding: 60px 0;
+}
+.mitte h1 { font-size: clamp(2rem, 6vw, 3.4rem); letter-spacing: -0.03em; margin: 0; }
+.mitte .vorspann { margin: 0; }
+.zweitsprache { color: var(--text-faint); }

@@ -1,0 +1,10 @@
+# Timatch — https://timatch.de
+# Wer eine Sicherheitsluecke findet, soll wissen, wohin damit.
+Contact: mailto:timatch@jaimetaboada.com
+Expires: 2027-08-23T19:53:09Z
+Preferred-Languages: de, en
+Canonical: https://timatch.de/.well-known/security.txt
+Policy: https://timatch.de/.well-known/security.txt
+
+# Diese Seite ist rein statisch: kein Formular, keine Datenbank, keine Anmeldung, keine Cookies.
+# Sie sammelt nichts. Meldungen zur iOS-App gehen an dieselbe Adresse.

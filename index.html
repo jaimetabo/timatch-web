@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<!-- Inhaltsrichtlinie. GitHub Pages kann keine eigenen HTTP-Kopfzeilen setzen, deshalb steht sie
+     hier als <meta>. Sie ist so streng, wie sie sein kann: Alles kommt von dieser Herkunft, es gibt
+     keine Ausnahme für fremde Skripte, keine Einbettung, keine Formulare.
+     `frame-ancestors` fehlt bewusst — als <meta> wird die Regel vom Browser ignoriert, und eine
+     Regel, die nicht wirkt, gehört nicht in den Kopf, wo sie Sicherheit vortäuscht. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+
+<title>Timatch — Zug-Timer, Punktezettel und Sammlung für den Spieleabend</title>
+<meta name="description" content="Timatch hält jeden Spieleabend fest: Zug-Timer für den Tisch, Punktezettel mit eigenem Wertungsblock, Spielesammlung mit BoardGameGeek-Anbindung und Statistik über Jahre. Ohne Konto, ohne Datensammlung.">
+<link rel="canonical" href="https://timatch.de/">
+<link rel="alternate" hreflang="de" href="https://timatch.de/">
+<link rel="alternate" hreflang="en" href="https://timatch.de/en/">
+<link rel="alternate" hreflang="x-default" href="https://timatch.de/">
+<meta name="theme-color" content="#08080c">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_DE">
+<meta property="og:site_name" content="Timatch">
+<meta property="og:title" content="Timatch — der Spieleabend, sauber festgehalten">
+<meta property="og:description" content="Zug-Timer, Punktezettel mit eigenem Wertungsblock, Sammlung mit BGG-Anbindung und Statistik. Für iPhone, iPad, Apple Watch und Apple TV.">
+<meta property="og:url" content="https://timatch.de/">
+<meta property="og:image" content="https://timatch.de/assets/img/icon-1024.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="assets/img/icon-1024.png" sizes="any">
+<link rel="apple-touch-icon" href="assets/img/icon-1024.png">
+<link rel="stylesheet" href="assets/css/site.css?v=3">
+</head>
+<body>
+
+<a class="sprunglink nur-vorlesen" href="#inhalt">Zum Inhalt springen</a>
+
+<header class="kopfleiste">
+  <div class="huelle">
+    <a class="marke" href="./"><img src="assets/img/icon-1024.png" alt="" width="28" height="28">Timatch</a>
+    <nav class="kopf-nav" aria-label="Hauptnavigation">
+      <a class="nav-abschnitt" href="#timer">Timer</a>
+      <a class="nav-abschnitt" href="#punkte">Punkte</a>
+      <a class="nav-abschnitt" href="#sammlung">Sammlung</a>
+      <a class="nav-abschnitt" href="#preise">Preise</a>
+      <span class="sprachwahl">
+        <a href="./" aria-current="true" lang="de">DE</a>
+        <a href="en/" lang="en">EN</a>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<main id="inhalt">
+
+<!-- ============================================================ Bühne -->
+<div class="buehne">
+  <div id="szene" aria-hidden="true"></div>
+  <!-- Läuft als Textur auf dem Bildschirm des Geräts in der 3D-Szene. Versteckt, aber im
+       Dokument — so lädt der Browser die Datei genau einmal. -->
+  <video id="szene-video" src="assets/video/timer.mp4" poster="assets/video/timer.jpg"
+         muted loop playsinline preload="auto" aria-hidden="true"
+         class="szene-quelle"></video>
+
+  <div class="huelle buehne-text">
+    <span class="plakette"><span class="punkt"></span>Für iPhone, iPad, Apple&nbsp;Watch und Apple&nbsp;TV</span>
+    <h1>Jeder Spieleabend,<br><em>sauber festgehalten.</em></h1>
+    <p class="vorspann">
+      Timatch führt die Uhr am Tisch, rechnet die Punkte zusammen und merkt sich, was ihr gespielt habt —
+      wer dran war, wie lange gedacht wurde und wer am Ende vorn lag.
+    </p>
+    <div class="knopfreihe">
+      <span class="hinweis-store">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg>
+        Bald im App&nbsp;Store
+      </span>
+      <a class="knopf knopf-haupt" href="https://testflight.apple.com/join/MxhgJ7Qr" rel="noopener noreferrer">
+        Beta über TestFlight
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+    <p class="buehne-fuss">
+      <span>Kein Konto nötig</span>
+      <span>Läuft offline</span>
+      <span>Keine Datensammlung</span>
+      <span>Deutsch &amp; Englisch</span>
+    </p>
+  </div>
+</div>
+
+<!-- ============================================================ Drei Säulen -->
+<section class="huelle auftritt" aria-labelledby="ueberblick">
+  <div class="abschnitt-kopf">
+    <span class="ueberschrift-klein">Worum es geht</span>
+    <h2 id="ueberblick">Drei Dinge, die am Tisch tatsächlich stören</h2>
+    <p>Und die Timatch übernimmt, ohne dass jemand die Runde unterbricht.</p>
+  </div>
+  <div class="karten">
+    <article class="karte">
+      <div class="karten-zeichen"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg></div>
+      <h3>„Wer ist eigentlich dran?"</h3>
+      <p>Die Uhr läuft für die Person am Zug, nicht für die Runde. Ein Tipp, und sie geht weiter.
+         Auf dem Sperrbildschirm sieht man es auch dann, wenn das Telefon auf dem Tisch liegt.</p>
+    </article>
+    <article class="karte">
+      <div class="karten-zeichen"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2.5"/><path d="M8 8h8M8 12h8M8 16h4"/></svg></div>
+      <h3>„Wer hat jetzt gewonnen?"</h3>
+      <p>Der Punktezettel kennt die Zeilen deines Spiels und addiert sie selbst.
+         Gleichstand wird erkannt, und auch Spiele, bei denen die niedrigste Zahl gewinnt.</p>
+    </article>
+    <article class="karte">
+      <div class="karten-zeichen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5C4 5 5 4 6.5 4H10l2 2.5h5.5C19 6.5 20 7.5 20 9v8.5c0 1.5-1 2.5-2.5 2.5h-11C5 20 4 19 4 17.5z"/></svg></div>
+      <h3>„Haben wir das schon gespielt?"</h3>
+      <p>Deine Sammlung mit Titelbildern, Spielerzahl und Dauer — und der ganze Verlauf dazu.
+         Nach zwei Jahren weißt du noch, wann ihr Ark Nova zuletzt auf dem Tisch hattet.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ============================================================ Timer -->
+<section id="timer" class="huelle auftritt" aria-labelledby="timer-titel">
+  <div class="paar">
+    <div class="paar-text">
+      <span class="ueberschrift-klein">Der Timer</span>
+      <h2 id="timer-titel">Die Uhr läuft für den, der dran ist</h2>
+      <p class="lang">
+        Gesamtzeit, Zugzeit je Person oder eine echte Schachuhr mit Zeitbudget. Reihum oder frei —
+        einfach antippen, wer als Nächstes spielt.
+      </p>
+      <ul class="merkmale">
+        <li><span class="haken"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.4" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6"/></svg></span>
+            <span><b>Zeitstempel statt Zähler.</b> Ein Neustart kostet keine Sekunde — die Partie läuft weiter, wo sie war.</span></li>
+        <li><span class="haken"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.4" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6"/></svg></span>
+            <span><b>Live Activity und Dynamic Island.</b> Wer dran ist, steht auf dem Sperrbildschirm.</span></li>
+        <li><span class="haken"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.4" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6"/></svg></span>
+            <span><b>Strafpunkte, wenn ihr wollt.</b> Bei Zeitüberschreitung, sekundengenau oder je angefangener Minute.</span></li>
+      </ul>
+    </div>
+    <div class="geraet">
+      <div class="geraet-schein" aria-hidden="true"></div>
+      <video src="assets/video/timer.mp4" poster="assets/video/timer.jpg"
+             muted loop playsinline preload="none" data-in-sicht
+             aria-label="Bildschirmaufnahme: Der Zug-Timer läuft, die Zugzeit zählt hoch, die Runde wird weitergeschaltet."></video>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ Punkte -->
+<section id="punkte" class="huelle auftritt" aria-labelledby="punkte-titel">
+  <div class="paar gedreht">
+    <div class="paar-text">
+      <span class="ueberschrift-klein">Der Punktezettel</span>
+      <h2 id="punkte-titel">Dein Wertungsblock, nicht unserer</h2>
+      <p class="lang">
+        Bei Azul genügt eine Zahl. Bei Agricola rechnet man Felder, Weiden, Vieh, Ställe und
+        Bettelkarten zusammen — und verrechnet sich. Also legst du die Zeilen einmal an, und Timatch
+        fragt sie ab und addiert sie selbst.
+      </p>
+      <ul class="merkmale">
+        <li><span class="haken"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.4" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6"/></svg></span>
+            <span><b>Einmal angelegt, immer da.</b> Der Block hängt am Spiel und steht bei jeder weiteren Partie wieder bereit.</span></li>
+        <li><span class="haken"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.4" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6"/></svg></span>
+            <span><b>Von dir, für dich.</b> Wir liefern keine Blöcke mit und schicken deine auch an niemanden weiter.</span></li>
+        <li><span class="haken"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.4" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6"/></svg></span>
+            <span><b>Gleichstand geklärt.</b> Wer bei Punktgleichheit gewinnt, entscheidet ihr — mit Begründung fürs Protokoll.</span></li>
+      </ul>
+    </div>
+    <div class="geraet">
+      <div class="geraet-schein" aria-hidden="true"></div>
+      <video src="assets/video/punkte.mp4" poster="assets/video/punkte.jpg"
+             muted loop playsinline preload="none" data-in-sicht
+             aria-label="Bildschirmaufnahme: Punkte werden Zeile für Zeile eingetragen, die Summe rechnet mit."></video>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ Sammlung -->
+<section id="sammlung" class="huelle auftritt" aria-labelledby="sammlung-titel">
+  <div class="paar">
+    <div class="paar-text">
+      <span class="ueberschrift-klein">Die Sammlung</span>
+      <h2 id="sammlung-titel">Dein Regal, digital</h2>
+      <p class="lang">
+        Spiele von Hand anlegen oder über BoardGameGeek übernehmen — einzeln oder die ganze Sammlung
+        über deinen Nutzernamen. Titelbild, Spielerzahl, Dauer, Gewicht, Verlage und Mechaniken
+        kommen mit.
+      </p>
+      <ul class="merkmale">
+        <li><span class="haken"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.4" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6"/></svg></span>
+            <span><b>Regal-Planer.</b> Rechnet aus, was in dein Kallax tatsächlich hineinpasst.</span></li>
+        <li><span class="haken"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.4" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6"/></svg></span>
+            <span><b>Verliehen an wen?</b> Mit Erinnerung, damit dein Spiel zurückkommt.</span></li>
+        <li><span class="haken"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.4" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6"/></svg></span>
+            <span><b>Erweiterungen am Grundspiel.</b> Und die Wunschliste gleich mit dabei.</span></li>
+      </ul>
+    </div>
+    <div class="geraet">
+      <div class="geraet-schein" aria-hidden="true"></div>
+      <video src="assets/video/sammlung.mp4" poster="assets/video/sammlung.jpg"
+             muted loop playsinline preload="none" data-in-sicht
+             aria-label="Bildschirmaufnahme: Durch die Spielesammlung scrollen, mit Titelbildern und Angaben zu jedem Spiel."></video>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ Statistik -->
+<section id="statistik" class="huelle auftritt" aria-labelledby="stat-titel">
+  <div class="paar gedreht">
+    <div class="paar-text">
+      <span class="ueberschrift-klein">Die Auswertung</span>
+      <h2 id="stat-titel">Was ihr wirklich spielt</h2>
+      <p class="lang">
+        Wie oft, wie lange, wer gewinnt — und wie sehr die Schachtelangabe danebenliegt. Timatch
+        rechnet aus euren Partien und nicht aus fremden Durchschnitten.
+      </p>
+      <ul class="merkmale">
+        <li><span class="haken"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.4" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6"/></svg></span>
+            <span><b>Eure echte Spieldauer</b>, aufgeschlüsselt nach Spielerzahl.</span></li>
+        <li><span class="haken"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.4" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6"/></svg></span>
+            <span><b>„Was spielen wir?"</b> — ein Vorschlag nach Rundengröße, Zeit und Lust, jedes Mal mit Begründung.</span></li>
+        <li><span class="haken"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.4" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6"/></svg></span>
+            <span><b>Siegquoten je Person</b>, Aktivitätskarte über die Jahre, Export als PDF oder CSV.</span></li>
+      </ul>
+    </div>
+    <div class="geraet">
+      <div class="geraet-schein" aria-hidden="true"></div>
+      <video src="assets/video/statistik.mp4" poster="assets/video/statistik.jpg"
+             muted loop playsinline preload="none" data-in-sicht
+             aria-label="Bildschirmaufnahme: Die Statistik mit Kennzahlen, Diagrammen und Auswertungen."></video>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ Geräte -->
+<section class="huelle auftritt" aria-labelledby="geraete-titel">
+  <div class="abschnitt-kopf">
+    <span class="ueberschrift-klein">Am Tisch</span>
+    <h2 id="geraete-titel">Auf dem Gerät, das gerade in Reichweite liegt</h2>
+    <p>Alles im Preis enthalten — keine getrennte App, kein zweiter Kauf.</p>
+  </div>
+  <div class="geraetereihe">
+    <div class="geraetekachel">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18.5h2"/></svg>
+      <h3>iPhone</h3>
+      <p>Der Tisch. Timer, Punkte, Sammlung — und die Live Activity auf dem Sperrbildschirm.</p>
+    </div>
+    <div class="geraetekachel">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2.5"/><path d="M11 18h2"/></svg>
+      <h3>iPad</h3>
+      <p>Groß in der Mitte des Tisches — oder als zweites Display, wenn kein Apple&nbsp;TV da ist.</p>
+    </div>
+    <div class="geraetekachel">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="6" width="10" height="12" rx="3"/><path d="M9.5 6V3.5h5V6M9.5 18v2.5h5V18"/></svg>
+      <h3>Apple&nbsp;Watch</h3>
+      <p>Deine Zugzeit am Handgelenk, mit einem Klopfen, wenn du dran bist.</p>
+    </div>
+    <div class="geraetekachel">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4" width="19" height="13" rx="2"/><path d="M8 21h8"/></svg>
+      <h3>Apple&nbsp;TV</h3>
+      <p>Der Spielstand groß für alle am Tisch, gesteuert bleibt es vom iPhone.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ Privatsphäre -->
+<section class="huelle auftritt" aria-labelledby="ruhe-titel">
+  <div class="ruhe">
+    <span class="ueberschrift-klein">Deine Daten</span>
+    <h2 id="ruhe-titel">Bleiben, wo sie sind</h2>
+    <p class="lang eng">
+      Timatch braucht kein Konto und keine Anmeldung. Es gibt kein Analyse-Werkzeug in der App,
+      keine Werbe-Kennung und keinen Server, auf dem eure Spieleabende landen.
+    </p>
+    <div class="ruhe-liste">
+      <div>
+        <h3>Auf deinem Gerät</h3>
+        <p>Sammlung, Personen und Partien liegen lokal. Wer will, synchronisiert über die eigene iCloud — abschaltbar.</p>
+      </div>
+      <div>
+        <h3>Ohne Konto</h3>
+        <p>Kein Login, keine E-Mail-Adresse, keine Registrierung. Die App startet und ist da.</p>
+      </div>
+      <div>
+        <h3>Offline nutzbar</h3>
+        <p>Ins Netz geht Timatch nur, wenn du ein Spiel bei BoardGameGeek nachschlägst.</p>
+      </div>
+      <div>
+        <h3>Deine Sicherung</h3>
+        <p>Alles lässt sich als Datei exportieren und wieder einlesen — auch, um wegzugehen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ Preise -->
+<section id="preise" class="huelle auftritt" aria-labelledby="preis-titel">
+  <div class="abschnitt-kopf">
+    <span class="ueberschrift-klein">Preise</span>
+    <h2 id="preis-titel">Der Kern bleibt kostenlos</h2>
+    <p>Sammlung, Partien, Punkte und Statistik kosten nichts. Pro schaltet die Tiefe frei,
+       die Vielspieler:innen sich wünschen.</p>
+  </div>
+  <div class="preise">
+    <div class="preis">
+      <span class="etikett">Timatch</span>
+      <div class="zahl">Kostenlos</div>
+      <ul>
+        <li>Sammlung, Personen, Orte</li>
+        <li>Partien mit Timer und Punkten</li>
+        <li>Statistik und Verlauf</li>
+        <li>Export und Sicherung</li>
+      </ul>
+    </div>
+    <div class="preis">
+      <span class="etikett">Pro monatlich</span>
+      <div class="zahl">1,99&nbsp;€ <small>/ Monat</small></div>
+      <ul>
+        <li>Alle Timer-Modi und Schachuhr</li>
+        <li>Strafpunkte und Zeitregeln</li>
+        <li>iCloud über alle Geräte</li>
+        <li>Apple&nbsp;TV, Apple&nbsp;Watch, BGG-Import</li>
+      </ul>
+    </div>
+    <div class="preis hervor">
+      <span class="etikett">Pro jährlich · beliebt</span>
+      <div class="zahl">14,99&nbsp;€ <small>/ Jahr</small></div>
+      <ul>
+        <li>Alles aus Pro</li>
+        <li>Günstiger als monatlich</li>
+        <li>Familienfreigabe inklusive</li>
+      </ul>
+    </div>
+    <div class="preis">
+      <span class="etikett">Pro einmalig</span>
+      <div class="zahl">34,99&nbsp;€ <small>einmalig</small></div>
+      <ul>
+        <li>Einmal zahlen, für immer behalten</li>
+        <li>Kein Abo, keine Verlängerung</li>
+        <li>Familienfreigabe inklusive</li>
+      </ul>
+    </div>
+  </div>
+  <p class="preis-hinweis">
+    Preise in Euro inkl. MwSt. Der Kauf läuft über den App&nbsp;Store; Abos verlängern sich
+    automatisch, solange sie nicht mindestens 24 Stunden vor Ablauf gekündigt werden.
+    Einige Pro-Funktionen sitzen im <b>Kenner-Modus</b> — einem Schalter in den Einstellungen,
+    der die selteneren Werkzeuge einblendet.
+  </p>
+</section>
+
+</main>
+
+<footer>
+  <div class="huelle">
+    <div class="fuss-oben">
+      <div>
+        <a class="marke" href="./"><img src="assets/img/icon-1024.png" alt="" width="28" height="28">Timatch</a>
+        <p class="marke-zeile">Der Spieleabend, sauber festgehalten.</p>
+      </div>
+      <div class="fuss-spalten">
+        <div class="fuss-spalte">
+          <h4>App</h4>
+          <ul>
+            <li><a href="#timer">Timer</a></li>
+            <li><a href="#punkte">Punktezettel</a></li>
+            <li><a href="#sammlung">Sammlung</a></li>
+            <li><a href="#preise">Preise</a></li>
+          </ul>
+        </div>
+        <div class="fuss-spalte">
+          <h4>Hilfe</h4>
+          <ul>
+            <li><a href="https://app.timatch.de/hilfe.html" rel="noopener noreferrer">Hilfe &amp; FAQ</a></li>
+            <li><a href="https://app.timatch.de/support.html" rel="noopener noreferrer">Support</a></li>
+            <li><a href="mailto:timatch@jaimetaboada.com">timatch@jaimetaboada.com</a></li>
+          </ul>
+        </div>
+        <div class="fuss-spalte">
+          <h4>Rechtliches</h4>
+          <ul>
+            <li><a href="https://app.timatch.de/datenschutz.html" rel="noopener noreferrer">Datenschutz</a></li>
+            <li><a href="https://jaimetaboada.com/impressum.html" rel="noopener noreferrer">Impressum</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="fuss-unten">
+      <span>© <span data-jahr>2026</span> Jaime Taboada. Alle Rechte vorbehalten.</span>
+      <span class="fuss-hinweis">
+        Timatch ist ein Begleiter für Brettspiele am Tisch und steht in keiner Verbindung zu
+        BoardGameGeek, LLC. Spieldaten stammen auf Wunsch von BoardGameGeek. Apple, iPhone, iPad,
+        Apple&nbsp;Watch und Apple&nbsp;TV sind Marken von Apple&nbsp;Inc.
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js?v=3" defer></script>
+<script type="module" src="assets/js/scene.js?v=3"></script>
+</body>
+</html>

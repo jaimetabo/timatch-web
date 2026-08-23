@@ -1,0 +1,5 @@
+# Timatch — https://timatch.de
+User-agent: *
+Allow: /
+
+Sitemap: https://timatch.de/sitemap.xml
