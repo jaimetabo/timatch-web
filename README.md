@@ -151,3 +151,9 @@ die alten URLs stehen in App Store Connect und in älteren App-Fassungen.
 
 **Das Repo muss öffentlich bleiben** — GitHub Pages veröffentlicht im kostenlosen Tarif nur aus
 öffentlichen Repos. Das ist derselbe Grund, aus dem `timatch-website` öffentlich ist.
+
+## `.nojekyll`
+
+Die leere Datei im Wurzelverzeichnis schaltet Jekyll ab. Ohne sie **veröffentlicht GitHub Pages
+keine Ordner, die mit einem Punkt beginnen** — `/.well-known/security.txt` kam mit 404 zurück,
+obwohl die Datei im Repo lag. Nicht löschen.
