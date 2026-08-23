@@ -205,7 +205,10 @@ function starte(wurzel) {
     stelleAuf();
   }, { passive: true });
 
-  const uhr = new THREE.Clock();
+  // Eigene Zeitmessung statt `THREE.Clock`: Three.js hat die Klasse für abgelehnt erklärt und
+  // schreibt bei jedem Seitenaufruf eine Verfallswarnung in die Konsole. Ein Zeitstempel und eine
+  // Subtraktion tun hier dasselbe, ohne fremde Baustelle.
+  const begonnen = performance.now();
   let angefordert = false;
 
   function schleife() {
@@ -218,7 +221,7 @@ function starte(wurzel) {
     angefordert = false;
     if (!laeuft || !sichtbar) return;
 
-    const t = uhr.getElapsedTime();
+    const t = (performance.now() - begonnen) / 1000;
 
     // Das Gerät atmet leicht und folgt dem Zeiger — dezent, sonst wirkt es zappelig.
     geraet.position.y = -0.1 + Math.sin(t * 0.6) * 0.12 - scrollAnteil * 1.6;
