@@ -13,4 +13,28 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://timatch.de/en/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://timatch.de/"/>
   </url>
+  <url>
+    <loc>https://timatch.de/hilfe/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://timatch.de/hilfe/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://timatch.de/en/support/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://timatch.de/hilfe/"/>
+  </url>
+  <url>
+    <loc>https://timatch.de/en/support/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://timatch.de/hilfe/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://timatch.de/en/support/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://timatch.de/hilfe/"/>
+  </url>
+  <url>
+    <loc>https://timatch.de/datenschutz/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://timatch.de/datenschutz/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://timatch.de/en/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://timatch.de/datenschutz/"/>
+  </url>
+  <url>
+    <loc>https://timatch.de/en/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://timatch.de/datenschutz/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://timatch.de/en/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://timatch.de/datenschutz/"/>
+  </url>
 </urlset>
