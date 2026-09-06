@@ -142,16 +142,31 @@ Domainverwaltung → timatch.de → DNS:
 |---|---|---|
 | A | `timatch.de` | `185.199.108.153` |
 | CNAME | `www` | `jaimetabo.github.io.` |
-| CNAME | `app` | Strato-Webspace, Zielverzeichnis `app-timatch` (seit 06.09.2026) |
+| — | `app` | Subdomain im STRATO-Paket, „Umleitung Extern" auf `https://timatch.de/` (seit 06.09.2026) |
 
 STRATO erlaubt in diesem Paket **genau einen** A-Eintrag; GitHub empfiehlt vier, einer genügt aber.
 Der Eintrag ersetzt die vorherige „Umleitung Intern".
 
-`app.timatch.de` zeigt seit dem 6. September 2026 **nicht mehr auf GitHub**, sondern auf den
-Strato-Webspace, wo ein `.htaccess` in `htdocs/app-timatch/` die alten Pfade auf ihre Nachfolger
-umleitet (`/hilfe.html` → `/hilfe/`, `/support.html` → `/en/support/`). Grund: Ein eigenes
-Repository mit fünf Platzhalterseiten war für eine reine Weiterleitung zu viel Apparat, und der
-Webspace läuft für `jaimetaboada.com` ohnehin.
+### `app.timatch.de`
+
+Die alte Adresse zeigt seit dem 6. September 2026 **nicht mehr auf GitHub**. Sie ist jetzt eine
+Subdomain im STRATO-Domainpaket mit einer permanenten Weiterleitung (301) auf `https://timatch.de/`.
+Ein eigenes Repository mit fünf Platzhalterseiten war für eine reine Weiterleitung zu viel Apparat.
+
+Zwei Eigenheiten dieser Weiterleitung, beide gemessen und beide mit Folgen:
+
+**Sie behält den Pfad bei.** `app.timatch.de/hilfe.html` landet auf `timatch.de/hilfe.html` — eine
+Adresse, die es hier nicht mehr gibt. Deshalb liegen im Wurzelverzeichnis vier Weiterleitungs-
+Seiten (`hilfe.html`, `datenschutz.html`, `support.html`, `privacy.html`), die per
+`meta refresh` auf `/hilfe/`, `/datenschutz/`, `/en/support/` und `/en/privacy/` zeigen. Sie
+tragen `noindex, follow` und ein `canonical` auf das Ziel. **Nicht löschen** — ohne sie enden die
+alten Adressen im 404.
+
+**Sie kann kein HTTPS.** Das im Paket enthaltene SSL-Zertifikat ist auf `timatch.de` ausgestellt
+und lässt sich nicht auf die Subdomain zuweisen (geprüft: die Auswahl bietet nur `timatch.de` an).
+`http://app.timatch.de/…` leitet um, `https://app.timatch.de/…` antwortet gar nicht. Für die
+TestFlight-Fassungen, die noch die alte Adresse tragen, heißt das: Diese Verweise laufen ins
+Leere, bis eine neue Fassung installiert ist. Ab dem Store-Release zeigt alles auf `timatch.de`.
 
 **Das Repo muss öffentlich bleiben** — GitHub Pages veröffentlicht im kostenlosen Tarif nur aus
 öffentlichen Repos.
