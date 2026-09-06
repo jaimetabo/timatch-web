@@ -1,5 +1,8 @@
 # Timatch — https://timatch.de
 User-agent: *
 Allow: /
+# deploy/ ist keine Seite, sondern die Strato-Konfiguration fuer app.timatch.de.
+# GitHub Pages liefert den Ordner mit aus; in den Suchindex gehoert er nicht.
+Disallow: /deploy/
 
 Sitemap: https://timatch.de/sitemap.xml

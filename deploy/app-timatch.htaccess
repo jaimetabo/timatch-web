@@ -1,0 +1,41 @@
+# ============================================================
+#  app.timatch.de — nur noch Weiterleitung auf timatch.de
+# ============================================================
+#
+#  Diese Adresse stand in den TestFlight-Fassungen der App und in den
+#  fruehen App-Store-Connect-Feldern. Seit dem 23.08.2026 liegt alles auf
+#  timatch.de. Hier liegt darum keine Seite mehr, sondern nur der Umzug.
+#
+#  Frueher lag hier ein eigenes GitHub-Pages-Repository (timatch-website)
+#  mit vier Platzhalterseiten. Ein ganzes Repository fuer fuenf
+#  Weiterleitungen war zu viel — jetzt macht es dieser eine Block.
+
+RewriteEngine On
+
+# ---- 1. HTTPS erzwingen ------------------------------------
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# ---- 2. Die alten Seiten auf ihre Nachfolger ---------------
+# Nicht alles auf die Startseite werfen: Wer die Hilfe wollte, soll die
+# Hilfe bekommen. Die englischen Seiten sind unter /en/ gelandet.
+RewriteRule ^hilfe\.html$        https://timatch.de/hilfe/        [L,R=301]
+RewriteRule ^datenschutz\.html$  https://timatch.de/datenschutz/  [L,R=301]
+RewriteRule ^support\.html$      https://timatch.de/en/support/   [L,R=301]
+RewriteRule ^privacy\.html$      https://timatch.de/en/privacy/   [L,R=301]
+
+# ---- 3. Alles Uebrige auf die Startseite -------------------
+RewriteRule ^ https://timatch.de/ [L,R=301]
+
+# ---- 4. Sicherheits-Header ---------------------------------
+# Auch eine Weiterleitung antwortet mit Kopfzeilen. HSTS steht hier, damit
+# app.timatch.de nicht die einzige Adresse unter timatch.de ohne bleibt.
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "DENY"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+</IfModule>
+
+# ---- 5. Nichts ausliefern, nichts auflisten ----------------
+Options -Indexes

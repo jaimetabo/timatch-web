@@ -4,9 +4,10 @@ Statische Seite, zweisprachig (Deutsch unter `/`, Englisch unter `/en/`), gehost
 Sie bewirbt die iOS-App **Timatch** (Repo `timatch-app`) und zeigt sie in vier kurzen Videos, die
 aus der echten App stammen.
 
-**Nicht zu verwechseln mit `timatch-website`.** Das ist ein anderes Repo und bedient
-`app.timatch.de` — Hilfe, Support, Datenschutz. Dessen Adressen stehen in App Store Connect und in
-der App selbst; sie bleiben unangetastet. Diese Seite hier verlinkt nur dorthin.
+Sie trägt **alles**: Landingpage, Hilfe (`/hilfe/`, `/en/support/`) und Rechtstexte
+(`/datenschutz/`, `/en/privacy/`). Es gibt kein zweites Website-Repo mehr — das frühere
+`timatch-website` hinter `app.timatch.de` ist am 6. September 2026 weggefallen, seine
+Weiterleitungen macht jetzt ein `.htaccess` auf dem Strato-Webspace.
 
 ---
 
@@ -141,16 +142,19 @@ Domainverwaltung → timatch.de → DNS:
 |---|---|---|
 | A | `timatch.de` | `185.199.108.153` |
 | CNAME | `www` | `jaimetabo.github.io.` |
-| CNAME | `app` | `jaimetabo.github.io.` (bestand bereits, unangetastet) |
+| CNAME | `app` | Strato-Webspace, Zielverzeichnis `app-timatch` (seit 06.09.2026) |
 
 STRATO erlaubt in diesem Paket **genau einen** A-Eintrag; GitHub empfiehlt vier, einer genügt aber.
 Der Eintrag ersetzt die vorherige „Umleitung Intern".
 
-`app.timatch.de` bleibt bestehen und leitet auf die neuen Adressen um (Repo `timatch-website`) —
-die alten URLs stehen in App Store Connect und in älteren App-Fassungen.
+`app.timatch.de` zeigt seit dem 6. September 2026 **nicht mehr auf GitHub**, sondern auf den
+Strato-Webspace, wo ein `.htaccess` in `htdocs/app-timatch/` die alten Pfade auf ihre Nachfolger
+umleitet (`/hilfe.html` → `/hilfe/`, `/support.html` → `/en/support/`). Grund: Ein eigenes
+Repository mit fünf Platzhalterseiten war für eine reine Weiterleitung zu viel Apparat, und der
+Webspace läuft für `jaimetaboada.com` ohnehin.
 
 **Das Repo muss öffentlich bleiben** — GitHub Pages veröffentlicht im kostenlosen Tarif nur aus
-öffentlichen Repos. Das ist derselbe Grund, aus dem `timatch-website` öffentlich ist.
+öffentlichen Repos.
 
 ## `.nojekyll`
 
