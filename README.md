@@ -135,38 +135,69 @@ Zwischenspeicher neu laden.
 
 GitHub Pages baut aus dem Zweig `main`, Wurzel `/`. Ein `git push` genügt.
 
-**DNS bei STRATO — am 23. August 2026 gesetzt.** Im Kundenbereich, Paket TIMATCH (7070811),
-Domainverwaltung → timatch.de → DNS:
+**DNS bei Cloudflare — seit dem 6. September 2026.** Die Zone liegt im Cloudflare-Konto
+(Free-Tarif); registriert bleibt die Domain bei STRATO, Paket TIMATCH (7070811). Dort stehen unter
+Domainverwaltung → timatch.de → DNS → NS-Record die **eigenen Nameserver**:
 
-| Typ | Name | Ziel |
-|---|---|---|
-| A | `timatch.de` | `185.199.108.153` |
-| CNAME | `www` | `jaimetabo.github.io.` |
-| — | `app` | Subdomain im STRATO-Paket, „Umleitung Extern" auf `https://timatch.de/` (seit 06.09.2026) |
+```
+edna.ns.cloudflare.com
+piotr.ns.cloudflare.com
+```
 
-STRATO erlaubt in diesem Paket **genau einen** A-Eintrag; GitHub empfiehlt vier, einer genügt aber.
-Der Eintrag ersetzt die vorherige „Umleitung Intern".
+Die Einträge in Cloudflare:
+
+| Typ | Name | Ziel | Modus |
+|---|---|---|---|
+| A ×4 | `timatch.de` | `185.199.108/109/110/111.153` | DNS only |
+| CNAME | `www` | `jaimetabo.github.io` | DNS only |
+| A | `app` | `217.160.0.19` | **Proxied** |
+| CNAME | `autoconfig` | `autoconfigure.strato.de` | DNS only |
+| MX | `*` und `timatch.de` | `smtpin.rzone.de` (5) | DNS only |
+| SRV / TXT | `_autodiscover`, `_dmarc`, `_domainkey` | unverändert übernommen | DNS only |
+
+**Warum `timatch.de` selbst DNS only bleibt:** Die Seite soll sich genau wie vorher verhalten,
+GitHub Pages liefert sie direkt aus und bringt sein eigenes Zertifikat mit. Cloudflare macht hier
+nur die Namensauflösung. Proxied ist einzig `app` — und zwar allein, damit die Weiterleitung ein
+Zertifikat bekommt.
+
+**Was der Umzug gebracht hat:** STRATO erlaubte in diesem Paket **genau einen** A-Eintrag; GitHub
+empfiehlt vier. Jetzt stehen alle vier da. Und `app.timatch.de` kann HTTPS, was bei STRATO
+unmöglich war.
+
+**Mail:** Mit eigenen Nameservern stehen STRATOs E-Mail-Funktionen für diese Domain nicht mehr zur
+Verfügung — STRATO warnt beim Umstellen ausdrücklich davor. Das war zu verschmerzen, weil keine
+`@timatch.de`-Adresse in Gebrauch ist: App und Website schreiben an `timatch@jaimetaboada.com`,
+also an die andere Domain im anderen Paket. Die MX-Einträge sind trotzdem mitgezogen, damit die
+Zone dem alten Stand entspricht.
 
 ### `app.timatch.de`
 
-Die alte Adresse zeigt seit dem 6. September 2026 **nicht mehr auf GitHub**. Sie ist jetzt eine
-Subdomain im STRATO-Domainpaket mit einer permanenten Weiterleitung (301) auf `https://timatch.de/`.
-Ein eigenes Repository mit fünf Platzhalterseiten war für eine reine Weiterleitung zu viel Apparat.
+Die alte Adresse zeigt seit dem 6. September 2026 **nicht mehr auf GitHub**, sondern wird von
+Cloudflare beantwortet. Eine Redirect Rule schickt sie dauerhaft weiter:
 
-Zwei Eigenheiten dieser Weiterleitung, beide gemessen und beide mit Folgen:
+```
+(http.host eq "app.timatch.de")
+  → 301 → concat("https://timatch.de", http.request.uri.path)
+```
 
-**Sie behält den Pfad bei.** `app.timatch.de/hilfe.html` landet auf `timatch.de/hilfe.html` — eine
-Adresse, die es hier nicht mehr gibt. Deshalb liegen im Wurzelverzeichnis vier Weiterleitungs-
-Seiten (`hilfe.html`, `datenschutz.html`, `support.html`, `privacy.html`), die per
-`meta refresh` auf `/hilfe/`, `/datenschutz/`, `/en/support/` und `/en/privacy/` zeigen. Sie
-tragen `noindex, follow` und ein `canonical` auf das Ziel. **Nicht löschen** — ohne sie enden die
-alten Adressen im 404.
+Ein eigenes Repository mit fünf Platzhalterseiten war für eine reine Weiterleitung zu viel
+Apparat; das frühere `timatch-website` ist deshalb archiviert.
 
-**Sie kann kein HTTPS.** Das im Paket enthaltene SSL-Zertifikat ist auf `timatch.de` ausgestellt
-und lässt sich nicht auf die Subdomain zuweisen (geprüft: die Auswahl bietet nur `timatch.de` an).
-`http://app.timatch.de/…` leitet um, `https://app.timatch.de/…` antwortet gar nicht. Für die
-TestFlight-Fassungen, die noch die alte Adresse tragen, heißt das: Diese Verweise laufen ins
-Leere, bis eine neue Fassung installiert ist. Ab dem Store-Release zeigt alles auf `timatch.de`.
+**Die Regel behält den Pfad bei.** `app.timatch.de/hilfe.html` landet also auf
+`timatch.de/hilfe.html` — eine Adresse, die es hier nicht mehr gibt. Deshalb liegen im
+Wurzelverzeichnis vier Weiterleitungsseiten (`hilfe.html`, `datenschutz.html`, `support.html`,
+`privacy.html`), die per `meta refresh` auf `/hilfe/`, `/datenschutz/`, `/en/support/` und
+`/en/privacy/` zeigen. Sie tragen `noindex, follow` und ein `canonical` auf das Ziel.
+**Nicht löschen** — ohne sie enden die alten Adressen im 404.
+
+Prüfen:
+
+```bash
+for p in / /hilfe.html /datenschutz.html /support.html /privacy.html; do
+  curl -sIo /dev/null -w "%{http_code} -> %{redirect_url}\n" "https://app.timatch.de$p"
+done
+```
+
 
 **Das Repo muss öffentlich bleiben** — GitHub Pages veröffentlicht im kostenlosen Tarif nur aus
 öffentlichen Repos.
