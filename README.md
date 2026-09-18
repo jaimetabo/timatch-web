@@ -172,8 +172,18 @@ Zone dem alten Stand entspricht.
 
 ### `app.timatch.de`
 
-Die alte Adresse zeigt seit dem 6. September 2026 **nicht mehr auf GitHub**, sondern wird von
-Cloudflare beantwortet. Eine Redirect Rule schickt sie dauerhaft weiter:
+**Seit dem 18. September 2026 ist `app.timatch.de` die Web-App „Timatch Tisch"** (Repo
+`jaimetabo/timatch-tisch`, privat, Cloudflare Pages, Projekt `timatch-tisch`). Die Redirect Rule
+unten ist damit Geschichte — sie musste im Cloudflare-Dashboard gelöscht und der DNS-Eintrag `app`
+auf `CNAME timatch-tisch.pages.dev` (proxied) umgestellt werden. Die alten Hilfe- und
+Rechtstext-Adressen unter `app.timatch.de/…` fängt jetzt eine `_redirects`-Datei im Tisch-Repo ab
+und schickt sie nach `timatch.de`; die vier `meta refresh`-Seiten hier bleiben trotzdem, für
+Links, die direkt auf `timatch.de/hilfe.html` zeigen.
+
+Zur Geschichte — so war es vom 6. bis 18. September 2026:
+
+Die alte Adresse zeigte **nicht mehr auf GitHub**, sondern wurde von
+Cloudflare beantwortet. Eine Redirect Rule schickte sie dauerhaft weiter:
 
 ```
 (http.host eq "app.timatch.de")
