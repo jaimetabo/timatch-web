@@ -28,7 +28,7 @@
 
 <link rel="icon" href="../assets/img/icon-64.png" sizes="any">
 <link rel="apple-touch-icon" href="../assets/img/icon-180.png">
-<link rel="stylesheet" href="../assets/css/site.css?v=9">
+<link rel="stylesheet" href="../assets/css/site.css?v=10">
 </head>
 <body>
 
@@ -42,7 +42,7 @@
       <a class="nav-abschnitt" href="#punkte">Scores</a>
       <a class="nav-abschnitt" href="#sammlung">Collection</a>
       <a class="nav-abschnitt" href="#preise">Pricing</a>
-      <a class="nav-abschnitt" href="#android">Android &amp; web</a>
+      <a class="nav-abschnitt" href="#wege">Android &amp; web</a>
       <span class="sprachwahl">
         <a href="../" lang="de">DE</a>
         <a href="./" aria-current="true" lang="en">EN</a>
@@ -61,25 +61,30 @@
          class="szene-quelle"></video>
 
   <div class="huelle buehne-text">
-    <span class="plakette"><span class="punkt"></span>For iPhone, iPad, Apple&nbsp;Watch and Apple&nbsp;TV</span>
+    <span class="plakette"><span class="punkt"></span>For iPhone, iPad, Apple&nbsp;Watch, Apple&nbsp;TV — and any browser</span>
     <h1>Every game night,<br><em>properly recorded.</em></h1>
     <p class="vorspann">
       Timatch keeps the clock at the table, adds up the scores, and remembers what you played —
       whose turn it was, how long everyone thought, and who came out on top.
     </p>
-    <div class="knopfreihe">
-      <span class="hinweis-store">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg>
-        Coming to the App&nbsp;Store
-      </span>
-      <a class="knopf knopf-haupt" href="https://testflight.apple.com/join/MxhgJ7Qr" rel="noopener noreferrer">
-        Join the TestFlight beta
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+    <div class="wege" aria-label="Two ways to use Timatch">
+      <a class="weg" href="https://testflight.apple.com/join/MxhgJ7Qr" rel="noopener noreferrer">
+        <span class="weg-kopf"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18.5h2"/></svg><span class="beta-pille">Beta</span></span>
+        <span class="weg-titel">Beta via TestFlight</span>
+        <span class="weg-unter">iPhone · iPad · Apple&nbsp;Watch · Apple&nbsp;TV</span>
+        <span class="weg-pfeil" aria-hidden="true">→</span>
       </a>
-      <a class="knopf knopf-still" href="https://app.timatch.de" title="The game table in your browser — for Android and anyone without an iPhone">
-        For Android &amp; browser
+      <a class="weg" href="https://app.timatch.de">
+        <span class="weg-kopf"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4" width="19" height="16" rx="2.5"/><path d="M2.5 9h19M6 6.5h.01M8.5 6.5h.01"/></svg><span class="beta-pille">Beta</span></span>
+        <span class="weg-titel">Start in the browser</span>
+        <span class="weg-unter">Android · any browser · no account</span>
+        <span class="weg-pfeil" aria-hidden="true">→</span>
       </a>
     </div>
+    <p class="wege-hinweis">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg>
+      Both are in beta — the app is coming to the App&nbsp;Store soon, the web version to the Play&nbsp;Store later.
+    </p>
     <p class="buehne-fuss">
       <span>No account needed</span>
       <span>Works offline</span>
@@ -260,39 +265,52 @@
       <h3>Apple&nbsp;TV</h3>
       <p>The score big enough for everyone at the table, still driven from the iPhone.</p>
     </div>
+    <div class="geraetekachel">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3 9.5h18M12 19v2.5M8.5 21.5h7"/></svg>
+      <h3>Android &amp; browser</h3>
+      <p>Timatch Table: the same game table as a web app — install it, works offline, no account.</p>
+    </div>
   </div>
 </section>
 
-<!-- ============================================================ Android & web -->
-<section id="android" class="huelle auftritt" aria-labelledby="android-titel">
+<!-- ============================================================ Two ways -->
+<section id="wege" class="huelle auftritt" aria-labelledby="wege-titel">
   <div class="abschnitt-kopf">
-    <span class="ueberschrift-klein">No iPhone at the table?</span>
-    <h2 id="android-titel">Timatch Table — the game table in your browser</h2>
-    <p>For Android and any browser, free, no account. Install it on your phone and it runs like an app — offline too.</p>
+    <span class="ueberschrift-klein">Beta both ways</span>
+    <h2 id="wege-titel">Two ways, one table</h2>
+    <p>The app for Apple devices and Timatch Table for Android and any browser follow the same rules — and pass plays to each other as Timatch files. What works where, honestly listed.</p>
   </div>
-  <div class="geraetereihe">
-    <div class="geraetekachel">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-      <h3>The same table</h3>
-      <p>Turn limit, chess clock, penalty points, thinking phase, score sheets, rounds, teams — the same rules as in the app.</p>
-    </div>
-    <div class="geraetekachel">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4" width="19" height="13" rx="2"/><path d="M8 21h8"/></svg>
-      <h3>Live on every screen</h3>
-      <p>One code, and the TV, a tablet or the others' phones show who is up — with a vibration when it's you.</p>
-    </div>
-    <div class="geraetekachel">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16.5a4.5 4.5 0 0 1 .8-8.9A6 6 0 0 1 16.4 6a4.5 4.5 0 0 1 3.1 8.6"/><path d="M12 12v9M8.5 15.5 12 12l3.5 3.5"/></svg>
-      <h3>Together with the iPhone</h3>
-      <p>Plays travel as Timatch files into the iPhone app and back. Collection from BoardGameGeek, cloud backup with a code, AI with your own key.</p>
-    </div>
+  <div class="vergleich-huelle">
+    <table class="vergleich">
+      <thead>
+        <tr>
+          <th scope="col"><span class="nur-vorlesen">Feature</span></th>
+          <th scope="col"><span class="v-kopf"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18.5h2"/></svg><span>Timatch<small>iPhone · iPad · Watch · TV</small></span></span></th>
+          <th scope="col"><span class="v-kopf"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4" width="19" height="16" rx="2.5"/><path d="M2.5 9h19M6 6.5h.01M8.5 6.5h.01"/></svg><span>Timatch Table<small>Android · browser</small></span></span></th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr><th scope="row">Timer</th><td data-l="Timatch"><span class="v-ja" aria-label="yes">✓</span><span class="v-text">Turn limit, countdown, chess clock, free order</span></td><td data-l="Timatch Table"><span class="v-ja" aria-label="yes">✓</span><span class="v-text">Turn limit, countdown, chess clock, free order</span></td></tr>
+      <tr><th scope="row">Time rules</th><td data-l="Timatch"><span class="v-ja" aria-label="yes">✓</span><span class="v-text">Penalty points, exemptions, thinking phase, interruption, teams</span></td><td data-l="Timatch Table"><span class="v-ja" aria-label="yes">✓</span><span class="v-text">Penalty points, exemptions, thinking phase, interruption, teams</span></td></tr>
+      <tr><th scope="row">Scores</th><td data-l="Timatch"><span class="v-ja" aria-label="yes">✓</span><span class="v-text">Score sheets, rounds, templates, turn history</span></td><td data-l="Timatch Table"><span class="v-ja" aria-label="yes">✓</span><span class="v-text">Score sheets, rounds, templates, turn history</span></td></tr>
+      <tr><th scope="row">Memory</th><td data-l="Timatch"><span class="v-ja" aria-label="yes">✓</span><span class="v-text">People, statistics, awards, all plays with search</span></td><td data-l="Timatch Table"><span class="v-ja" aria-label="yes">✓</span><span class="v-text">People, statistics, awards, all plays with search</span></td></tr>
+      <tr><th scope="row">Table display</th><td data-l="Timatch"><span class="v-ja" aria-label="yes">✓</span><span class="v-text">Apple&nbsp;TV / iPad</span></td><td data-l="Timatch Table"><span class="v-ja" aria-label="yes">✓</span><span class="v-text">Any browser, Chromecast</span></td></tr>
+      <tr><th scope="row">Collection</th><td data-l="Timatch"><span class="v-ja" aria-label="yes">✓</span><span class="v-text">BoardGameGeek: search, import, covers</span></td><td data-l="Timatch Table"><span class="v-ja" aria-label="yes">✓</span><span class="v-text">BoardGameGeek: search, import, covers</span></td></tr>
+      <tr><th scope="row">Backup</th><td data-l="Timatch"><span class="v-ja" aria-label="yes">✓</span><span class="v-text">iCloud</span></td><td data-l="Timatch Table"><span class="v-ja" aria-label="yes">✓</span><span class="v-text">Cloud backup with a code</span></td></tr>
+      <tr><th scope="row">Hand over a play</th><td data-l="Timatch"><span class="v-ja" aria-label="yes">✓</span><span class="v-text">iPhone ↔ iPhone on Wi-Fi</span></td><td data-l="Timatch Table"><span class="v-ja" aria-label="yes">✓</span><span class="v-text">QR code, text or file</span></td></tr>
+      <tr><th scope="row">Exchange</th><td data-l="Timatch"><span class="v-ja" aria-label="yes">✓</span><span class="v-text">Plays travel as Timatch files between app and web</span></td><td data-l="Timatch Table"><span class="v-ja" aria-label="yes">✓</span><span class="v-text">Plays travel as Timatch files between app and web</span></td></tr>
+      <tr><th scope="row">AI</th><td data-l="Timatch"><span class="v-ja" aria-label="yes">✓</span><span class="v-text">On the device, no account</span></td><td data-l="Timatch Table"><span class="v-ja" aria-label="yes">✓</span><span class="v-text">With your own Claude or ChatGPT key</span></td></tr>
+      <tr><th scope="row">Apple Watch, Live Activity, widgets, Siri</th><td data-l="Timatch"><span class="v-ja" aria-label="yes">✓</span><span class="v-text">Turn time on the wrist, lock screen</span></td><td data-l="Timatch Table"><span class="v-nein" aria-label="no">—</span></td></tr>
+      <tr><th scope="row">Handwriting & PDF report</th><td data-l="Timatch"><span class="v-ja" aria-label="yes">✓</span><span class="v-text">Apple Pencil on the sheet, report as PDF</span></td><td data-l="Timatch Table"><span class="v-nein" aria-label="no">—</span></td></tr>
+      <tr><th scope="row">Runs everywhere</th><td data-l="Timatch"><span class="v-nein" aria-label="no">—</span></td><td data-l="Timatch Table"><span class="v-ja" aria-label="yes">✓</span><span class="v-text">Install, offline, Android and desktop</span></td></tr>
+      </tbody>
+    </table>
   </div>
-  <p class="knopfreihe" style="margin-top:28px">
-    <a class="knopf knopf-haupt" href="https://app.timatch.de">Open app.timatch.de
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
-    </a>
+  <div class="wege-knoepfe">
+    <a class="knopf knopf-still" href="https://testflight.apple.com/join/MxhgJ7Qr" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18.5h2"/></svg>Beta via TestFlight</a>
+    <a class="knopf knopf-still" href="https://app.timatch.de"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4" width="19" height="16" rx="2.5"/><path d="M2.5 9h19M6 6.5h.01M8.5 6.5h.01"/></svg>Open app.timatch.de</a>
     <a class="knopf knopf-still" href="/en/support/table/">Help for the web version</a>
-  </p>
+  </div>
 </section>
 
 <!-- ============================================================ Privacy -->
@@ -398,6 +416,8 @@
             <li><a href="#punkte">Score sheet</a></li>
             <li><a href="#sammlung">Collection</a></li>
             <li><a href="#preise">Pricing</a></li>
+            <li><a href="https://app.timatch.de">Timatch Table (web)</a></li>
+            <li><a href="/en/support/table/">Help for the web version</a></li>
           </ul>
         </div>
         <div class="fuss-spalte">
