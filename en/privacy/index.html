@@ -35,7 +35,7 @@
 
 <main id="inhalt" class="huelle blatt">
 <h1>Privacy Policy</h1>
-  <p class="stand">Last updated: 19 August 2026</p>
+  <p class="stand">Last updated: 21 September 2026</p>
 
 
 <div class="merkkasten">
@@ -87,10 +87,36 @@ Email: <a href="mailto:timatch@jaimetaboada.com">timatch@jaimetaboada.com</a></p
 <h2 id="apple-intelligence">6. Apple Intelligence</h2>
 <p>On devices that support Apple Intelligence, Timatch can phrase your statistics as a short written summary using Apple's on-device FoundationModels framework. This runs entirely on your device. No prompt and no statistic leaves the device. On all other devices a rule-based summary is used instead.</p>
 
-<h2 id="children">7. Children</h2>
-<p>Timatch is rated 4+ and is suitable for all ages. It collects no data, contains no advertising, has no user accounts and offers no communication with strangers.</p>
 
-<h2 id="your-rights">8. Your rights</h2>
+<h2 id="timatch-table">7. Timatch Table (web version, app.timatch.de)</h2>
+<p>The web version runs in the browser and initially stores everything only there (the device's browser storage). Without an account nothing leaves the device — with two exceptions you trigger yourself: searching BoardGameGeek, and the features listed individually below.</p>
+
+<h3>Server and hosting</h3>
+<p>The web version is delivered by <b>Cloudflare, Inc.</b> (101 Townsend St, San Francisco, CA 94107, USA) via Cloudflare Pages and uses a small service on Cloudflare Workers at <code>api.timatch.de</code>. Cloudflare necessarily processes your IP address and request data; Cloudflare is certified under the EU-US Data Privacy Framework and EU standard contractual clauses apply in addition. The service counts requests per IP address for one minute to limit abuse; beyond that, no access logs with personal data are kept.</p>
+
+<h3>Timatch account (optional)</h3>
+<p>If you create an account you provide your email address and receive a sign-in link (no password). With an account your plays, people, games, score sheets, settings and photos are stored on our server at Cloudflare (D1 database and KV storage) so that they appear on every device where you sign in. The legal basis is performance of the usage contract (Art. 6(1)(b) GDPR). Sign-in links are valid for 15 minutes, device sessions for 90 days. You can sign out individual devices at any time, download your data as a file and delete the account together with all data in the settings; afterwards everything on the server is deleted while your device keeps its copy.</p>
+<p>The sign-in email is sent on our behalf by <b>Brevo</b> (Sendinblue GmbH, Köpenicker Straße 126, 10179 Berlin, Germany); Brevo receives your email address for this purpose.</p>
+
+<h3>Cloud backup with a code (without an account)</h3>
+<p>As an alternative to an account you can create a backup protected by a code. It is encrypted on your device before upload (AES-GCM); the server stores only the encrypted bytes under an identifier derived from the code and cannot read them. Without the code the data cannot be recovered. A backup is deleted automatically after 180 days without an update.</p>
+
+<h3>Table display and viewers</h3>
+<p>If you start a table display, your device sends the game state (names of the people, colours, times, scores) to our server, which passes it on to everyone who knows the six-character code. The state is kept for at most 24 hours after the last change and is then deleted. Share the code only with people at the table.</p>
+
+<h3>BoardGameGeek via our server</h3>
+<p>Game search and collection import in the web version go through <code>api.timatch.de</code> to BoardGameGeek (see section 4); only the search term or the BGG username is sent to BGG, never account data. Responses are cached on our server (search 24 hours, game details 7 days, collections 1 hour).</p>
+
+<h3>AI with your own key</h3>
+<p>The AI features of the web version only work if you enter your own API key from Anthropic (Claude) or OpenAI (ChatGPT). The key stays in your browser; requests (statistics excerpts, game states, your collection, names of the people) then go directly from your device to the chosen provider under its privacy policy. We do not see these requests.</p>
+
+<h3>Photos</h3>
+<p>Table photos and people photos are kept in the device's browser storage; with an account also in your account on our server (see above). They are not uploaded anywhere else.</p>
+
+<h2 id="children">8. Children</h2>
+<p>Timatch is rated 4+ and is suitable for all ages. It collects no data, contains no advertising and offers no communication with strangers. The optional Timatch account of the web version (section 7) is intended for adults.</p>
+
+<h2 id="your-rights">9. Your rights</h2>
 <p>Because the developer holds no personal data about you, there is nothing to request access to, correct or delete on the developer's side. You remain in full control of your own data:</p>
 <ul>
 <li><strong>Export:</strong> export sessions and your full database as PDF, CSV or a Timatch file from within the app.</li>
@@ -98,7 +124,7 @@ Email: <a href="mailto:timatch@jaimetaboada.com">timatch@jaimetaboada.com</a></p
 </ul>
 <p>Under the GDPR you also have the right to lodge a complaint with a supervisory authority. If you have any question about this policy, write to <a href="mailto:timatch@jaimetaboada.com">timatch@jaimetaboada.com</a>.</p>
 
-<h2 id="changes">9. Changes</h2>
+<h2 id="changes">10. Changes</h2>
 <p>If the app's data practices change, this page will be updated and the date at the top will change with it.</p>
 </main>
 
