@@ -1,6 +1,6 @@
 # Timatch — https://timatch.de
 # Wer eine Sicherheitsluecke findet, soll wissen, wohin damit.
-Contact: mailto:timatch@jaimetaboada.com
+Contact: mailto:hello@timatch.de
 Expires: 2027-08-23T19:53:09Z
 Preferred-Languages: de, en
 Canonical: https://timatch.de/.well-known/security.txt

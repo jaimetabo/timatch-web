@@ -164,11 +164,15 @@ Zertifikat bekommt.
 empfiehlt vier. Jetzt stehen alle vier da. Und `app.timatch.de` kann HTTPS, was bei STRATO
 unmöglich war.
 
-**Mail:** Mit eigenen Nameservern stehen STRATOs E-Mail-Funktionen für diese Domain nicht mehr zur
-Verfügung — STRATO warnt beim Umstellen ausdrücklich davor. Das war zu verschmerzen, weil keine
-`@timatch.de`-Adresse in Gebrauch ist: App und Website schreiben an `timatch@jaimetaboada.com`,
-also an die andere Domain im anderen Paket. Die MX-Einträge sind trotzdem mitgezogen, damit die
-Zone dem alten Stand entspricht.
+**Mail:** Die MX-Einträge der Zone zeigen weiter auf STRATO (`smtpin.rzone.de`), und darüber kommt
+Post an `@timatch.de` an. **Öffentliche Kontaktadresse für alles rund um Timatch ist seit dem
+23.09.2026 `hello@timatch.de`** (Website, Datenschutz, Impressum, security.txt, Web-App). Dieselbe
+Adresse ist bei Brevo als Absender der Anmelde-Mails verifiziert; timatch.de ist dort per DKIM
+authentifiziert (CNAMEs `brevo1/brevo2._domainkey`). DMARC steht auf `p=reject`.
+
+**Rechtstexte:** Impressum und Datenschutz liegen auf timatch.de (`/impressum/`, `/datenschutz/`,
+`/en/legal-notice/`, `/en/privacy/`), nicht mehr auf jaimetaboada.com. Jede Unterseite verlinkt beide
+im Fuß (`.fuss-recht`).
 
 ### `app.timatch.de`
 

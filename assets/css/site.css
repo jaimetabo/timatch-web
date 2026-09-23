@@ -439,6 +439,9 @@ footer {
 .fuss-spalte a:hover { color: var(--text); }
 .fuss-unten { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; align-items: center; }
 .fuss-hinweis { max-width: 62ch; line-height: 1.5; }
+.fuss-recht { display: flex; flex-wrap: wrap; gap: 8px 18px; width: 100%; }
+.fuss-recht a { color: var(--text-faint); }
+.fuss-recht a:hover { color: var(--text); }
 
 /* ---------------------------------------------------------------- Einblenden */
 
