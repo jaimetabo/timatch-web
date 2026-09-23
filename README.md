@@ -165,8 +165,9 @@ empfiehlt vier. Jetzt stehen alle vier da. Und `app.timatch.de` kann HTTPS, was 
 unmöglich war.
 
 **Mail:** Die MX-Einträge der Zone zeigen weiter auf STRATO (`smtpin.rzone.de`), und darüber kommt
-Post an `@timatch.de` an. **Öffentliche Kontaktadresse für alles rund um Timatch ist seit dem
-23.09.2026 `hello@timatch.de`** (Website, Datenschutz, Impressum, security.txt, Web-App). Dieselbe
+Post an `@timatch.de` an. **Adressen seit 23.09.2026:** `support@timatch.de` für Hilfe und Fehler (Hilfe-Seiten, Fuß-Spalte
+„Hilfe", Web-App, Anmelde-Mail als Antwortadresse, Play Store); `hello@timatch.de` für Rechtliches und
+allgemein (Impressum, Datenschutz, security.txt, Absender der Anmelde-Mail). Beide kommen per Catch-all an. Dieselbe
 Adresse ist bei Brevo als Absender der Anmelde-Mails verifiziert; timatch.de ist dort per DKIM
 authentifiziert (CNAMEs `brevo1/brevo2._domainkey`). DMARC steht auf `p=reject`.
 
