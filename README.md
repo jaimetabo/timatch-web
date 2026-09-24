@@ -177,7 +177,7 @@ im Fuß (`.fuss-recht`).
 
 ### `app.timatch.de`
 
-**Seit dem 18. September 2026 ist `app.timatch.de` die Web-App „Timatch Tisch"** (Repo
+**Seit dem 18. September 2026 ist `app.timatch.de` die Web-App „Timatch Web"** (Repo
 `jaimetabo/timatch-tisch`, privat, Cloudflare Pages, Projekt `timatch-tisch`). Die Redirect Rule
 unten ist damit Geschichte — sie musste im Cloudflare-Dashboard gelöscht und der DNS-Eintrag `app`
 auf `CNAME timatch-tisch.pages.dev` (proxied) umgestellt werden. Die alten Hilfe- und

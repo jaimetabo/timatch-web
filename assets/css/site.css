@@ -607,7 +607,7 @@ footer {
 .sprungliste a:hover { color: var(--orange); }
 
 /* ---------------------------------------------------------------- Zwei Wege (Beta gleichwertig)
-   Die beiden Fassungen — App über TestFlight und Timatch Tisch im Browser — stehen im Hero als
+   Die beiden Fassungen — App über TestFlight und Timatch Web im Browser — stehen im Hero als
    gleich große Karten nebeneinander, nicht mehr als Haupt- und Nebenknopf. Gleiche Optik, gleiche
    Beta-Pille; nur der Inhalt unterscheidet sie. */
 .wege {
