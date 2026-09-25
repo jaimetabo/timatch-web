@@ -35,11 +35,11 @@
 
 <main id="inhalt" class="huelle blatt">
 <h1>Privacy Policy</h1>
-  <p class="stand">Last updated: 23 September 2026</p>
+  <p class="stand">Last updated: 25 September 2026</p>
 
 
 <div class="merkkasten">
-<p><strong>The short version.</strong> Without an account, everything you enter in Timatch stays on your device — and, if you switch it on, in your own private iCloud account, which the developer cannot access. Only if you choose to create a Timatch account is your data also stored on our server, so it shows up on all your devices (section 7). There are no analytics, no advertising and no tracking.</p>
+<p><strong>The short version.</strong> Without an account, everything you enter in Timatch stays on your device — and, if you switch it on, in your own private iCloud account, which the developer cannot access. Only if you choose to create a Timatch account is your data also stored on our server, so it shows up on all your devices, in the iPhone app and in the web version (section 7). Timatch Pro is paid through Apple or, in the web version, through Stripe; we never see your payment details. There are no analytics, no advertising and no tracking.</p>
 </div>
 
 <h2 id="who-is-responsible">1. Who is responsible</h2>
@@ -51,24 +51,27 @@ Email: <a href="mailto:hello@timatch.de">hello@timatch.de</a></p>
 <h2 id="what-timatch-stores-and-where">2. What Timatch stores, and where</h2>
 <p>Timatch is an offline-first app. All content you create — your game collection, players, places, sessions, turn times, scores, photos, tags and settings — is stored locally on your device using Apple's SwiftData framework.</p>
 <p>If you enable <strong>iCloud sync</strong> in the app's settings, that same data is additionally stored in the private database of <em>your</em> iCloud account via Apple CloudKit, so it is available on your other devices. This data is governed by <a href="https://www.apple.com/legal/privacy/">Apple's Privacy Policy</a>. The developer of Timatch has no access to it and receives no copy of it.</p>
-<p>Without a Timatch account, the app does not talk to any server run by the developer. The optional account and the web version use the service at api.timatch.de (section 7).</p>
+<p>The app talks to the developer's server (<code>api.timatch.de</code>) in only three cases, each started by you: when you use a Timatch account, when you start or join a live table (table display), and when you restore a cloud backup with a code. Section 7 covers all of them.</p>
 
 <h2 id="data-the-developer-receives">3. Data the developer receives</h2>
-<p>Without an account: none. With an account: the data listed in section 7, used only for the purpose stated there. Timatch contains no analytics SDK, no crash reporting service, no advertising SDK and no third-party tracking of any kind. No user identifier, device identifier or usage statistic is transmitted to the developer.</p>
+<p>Without an account: nothing that is kept. A live table stays on the server for at most 24 hours (section 7). With an account: the data listed in section 7, used only for the purpose stated there. Timatch contains no analytics SDK, no crash reporting service, no advertising SDK and no third-party tracking of any kind. No advertising identifier, device identifier or usage statistic is transmitted to the developer.</p>
 
-<h2 id="connections-the-app-makes">4. Connections the app makes</h2>
+<h2 id="connections-the-app-makes">4. Connections the iPhone app makes</h2>
 
 <h3>BoardGameGeek</h3>
-<p>When you actively search for a game or import a collection, the app sends your search term or your BoardGameGeek username to the public BoardGameGeek XML API2 (<code>boardgamegeek.com</code>) in order to retrieve game metadata. This only happens when you trigger it. No other data is transmitted. BoardGameGeek is an independent third party; their handling of that request is subject to their own privacy policy. Timatch is not affiliated with or endorsed by BoardGameGeek.</p>
+<p>When you actively search for a game or import a collection, the app sends your search term or your BoardGameGeek username to the public BoardGameGeek XML API2 (<code>boardgamegeek.com</code>) to fetch game metadata. This only happens when you trigger it. No other data is sent. BoardGameGeek is an independent third party, and its own privacy policy governs what it does with that request. Timatch is not affiliated with BoardGameGeek.</p>
 
 <h3>Game cover images from BoardGameGeek</h3>
-<p>Cover images that come from BoardGameGeek are loaded directly from BoardGameGeek's image server when displayed (<code>cf.geekdo-images.com</code>). As with any image request on the internet, that server learns your IP address and which image was requested. A photo you take yourself replaces the cover image and is stored on your device only.</p>
+<p>Cover images that come from BoardGameGeek are loaded directly from BoardGameGeek's image server (<code>cf.geekdo-images.com</code>) when they are shown. Like any image request on the internet, this tells that server your IP address and which image was requested. A photo you take yourself replaces the cover image and is stored only on your device.</p>
+
+<h3>Maps and address search (Apple Maps)</h3>
+<p>The map of your places and the address search when you add a place use Apple's MapKit. The map areas shown and the address you type go to Apple, under <a href="https://www.apple.com/legal/privacy/">Apple's Privacy Policy</a>. The developer receives none of it.</p>
 
 <h3>Local network (Apple TV, Apple Watch, second device)</h3>
-<p>To show the session on an Apple TV, an Apple Watch or a second iPhone/iPad, Timatch connects directly to that device over your local Wi-Fi using Apple's MultipeerConnectivity and Bonjour. The session data travels device to device. It does not pass through the internet and it does not reach the developer.</p>
+<p>To show a session on an Apple TV, an Apple Watch or a second iPhone/iPad, Timatch connects directly to that device over your local Wi-Fi (Apple MultipeerConnectivity and Bonjour). Session data travels from device to device. It never goes over the internet or to the developer.</p>
 
 <h3>In-app purchases</h3>
-<p>Purchases of Timatch Pro are processed entirely by Apple through StoreKit. The developer receives only Apple's anonymised sales and financial reports and never sees your payment details or your Apple Account.</p>
+<p>Purchases of Timatch Pro are handled entirely by Apple through StoreKit. The developer never sees your payment details or your Apple Account. If you are signed in to a Timatch account, the app sends Apple's signed purchase receipt to our server so that Pro also applies in the web version. For that we store only Apple's transaction ID, the product bought, its expiry date and whether it was a test or a real purchase. Apple also notifies our server of renewals, cancellations and refunds (App Store Server Notifications). The legal basis is the performance of the contract (Art. 6(1)(b) GDPR).</p>
 
 <h2 id="device-permissions">5. Device permissions</h2>
 <p>Every permission below is optional. Timatch's core functions work without any of them, and each is requested only at the moment you use the feature that needs it.</p>
@@ -82,42 +85,55 @@ Email: <a href="mailto:hello@timatch.de">hello@timatch.de</a></p>
 <tr><td>Contacts</td><td>Picking a person when you record who borrowed one of your games.</td></tr>
 <tr><td>Location (while using the app)</td><td>Filling in the address of a place when you tap "use current location".</td></tr>
 </table>
-<p>Photos, calendar entries, contacts and locations accessed this way are stored only on your device (and in your own iCloud if sync is on). None of them is transmitted to the developer.</p>
+<p>Photos, calendar entries, contacts and locations accessed this way are stored on your device (and in your own iCloud if sync is on). Photos and places reach the developer only if you use a Timatch account (section 7). Calendar entries and contacts never leave your device.</p>
 
 <h2 id="apple-intelligence">6. Apple Intelligence</h2>
 <p>On devices that support Apple Intelligence, Timatch can phrase your statistics as a short written summary using Apple's on-device FoundationModels framework. This runs entirely on your device. No prompt and no statistic leaves the device. On all other devices a rule-based summary is used instead.</p>
 
 
-<h2 id="timatch-table">7. Timatch Web (web version, app.timatch.de)</h2>
-<p>The web version runs in the browser and initially stores everything only there (the device's browser storage). Without an account nothing leaves the device — with two exceptions you trigger yourself: searching BoardGameGeek, and the features listed individually below.</p>
+<h2 id="timatch-table">7. Timatch account, web version and our server</h2>
+<p>This section covers everything that goes through our service at <code>api.timatch.de</code>, and the web version at <code>app.timatch.de</code>. The web version runs in your browser and first stores everything there only (the device's browser storage). Without an account nothing leaves the device, except for the features listed below, each of which you start yourself.</p>
 
 <h3>Server and hosting</h3>
-<p>The web version is delivered by <b>Cloudflare, Inc.</b> (101 Townsend St, San Francisco, CA 94107, USA) via Cloudflare Pages and uses a small service on Cloudflare Workers at <code>api.timatch.de</code>. Cloudflare necessarily processes your IP address and request data; Cloudflare is certified under the EU-US Data Privacy Framework and EU standard contractual clauses apply in addition. The service counts requests per IP address for one minute to limit abuse; beyond that, no access logs with personal data are kept.</p>
+<p>The web version is served by <b>Cloudflare, Inc.</b> (101 Townsend St, San Francisco, CA 94107, USA) through Cloudflare Pages; the service <code>api.timatch.de</code> runs on Cloudflare Workers. Cloudflare necessarily processes your IP address and request data to do so; Cloudflare is certified under the EU-US Data Privacy Framework, and EU Standard Contractual Clauses apply in addition. The service counts requests per IP address for one minute to limit abuse; beyond that, no access logs containing personal data are kept. The legal basis is our legitimate interest in running the service securely (Art. 6(1)(f) GDPR).</p>
 
 <h3>Timatch account (optional)</h3>
-<p>The Timatch account is available in the web version; the iPhone app will use the same account once the feature is released there. If you create an account you provide your email address and receive a sign-in email with a link and an 8-digit code (no password). With an account your plays, people, games, score sheets, settings and photos are stored on our server at Cloudflare (D1 database and KV storage) so that they appear on every device where you sign in. The legal basis is performance of the usage contract (Art. 6(1)(b) GDPR). The link and code are valid for 15 minutes and work only once; after five wrong code entries the code expires. Device sessions last 90 days. Signing out removes your data from that device; it stays in your account. You can sign out individual devices at any time, download your data as a file and delete the account together with all data in the settings; afterwards everything on the server is deleted while your device keeps its copy.</p>
-<p>The sign-in email is sent on our behalf by <b>Brevo</b> (Sendinblue GmbH, Köpenicker Straße 126, 10179 Berlin, Germany); Brevo receives your email address for this purpose.</p>
+<p>The Timatch account is available in the web version and in the iPhone app; both use the same account. To create one, you sign in with your email address and receive a sign-in email with a link and an 8-digit code (no password), or you sign in with Apple or Google (see below). With an account, your plays (including one in progress), players, games, places, score sheets, settings and photos are stored on our server at Cloudflare (D1 database and KV storage), so they appear on every device you sign in on. For each device session we store a device name (for example "Chrome · Mac"), so you can recognise it in the settings and sign it out on its own. The legal basis is the performance of the user agreement (Art. 6(1)(b) GDPR).</p>
+<p>The link and code are valid for 15 minutes and can be used once; after five wrong code entries the code expires. Device sessions last 90 days. In the web version, signing out removes your data from the browser; it stays in the account. You can sign out individual devices at any time, download your data as a file, and delete the account with all its data in the settings. Everything on the server is then deleted, an active web subscription is cancelled, and the data stays on your device.</p>
+<p>The sign-in email is sent on our behalf by <b>Brevo</b> (Sendinblue GmbH, Köpenicker Straße 126, 10179 Berlin, Germany), which receives your email address for this purpose.</p>
+
+<h3>Sign in with Apple or Google</h3>
+<p>Instead of the sign-in email you can sign in with your Apple Account (web version and iPhone app) or your Google account (web version). You are sent to Apple's or Google's sign-in page, and the provider confirms your email address to us. We request only the email address — no name, no profile picture, no contacts — and that address is all we store. If you choose "Hide My Email" with Apple, we only receive Apple's relay address. The providers are Apple Distribution International Ltd. (Hollyhill Industrial Estate, Cork, Ireland) and Google Ireland Limited (Gordon House, Barrow Street, Dublin 4, Ireland); their privacy policies govern the sign-in on their side. The legal basis is the performance of the user agreement (Art. 6(1)(b) GDPR).</p>
+
+<h3>Timatch Pro in the web version (Stripe)</h3>
+<p>If you buy Timatch Pro in the web version, you pay on the checkout page of <b>Stripe</b> (Stripe Payments Europe, Ltd., 1 Grand Canal Street Lower, Grand Canal Dock, Dublin, D02 H210, Ireland). We pass your account's email address to Stripe for this. You enter payment details such as a card number or IBAN only at Stripe; we never see them. We store only Stripe's customer and subscription IDs, the plan, its status and until when Pro applies. You manage invoices and cancellation in Stripe's customer portal. The legal basis is the performance of the contract (Art. 6(1)(b) GDPR); Stripe keeps payment records for the statutory retention periods (Art. 6(1)(c) GDPR). Stripe may also process data in the USA; Stripe is certified under the EU-US Data Privacy Framework. <a href="https://stripe.com/privacy">Stripe's Privacy Policy</a> applies.</p>
 
 <h3>Cloud backup with a code (without an account)</h3>
-<p>As an alternative to an account you can create a backup protected by a code. It is encrypted on your device before upload (AES-GCM); the server stores only the encrypted bytes under an identifier derived from the code and cannot read them. Without the code the data cannot be recovered. A backup is deleted automatically after 180 days without an update.</p>
+<p>As an alternative to an account, you can create a backup protected by a code in the web version and restore it in the web version or the iPhone app. It is encrypted on your device before upload (AES-GCM); the server stores only the encrypted bytes under an identifier derived from the code and cannot read them. Without the code the data cannot be recovered. The backup is deleted automatically after 180 days without an update.</p>
 
-<h3>Table display and viewers</h3>
-<p>If you start a table display, your device sends the game state (names of the people, colours, times, scores) to our server, which passes it on to everyone who knows the six-character code. The state is kept for at most 24 hours after the last change and is then deleted. Share the code only with people at the table.</p>
+<h3>Live table, table display and viewers</h3>
+<p>If you start a live table or a table display (in the web version or the iPhone app), your device sends the game state (game, players' names, colours, times, scores) to our server, which passes it on to everyone who knows the six-digit code. Depending on the setting, people who join can also end their own turn. The state is kept for at most 24 hours after the last change and then deleted. Only share the code with people at your table.</p>
 
 <h3>BoardGameGeek via our server</h3>
-<p>Game search and collection import in the web version go through <code>api.timatch.de</code> to BoardGameGeek (see section 4); only the search term or the BGG username is sent to BGG, never account data. Responses are cached on our server (search 24 hours, game details 7 days, collections 1 hour).</p>
+<p>Game search and collection import in the web version go through <code>api.timatch.de</code> to BoardGameGeek (see section 4); BGG receives only the search term or the BGG username — no account data and not your IP address. Responses are cached on our server (search 24 hours, game details 7 days, collections 1 hour). Your browser loads cover images directly from BoardGameGeek, as described in section 4.</p>
+
+<h3>Map and address search (OpenStreetMap)</h3>
+<p>The map of your places in the web version loads its map tiles directly from the OpenStreetMap Foundation's tile server (<code>tile.openstreetmap.org</code>, St John’s Innovation Centre, Cowley Road, Cambridge, CB4 0WS, United Kingdom). That server learns your IP address and which map area is shown. The European Commission has adopted an adequacy decision for the United Kingdom. When you look up the coordinates of an address, only the address text you typed goes through our server to the Foundation's Nominatim search service — not your IP address; results are cached for 30 days. The legal basis is our legitimate interest in offering a map without running our own map service (Art. 6(1)(f) GDPR). The <a href="https://osmfoundation.org/wiki/Privacy_Policy">OpenStreetMap Foundation's Privacy Policy</a> applies.</p>
+
+<h3>Location in the browser</h3>
+<p>If you tap "current location" for a place, the browser asks for permission and provides the coordinates. They are stored only with that place (in the browser, and in the account if you have one) and are not sent anywhere else.</p>
 
 <h3>AI with your own key</h3>
-<p>The AI features of the web version only work if you enter your own API key from Anthropic (Claude) or OpenAI (ChatGPT). The key stays in your browser; requests (statistics excerpts, game states, your collection, names of the people) then go directly from your device to the chosen provider under its privacy policy. We do not see these requests.</p>
+<p>The web version's AI features only work if you enter your own API key from Anthropic (Claude) or OpenAI (ChatGPT). The key stays in your browser; requests (statistics excerpts, game states, your collection, players' names) then go directly from your device to the provider you chose, under that provider's privacy terms. We do not see these requests.</p>
 
 <h3>Photos</h3>
-<p>Table photos and people photos are kept in the device's browser storage; with an account also in your account on our server (see above). They are not uploaded anywhere else.</p>
+<p>Table photos, player photos and game photos are stored on your device or in browser storage; with an account, also in your account on our server (see above). They are not uploaded anywhere else.</p>
 
 <h2 id="children">8. Children</h2>
-<p>Timatch is rated 4+ and is suitable for all ages. It collects no data, contains no advertising and offers no communication with strangers. The optional Timatch account of the web version (section 7) is intended for adults.</p>
+<p>Timatch is rated 4+ and is suitable for all ages. Without an account it collects no data, contains no advertising and offers no communication with strangers. The optional Timatch account and purchases of Timatch Pro are intended for adults.</p>
 
 <h2 id="your-rights">9. Your rights</h2>
-<p>Without an account the developer holds no personal data about you. With an account you have the rights of access, rectification, erasure, restriction and data portability (Art. 15–20 GDPR): download the complete file under Settings → Account → Download my data, and delete the account with all server-side data there. For anything else, email <a href="mailto:hello@timatch.de">hello@timatch.de</a>. On your device you stay in full control anyway:</p>
+<p>Without an account the developer holds no personal data about you. With an account you have the rights of access, rectification, erasure, restriction, data portability and objection (Art. 15–21 GDPR): download the complete file under Settings → Account → Download my data, and delete the account with all server-side data there. For anything else, email <a href="mailto:hello@timatch.de">hello@timatch.de</a>. On your device you stay in full control anyway:</p>
 <ul>
 <li><strong>Export:</strong> export sessions and your full database as PDF, CSV or a Timatch file from within the app.</li>
 <li><strong>Delete:</strong> use the factory reset in the app's settings, or delete the app, to remove all local data. Turning off iCloud sync and deleting the app's iCloud data in your iOS settings removes the synced copy.</li>
