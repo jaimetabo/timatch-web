@@ -37,6 +37,12 @@ Webfont, kein Analysewerkzeug, keine Cookies, kein Formular. Das ist keine Zierd
 App Store mit „Data Not Collected". Eine Landingpage mit drei Trackern würde dieses Versprechen an
 der Haustür brechen.
 
+Seit es das freiwillige Timatch-Konto, Anmelden mit Apple/Google und Pro-Käufe übers Konto gibt
+(September 2026), stimmt „Data Not Collected" für die App nur noch ohne Konto. Die Angaben zum
+Datenschutz in App Store Connect müssen vor dem Release mit dem Konto angepasst werden (E-Mail,
+Nutzerinhalte, Käufe — jeweils „mit dir verknüpft", kein Tracking). Die Datenschutzerklärung
+(`/datenschutz/`, `/en/privacy/`) beschreibt den Stand vom 25.09.2026.
+
 Daraus folgt die Inhaltsrichtlinie im Kopf jeder Seite:
 
 ```

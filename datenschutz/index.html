@@ -35,11 +35,11 @@
 
 <main id="inhalt" class="huelle blatt">
 <h1>Datenschutzerklärung</h1>
-  <p class="stand">Stand: 23. September 2026</p>
+  <p class="stand">Stand: 25. September 2026</p>
 
 
 <div class="merkkasten">
-<p><strong>Kurzfassung.</strong> Ohne Konto bleibt alles, was du in Timatch eingibst, auf deinem Gerät — und, wenn du sie einschaltest, in deiner eigenen privaten iCloud, auf die der Entwickler keinen Zugriff hat. Nur wenn du freiwillig ein Timatch-Konto anlegst, liegen deine Daten zusätzlich auf unserem Server, damit sie auf all deinen Geräten erscheinen (Abschnitt 7). Es gibt keine Analyse-Dienste, keine Werbung und kein Tracking.</p>
+<p><strong>Kurzfassung.</strong> Ohne Konto bleibt alles, was du in Timatch eingibst, auf deinem Gerät — und, wenn du sie einschaltest, in deiner eigenen privaten iCloud, auf die der Entwickler keinen Zugriff hat. Nur wenn du freiwillig ein Timatch-Konto anlegst, liegen deine Daten zusätzlich auf unserem Server, damit sie auf all deinen Geräten erscheinen, in der iPhone-App und in der Web-Version (Abschnitt 7). Bezahlt wird Timatch Pro über Apple oder, in der Web-Version, über Stripe. Zahlungsdaten sehen wir dabei nie. Es gibt keine Analyse-Dienste, keine Werbung und kein Tracking.</p>
 </div>
 
 <h2 id="verantwortlicher">1. Verantwortlicher</h2>
@@ -51,12 +51,12 @@ E-Mail: <a href="mailto:hello@timatch.de">hello@timatch.de</a></p>
 <h2 id="was-timatch-speichert-und-wo">2. Was Timatch speichert und wo</h2>
 <p>Timatch ist eine Offline-First-App. Alle Inhalte, die du anlegst — Spielesammlung, Personen, Orte, Sessions, Zugzeiten, Punkte, Fotos, Tags und Einstellungen — werden lokal auf deinem Gerät über Apples SwiftData-Framework gespeichert.</p>
 <p>Wenn du in den Einstellungen die <strong>iCloud-Synchronisierung</strong> aktivierst, werden dieselben Daten zusätzlich in der privaten Datenbank <em>deines</em> iCloud-Accounts über Apple CloudKit abgelegt, damit sie auf deinen anderen Geräten verfügbar sind. Für diese Verarbeitung gilt die <a href="https://www.apple.com/de/legal/privacy/">Datenschutzerklärung von Apple</a>. Der Entwickler von Timatch hat darauf keinen Zugriff und erhält keine Kopie.</p>
-<p>Ohne Timatch-Konto spricht die App mit keinem Server des Entwicklers. Für das freiwillige Konto und die Web-Version gibt es den Dienst unter api.timatch.de (Abschnitt 7).</p>
+<p>Mit dem Server des Entwicklers (<code>api.timatch.de</code>) spricht die App nur in drei Fällen, die du selbst auslöst: wenn du ein Timatch-Konto nutzt, wenn du einen Live-Tisch (Tisch-Display) startest oder ihm beitrittst, und wenn du eine Cloud-Sicherung mit Code holst. Alles dazu steht in Abschnitt 7.</p>
 
 <h2 id="welche-daten-der-entwickler-erhaelt">3. Welche Daten der Entwickler erhält</h2>
-<p>Ohne Konto: keine. Mit Konto: die in Abschnitt 7 genannten Daten, und nur zu dem dort genannten Zweck. Timatch enthält kein Analyse-SDK, keinen Crash-Reporting-Dienst, kein Werbe-SDK und kein Tracking Dritter. Es werden keine Nutzer-Kennungen, Gerätekennungen oder Nutzungsstatistiken an den Entwickler übertragen.</p>
+<p>Ohne Konto: keine dauerhaft gespeicherten. Ein Live-Tisch liegt höchstens 24 Stunden auf dem Server (Abschnitt 7). Mit Konto: die in Abschnitt 7 genannten Daten, und nur zu dem dort genannten Zweck. Timatch enthält kein Analyse-SDK, keinen Crash-Reporting-Dienst, kein Werbe-SDK und kein Tracking Dritter. Es werden keine Werbe-Kennungen, Gerätekennungen oder Nutzungsstatistiken an den Entwickler übertragen.</p>
 
-<h2 id="verbindungen-die-die-app-aufbaut">4. Verbindungen, die die App aufbaut</h2>
+<h2 id="verbindungen-die-die-app-aufbaut">4. Verbindungen, die die iPhone-App aufbaut</h2>
 
 <h3>BoardGameGeek</h3>
 <p>Wenn du aktiv nach einem Spiel suchst oder eine Sammlung importierst, sendet die App deinen Suchbegriff bzw. deinen BoardGameGeek-Benutzernamen an die öffentliche BoardGameGeek XML API2 (<code>boardgamegeek.com</code>), um Spiel-Metadaten abzurufen. Das geschieht ausschließlich, wenn du es auslöst. Weitere Daten werden nicht übertragen. BoardGameGeek ist ein unabhängiger Dritter; für die dortige Verarbeitung gilt deren eigene Datenschutzerklärung. Timatch steht in keiner Verbindung zu BoardGameGeek.</p>
@@ -64,11 +64,14 @@ E-Mail: <a href="mailto:hello@timatch.de">hello@timatch.de</a></p>
 <h3>Titelbilder von BoardGameGeek</h3>
 <p>Spiele-Titelbilder, die aus BoardGameGeek stammen, werden beim Anzeigen direkt vom Bildserver von BoardGameGeek geladen (<code>cf.geekdo-images.com</code>). Dabei erfährt dieser Server — wie bei jedem Bildabruf im Internet — deine IP-Adresse und welches Bild angefordert wurde. Ein selbst aufgenommenes Foto ersetzt das Titelbild und wird ausschließlich auf deinem Gerät gespeichert.</p>
 
+<h3>Karten und Adresssuche (Apple Karten)</h3>
+<p>Die Karte deiner Spielorte und die Adresssuche beim Anlegen eines Orts nutzen Apples MapKit. Dabei gehen die angezeigten Kartenausschnitte bzw. die eingegebene Adresse an Apple; es gilt die <a href="https://www.apple.com/de/legal/privacy/">Datenschutzerklärung von Apple</a>. Der Entwickler erhält davon nichts.</p>
+
 <h3>Lokales Netzwerk (Apple TV, Apple Watch, Zweitgerät)</h3>
 <p>Um die Session auf einem Apple TV, einer Apple Watch oder einem zweiten iPhone/iPad anzuzeigen, verbindet sich Timatch über dein lokales WLAN direkt mit diesem Gerät (Apple MultipeerConnectivity und Bonjour). Die Session-Daten laufen von Gerät zu Gerät. Sie gehen weder über das Internet noch an den Entwickler.</p>
 
 <h3>In-App-Käufe</h3>
-<p>Käufe von Timatch Pro werden vollständig von Apple über StoreKit abgewickelt. Der Entwickler erhält nur die anonymisierten Verkaufs- und Finanzberichte von Apple und sieht weder deine Zahlungsdaten noch deinen Apple Account.</p>
+<p>Käufe von Timatch Pro werden vollständig von Apple über StoreKit abgewickelt. Der Entwickler sieht weder deine Zahlungsdaten noch deinen Apple Account. Bist du mit einem Timatch-Konto angemeldet, schickt die App Apples signierten Kaufbeleg an unseren Server, damit Pro auch in der Web-Version gilt. Gespeichert werden dazu nur die Transaktionskennung von Apple, das gekaufte Produkt, das Ablaufdatum und ob es ein Test- oder echter Kauf war. Apple meldet unserem Server außerdem Verlängerungen, Kündigungen und Erstattungen (App Store Server Notifications). Rechtsgrundlage ist die Erfüllung des Vertrags (Art. 6 Abs. 1 lit. b DSGVO).</p>
 
 <h2 id="geraeteberechtigungen">5. Geräteberechtigungen</h2>
 <p>Alle folgenden Berechtigungen sind freiwillig. Die Kernfunktionen von Timatch laufen ohne sie, und jede wird erst in dem Moment abgefragt, in dem du die zugehörige Funktion nutzt.</p>
@@ -82,42 +85,55 @@ E-Mail: <a href="mailto:hello@timatch.de">hello@timatch.de</a></p>
 <tr><td>Kontakte</td><td>Person auswählen, wenn du festhältst, wer eines deiner Spiele geliehen hat.</td></tr>
 <tr><td>Standort (bei App-Nutzung)</td><td>Adresse eines Spielorts ausfüllen, wenn du „Aktuellen Standort verwenden“ tippst.</td></tr>
 </table>
-<p>So genutzte Fotos, Kalendereinträge, Kontakte und Standorte werden ausschließlich auf deinem Gerät gespeichert (und in deiner eigenen iCloud, wenn die Synchronisierung aktiv ist). Nichts davon wird an den Entwickler übertragen.</p>
+<p>So genutzte Fotos, Kalendereinträge, Kontakte und Standorte werden auf deinem Gerät gespeichert (und in deiner eigenen iCloud, wenn die Synchronisierung aktiv ist). An den Entwickler gehen Fotos und Orte nur, wenn du ein Timatch-Konto nutzt (Abschnitt 7). Kalendereinträge und Kontakte verlassen das Gerät nie.</p>
 
 <h2 id="apple-intelligence">6. Apple Intelligence</h2>
 <p>Auf Geräten mit Apple Intelligence kann Timatch deine Statistiken als kurze Zusammenfassung formulieren — über Apples geräteinternes FoundationModels-Framework. Das läuft vollständig auf deinem Gerät. Weder Eingaben noch Statistiken verlassen das Gerät. Auf allen anderen Geräten wird stattdessen eine regelbasierte Auswertung verwendet.</p>
 
 
-<h2 id="timatch-tisch">7. Timatch Web (Web-Version, app.timatch.de)</h2>
-<p>Die Web-Version läuft im Browser und speichert alles zunächst nur dort (Browser-Speicher des Geräts). Ohne Konto verlässt nichts das Gerät — mit zwei Ausnahmen, die du selbst auslöst: die Suche bei BoardGameGeek und die Funktionen, die unten einzeln stehen.</p>
+<h2 id="timatch-tisch">7. Timatch-Konto, Web-Version und unser Server</h2>
+<p>Dieser Abschnitt gilt für alles, was über unseren Dienst unter <code>api.timatch.de</code> läuft, und für die Web-Version unter <code>app.timatch.de</code>. Die Web-Version läuft im Browser und speichert alles zunächst nur dort (Browser-Speicher des Geräts). Ohne Konto verlässt nichts das Gerät, außer bei den Funktionen, die unten einzeln stehen und die du selbst auslöst.</p>
 
 <h3>Server und Hosting</h3>
-<p>Die Web-Version wird von <b>Cloudflare, Inc.</b> (101 Townsend St, San Francisco, CA 94107, USA) ausgeliefert (Cloudflare Pages) und nutzt einen kleinen Dienst auf Cloudflare Workers unter <code>api.timatch.de</code>. Cloudflare verarbeitet dabei technisch notwendig deine IP-Adresse und Anfragedaten; Cloudflare ist nach dem EU-US Data Privacy Framework zertifiziert, zusätzlich gelten EU-Standardvertragsklauseln. Der Dienst zählt Anfragen je IP-Adresse für eine Minute, um Missbrauch zu begrenzen; darüber hinaus werden keine Zugriffsprotokolle mit Personenbezug aufbewahrt.</p>
+<p>Die Web-Version wird von <b>Cloudflare, Inc.</b> (101 Townsend St, San Francisco, CA 94107, USA) ausgeliefert (Cloudflare Pages); der Dienst <code>api.timatch.de</code> läuft auf Cloudflare Workers. Cloudflare verarbeitet dabei technisch notwendig deine IP-Adresse und Anfragedaten; Cloudflare ist nach dem EU-US Data Privacy Framework zertifiziert, zusätzlich gelten EU-Standardvertragsklauseln. Der Dienst zählt Anfragen je IP-Adresse für eine Minute, um Missbrauch zu begrenzen; darüber hinaus werden keine Zugriffsprotokolle mit Personenbezug aufbewahrt. Rechtsgrundlage ist unser berechtigtes Interesse an einem sicheren Betrieb (Art. 6 Abs. 1 lit. f DSGVO).</p>
 
 <h3>Timatch-Konto (freiwillig)</h3>
-<p>Das Timatch-Konto gibt es in der Web-Version; die iPhone-App nutzt dasselbe Konto, sobald die Funktion dort freigeschaltet ist. Wer ein Konto anlegt, gibt seine E-Mail-Adresse an und erhält eine Anmelde-Mail mit Link und 8-stelligem Code (kein Passwort). Mit Konto liegen deine Partien, Personen, Spiele, Wertungsblöcke, Einstellungen und Fotos auf unserem Server bei Cloudflare (Datenbank D1 und Speicher KV), damit sie auf jedem Gerät erscheinen, auf dem du dich anmeldest. Rechtsgrundlage ist die Erfüllung des Nutzungsvertrags (Art. 6 Abs. 1 lit. b DSGVO). Link und Code sind 15 Minuten gültig und nur einmal verwendbar; nach fünf falschen Code-Eingaben verfällt der Code. Geräte-Sitzungen gelten 90 Tage. Beim Abmelden werden deine Daten vom jeweiligen Gerät entfernt; im Konto bleiben sie. Du kannst dich jederzeit auf einzelnen Geräten abmelden, deine Daten als Datei herunterladen und das Konto in den Einstellungen mit allen Daten löschen; danach ist alles auf dem Server gelöscht, auf deinem Gerät bleibt es.</p>
+<p>Das Timatch-Konto gibt es in der Web-Version und in der iPhone-App; beide nutzen dasselbe Konto. Wer ein Konto anlegt, meldet sich mit seiner E-Mail-Adresse an und erhält eine Anmelde-Mail mit Link und 8-stelligem Code (kein Passwort), oder meldet sich mit Apple bzw. Google an (siehe unten). Mit Konto liegen deine Partien (auch eine gerade laufende), Personen, Spiele, Orte, Wertungsblöcke, Einstellungen und Fotos auf unserem Server bei Cloudflare (Datenbank D1 und Speicher KV), damit sie auf jedem Gerät erscheinen, auf dem du dich anmeldest. Zu jeder Geräte-Sitzung speichern wir einen Gerätenamen (z. B. „iPhone“ oder „Chrome · Mac“), damit du sie in den Einstellungen erkennst und einzeln abmelden kannst. Rechtsgrundlage ist die Erfüllung des Nutzungsvertrags (Art. 6 Abs. 1 lit. b DSGVO).</p>
+<p>Link und Code sind 15 Minuten gültig und nur einmal verwendbar; nach fünf falschen Code-Eingaben verfällt der Code. Geräte-Sitzungen gelten 90 Tage. In der Web-Version werden beim Abmelden deine Daten aus dem Browser entfernt; im Konto bleiben sie. Du kannst dich jederzeit auf einzelnen Geräten abmelden, deine Daten als Datei herunterladen und das Konto in den Einstellungen mit allen Daten löschen. Dann ist alles auf dem Server gelöscht, ein laufendes Web-Abo wird gekündigt, und auf deinem Gerät bleiben die Daten erhalten.</p>
 <p>Die Anmelde-Mail verschickt <b>Brevo</b> (Sendinblue GmbH, Köpenicker Straße 126, 10179 Berlin) in unserem Auftrag; Brevo erhält dafür deine E-Mail-Adresse.</p>
 
-<h3>Cloud-Sicherung mit Code (ohne Konto)</h3>
-<p>Alternativ zum Konto kannst du eine Sicherung mit einem Code anlegen. Sie wird vor dem Hochladen auf deinem Gerät verschlüsselt (AES-GCM); der Server speichert nur die verschlüsselten Bytes unter einer aus dem Code abgeleiteten Kennung und kann sie nicht lesen. Ohne Code sind die Daten nicht wiederherstellbar. Die Sicherung wird nach 180 Tagen ohne Aktualisierung automatisch gelöscht.</p>
+<h3>Anmelden mit Apple oder Google</h3>
+<p>Statt der Anmelde-Mail kannst du dich mit deinem Apple Account (Web-Version und iPhone-App) oder deinem Google-Konto (Web-Version) anmelden. Dann wirst du zur Anmeldeseite von Apple bzw. Google geleitet, und der Anbieter bestätigt uns deine E-Mail-Adresse. Wir fragen nur die E-Mail-Adresse ab, keinen Namen, kein Profilbild und keine Kontakte, und wir speichern nur diese Adresse. Wählst du bei Apple „E-Mail-Adresse verbergen“, erhalten wir nur Apples Weiterleitungsadresse. Anbieter sind Apple Distribution International Ltd. (Hollyhill Industrial Estate, Cork, Irland) bzw. Google Ireland Limited (Gordon House, Barrow Street, Dublin 4, Irland); für die Anmeldung dort gilt deren Datenschutzerklärung. Rechtsgrundlage ist die Erfüllung des Nutzungsvertrags (Art. 6 Abs. 1 lit. b DSGVO).</p>
 
-<h3>Tisch-Display und Zuschauer</h3>
-<p>Startest du ein Tisch-Display, überträgt dein Gerät den Spielstand (Namen der Personen, Farben, Zeiten, Punkte) an unseren Server, der ihn an alle weitergibt, die den sechsstelligen Code kennen. Der Stand liegt dort höchstens 24 Stunden nach der letzten Änderung und wird dann gelöscht. Teile den Code nur mit Leuten am Tisch.</p>
+<h3>Timatch Pro in der Web-Version (Stripe)</h3>
+<p>Kaufst du Timatch Pro in der Web-Version, bezahlst du auf der Bezahlseite von <b>Stripe</b> (Stripe Payments Europe, Ltd., 1 Grand Canal Street Lower, Grand Canal Dock, Dublin, D02 H210, Irland). Wir geben Stripe dafür die E-Mail-Adresse deines Kontos weiter. Zahlungsdaten wie Kartennummer oder IBAN gibst du nur bei Stripe ein; wir sehen sie nie. Bei uns gespeichert werden nur Stripes Kunden- und Abo-Kennung, der Tarif, der Status und bis wann Pro gilt. Rechnungen und Kündigungen verwaltest du im Kundenportal von Stripe. Rechtsgrundlage ist die Erfüllung des Vertrags (Art. 6 Abs. 1 lit. b DSGVO); Stripe bewahrt Zahlungsbelege nach den gesetzlichen Aufbewahrungsfristen auf (Art. 6 Abs. 1 lit. c DSGVO). Stripe kann Daten auch in den USA verarbeiten; Stripe ist nach dem EU-US Data Privacy Framework zertifiziert. Es gilt die <a href="https://stripe.com/de/privacy">Datenschutzerklärung von Stripe</a>.</p>
+
+<h3>Cloud-Sicherung mit Code (ohne Konto)</h3>
+<p>Alternativ zum Konto kannst du in der Web-Version eine Sicherung mit einem Code anlegen und sie in der Web-Version oder der iPhone-App wieder holen. Sie wird vor dem Hochladen auf deinem Gerät verschlüsselt (AES-GCM); der Server speichert nur die verschlüsselten Bytes unter einer aus dem Code abgeleiteten Kennung und kann sie nicht lesen. Ohne Code sind die Daten nicht wiederherstellbar. Die Sicherung wird nach 180 Tagen ohne Aktualisierung automatisch gelöscht.</p>
+
+<h3>Live-Tisch, Tisch-Display und Zuschauer</h3>
+<p>Startest du einen Live-Tisch oder ein Tisch-Display (in der Web-Version oder der iPhone-App), überträgt dein Gerät den Spielstand (Spiel, Namen der Personen, Farben, Zeiten, Punkte) an unseren Server, der ihn an alle weitergibt, die den sechsstelligen Code kennen. Wer beitritt, kann je nach Einstellung auch selbst den Zug beenden. Der Stand liegt dort höchstens 24 Stunden nach der letzten Änderung und wird dann gelöscht. Teile den Code nur mit Leuten am Tisch.</p>
 
 <h3>BoardGameGeek über unseren Server</h3>
-<p>Spielsuche und Sammlungsimport der Web-Version laufen über <code>api.timatch.de</code> an BoardGameGeek (siehe Abschnitt 4); an BGG geht nur der Suchbegriff bzw. der BGG-Nutzername, keine Kontodaten. Antworten werden auf unserem Server zwischengespeichert (Suche 24 Stunden, Spielinfos 7 Tage, Sammlungen 1 Stunde).</p>
+<p>Spielsuche und Sammlungsimport der Web-Version laufen über <code>api.timatch.de</code> an BoardGameGeek (siehe Abschnitt 4); an BGG geht nur der Suchbegriff bzw. der BGG-Nutzername, keine Kontodaten und nicht deine IP-Adresse. Antworten werden auf unserem Server zwischengespeichert (Suche 24 Stunden, Spielinfos 7 Tage, Sammlungen 1 Stunde). Titelbilder lädt dein Browser direkt von BoardGameGeek, wie in Abschnitt 4 beschrieben.</p>
+
+<h3>Karte und Adresssuche (OpenStreetMap)</h3>
+<p>Die Karte deiner Spielorte in der Web-Version lädt ihre Kartenkacheln direkt vom Kartenserver der OpenStreetMap Foundation (<code>tile.openstreetmap.org</code>, St John’s Innovation Centre, Cowley Road, Cambridge, CB4 0WS, Vereinigtes Königreich). Dabei erfährt dieser Server deine IP-Adresse und welcher Kartenausschnitt angezeigt wird. Für das Vereinigte Königreich besteht ein Angemessenheitsbeschluss der EU-Kommission. Suchst du die Koordinaten zu einer Adresse, geht nur der eingegebene Adresstext über unseren Server an den Suchdienst Nominatim derselben Stiftung, nicht deine IP-Adresse; Ergebnisse werden 30 Tage zwischengespeichert. Rechtsgrundlage ist unser berechtigtes Interesse, eine Karte ohne eigenen Kartendienst anzubieten (Art. 6 Abs. 1 lit. f DSGVO). Es gilt die <a href="https://osmfoundation.org/wiki/Privacy_Policy">Datenschutzerklärung der OpenStreetMap Foundation</a>.</p>
+
+<h3>Standort im Browser</h3>
+<p>Tippst du bei einem Ort auf „Aktuellen Standort“, fragt der Browser um Erlaubnis und liefert die Koordinaten. Sie werden nur beim Ort gespeichert (im Browser, mit Konto auch im Konto) und an niemanden sonst geschickt.</p>
 
 <h3>KI mit eigenem Schlüssel</h3>
 <p>Die KI-Funktionen der Web-Version arbeiten nur, wenn du einen eigenen API-Schlüssel von Anthropic (Claude) oder OpenAI (ChatGPT) einträgst. Der Schlüssel bleibt in deinem Browser; Anfragen (Statistik-Auszüge, Spielstände, deine Sammlung, Namen der Personen) gehen dann direkt von deinem Gerät an den gewählten Anbieter nach dessen Datenschutzbestimmungen. Wir sehen diese Anfragen nicht.</p>
 
 <h3>Fotos</h3>
-<p>Tischfotos und Personenfotos liegen im Browser-Speicher des Geräts; mit Konto zusätzlich in deinem Konto auf unserem Server (siehe oben). Sie werden nirgends sonst hochgeladen.</p>
+<p>Tischfotos, Personenfotos und Spielfotos liegen auf deinem Gerät bzw. im Browser-Speicher; mit Konto zusätzlich in deinem Konto auf unserem Server (siehe oben). Sie werden nirgends sonst hochgeladen.</p>
 
 <h2 id="kinder">8. Kinder</h2>
-<p>Timatch ist mit 4+ eingestuft und für jedes Alter geeignet. Die App erhebt keine Daten, enthält keine Werbung und bietet keine Kommunikation mit Fremden. Das freiwillige Timatch-Konto der Web-Version (Abschnitt 7) richtet sich an Erwachsene.</p>
+<p>Timatch ist mit 4+ eingestuft und für jedes Alter geeignet. Ohne Konto erhebt die App keine Daten, enthält keine Werbung und bietet keine Kommunikation mit Fremden. Das freiwillige Timatch-Konto und Käufe von Timatch Pro richten sich an Erwachsene.</p>
 
 <h2 id="deine-rechte">9. Deine Rechte</h2>
-<p>Ohne Konto liegen beim Entwickler keine personenbezogenen Daten über dich vor. Mit Konto hast du die Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung und Datenübertragbarkeit (Art. 15–20 DSGVO): Die vollständige Datei lädst du in den Einstellungen unter „Konto → Meine Daten herunterladen", und dort löschst du das Konto samt allen Daten auf dem Server. Alles andere gern per E-Mail an <a href="mailto:hello@timatch.de">hello@timatch.de</a>. Auf dem Gerät selbst liegt die Kontrolle ohnehin bei dir:</p>
+<p>Ohne Konto liegen beim Entwickler keine personenbezogenen Daten über dich vor. Mit Konto hast du die Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit und Widerspruch (Art. 15–21 DSGVO): Die vollständige Datei lädst du in den Einstellungen unter „Konto → Meine Daten herunterladen“, und dort löschst du das Konto samt allen Daten auf dem Server. Alles andere gern per E-Mail an <a href="mailto:hello@timatch.de">hello@timatch.de</a>. Auf dem Gerät selbst liegt die Kontrolle ohnehin bei dir:</p>
 <ul>
 <li><strong>Export:</strong> Sessions und die vollständige Datenbank lassen sich in der App als PDF, CSV oder Timatch-Datei exportieren.</li>
 <li><strong>Löschen:</strong> Über den Werksreset in den App-Einstellungen oder durch Löschen der App entfernst du alle lokalen Daten. Wenn du die iCloud-Synchronisierung deaktivierst und die App-Daten in den iOS-Einstellungen aus iCloud löschst, ist auch die synchronisierte Kopie entfernt.</li>
