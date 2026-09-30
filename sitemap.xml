@@ -49,4 +49,16 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://timatch.de/en/legal-notice/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://timatch.de/impressum/"/>
   </url>
+  <url>
+    <loc>https://timatch.de/agb/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://timatch.de/agb/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://timatch.de/en/terms/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://timatch.de/agb/"/>
+  </url>
+  <url>
+    <loc>https://timatch.de/en/terms/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://timatch.de/agb/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://timatch.de/en/terms/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://timatch.de/agb/"/>
+  </url>
 </urlset>
