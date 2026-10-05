@@ -1,13 +1,13 @@
 # timatch-web — die Landingpage für timatch.de
 
 Statische Seite, zweisprachig (Deutsch unter `/`, Englisch unter `/en/`), gehostet auf GitHub Pages.
-Sie bewirbt die iOS-App **Timatch** (Repo `timatch-app`) und zeigt sie in vier kurzen Videos, die
-aus der echten App stammen.
+Sie bewirbt die iOS-App **Timatch** (Repo `timatch-app`) mit vier kurzen Videos aus der echten App
+und verweist auf die Web-App **Timatch Web** unter `app.timatch.de` (Repo `timatch-tisch`).
 
-Sie trägt **alles**: Landingpage, Hilfe (`/hilfe/`, `/en/support/`) und Rechtstexte
-(`/datenschutz/`, `/en/privacy/`). Es gibt kein zweites Website-Repo mehr — das frühere
-`timatch-website` hinter `app.timatch.de` ist am 6. September 2026 weggefallen, seine
-Weiterleitungen macht jetzt ein `.htaccess` auf dem Strato-Webspace.
+Sie trägt Landingpage, Hilfe (`/hilfe/`, `/hilfe/tisch/`, `/en/support/`) und Rechtstexte
+(`/datenschutz/`, `/impressum/`, `/agb/`, `/en/privacy/`, `/en/legal-notice/`, `/en/terms/`). Das frühere Repo
+`timatch-website` ist archiviert. `app.timatch.de` ist seit 18.09.2026 die Web-App; alte Hilfe-
+und Rechtstext-Adressen dort leitet deren `_redirects`-Datei hierher (siehe unten).
 
 ---
 
@@ -16,10 +16,16 @@ Weiterleitungen macht jetzt ein `.htaccess` auf dem Strato-Webspace.
 ```
 index.html            deutsche Landingpage
 en/index.html         englische Landingpage
-hilfe/                Hilfe & FAQ (deutsch)
+hilfe/                Hilfe & FAQ (deutsch), hilfe/tisch/ für die Web-App
 datenschutz/          Datenschutzerklärung (deutsch)
+impressum/            Impressum (deutsch)
+agb/                  AGB, Widerrufsbelehrung, Muster-Widerrufsformular (deutsch) + PDF der Fassung
 en/support/           Support & FAQ (englisch)
 en/privacy/           Privacy Policy (englisch)
+en/legal-notice/      Impressum (englisch)
+en/terms/             Terms and Conditions (englisch) + PDF der Fassung
+hilfe.html, datenschutz.html, support.html, privacy.html
+                      Auffangseiten für alte Adressen (meta refresh, nicht löschen)
 404.html              Fehlerseite (zweisprachig)
 assets/css/site.css   das gesamte Aussehen — eine Datei, kein Framework
 assets/js/site.js     Einblenden beim Scrollen, Videos nur im Bild abspielen
@@ -66,9 +72,9 @@ Weiter:
 
 - **HTTPS erzwingen** ist in den Repo-Einstellungen unter *Pages → Enforce HTTPS* eingeschaltet.
 - Alle Verweise nach außen tragen `rel="noopener noreferrer"`.
-- `.well-known/security.txt` nennt eine Adresse für Sicherheitsmeldungen. **Das `Expires`-Datum
-  steht auf einem Jahr** — läuft es ab, gilt die Datei als ungültig. Beim nächsten größeren Umbau
-  bitte hochsetzen.
+- `.well-known/security.txt` nennt eine Adresse für Sicherheitsmeldungen. **`Expires` steht auf
+  2027-08-23** — läuft es ab, gilt die Datei als ungültig. Spätestens im Sommer 2027 um ein Jahr
+  hochsetzen.
 
 ### Three.js
 
@@ -150,21 +156,23 @@ edna.ns.cloudflare.com
 piotr.ns.cloudflare.com
 ```
 
-Die Einträge in Cloudflare:
+Die Einträge in Cloudflare (Stand 29.09.2026):
 
 | Typ | Name | Ziel | Modus |
 |---|---|---|---|
-| A ×4 | `timatch.de` | `185.199.108/109/110/111.153` | DNS only |
+| A ×4 | `timatch.de` | `185.199.108/109/110/111.153` (GitHub Pages) | DNS only |
 | CNAME | `www` | `jaimetabo.github.io` | DNS only |
-| A | `app` | `217.160.0.19` | **Proxied** |
+| CNAME | `app` | `timatch-tisch.pages.dev` (Web-App, Cloudflare Pages) | **Proxied** |
+| Worker-Domain | `api` | Worker `timatch-tisch-api` (Custom Domain, von Cloudflare selbst angelegt) | **Proxied** |
 | CNAME | `autoconfig` | `autoconfigure.strato.de` | DNS only |
 | MX | `*` und `timatch.de` | `smtpin.rzone.de` (5) | DNS only |
-| SRV / TXT | `_autodiscover`, `_dmarc`, `_domainkey` | unverändert übernommen | DNS only |
+| CNAME | `brevo1._domainkey`, `brevo2._domainkey` | Brevo (DKIM der Anmelde-Mails) | DNS only |
+| TXT | `timatch.de` | `brevo-code:…` (Brevo-Domainnachweis) | DNS only |
+| SRV / TXT | `_autodiscover`, `_dmarc` (`p=reject`), `_domainkey` | von STRATO übernommen | DNS only |
 
-**Warum `timatch.de` selbst DNS only bleibt:** Die Seite soll sich genau wie vorher verhalten,
-GitHub Pages liefert sie direkt aus und bringt sein eigenes Zertifikat mit. Cloudflare macht hier
-nur die Namensauflösung. Proxied ist einzig `app` — und zwar allein, damit die Weiterleitung ein
-Zertifikat bekommt.
+**Warum `timatch.de` selbst DNS only bleibt:** GitHub Pages liefert die Seite direkt aus und bringt
+sein eigenes Zertifikat mit. Cloudflare macht hier nur die Namensauflösung. Proxied sind `app` und
+`api`, weil Cloudflare diese beiden selbst beantwortet (Pages und Worker).
 
 **Was der Umzug gebracht hat:** STRATO erlaubte in diesem Paket **genau einen** A-Eintrag; GitHub
 empfiehlt vier. Jetzt stehen alle vier da. Und `app.timatch.de` kann HTTPS, was bei STRATO
@@ -177,9 +185,12 @@ allgemein (Impressum, Datenschutz, security.txt, Absender der Anmelde-Mail). Bei
 Adresse ist bei Brevo als Absender der Anmelde-Mails verifiziert; timatch.de ist dort per DKIM
 authentifiziert (CNAMEs `brevo1/brevo2._domainkey`). DMARC steht auf `p=reject`.
 
-**Rechtstexte:** Impressum und Datenschutz liegen auf timatch.de (`/impressum/`, `/datenschutz/`,
-`/en/legal-notice/`, `/en/privacy/`), nicht mehr auf jaimetaboada.com. Jede Unterseite verlinkt beide
-im Fuß (`.fuss-recht`).
+**Rechtstexte:** Impressum, AGB und Datenschutz liegen auf timatch.de (`/impressum/`, `/agb/`,
+`/datenschutz/`, `/en/legal-notice/`, `/en/terms/`, `/en/privacy/`), nicht mehr auf jaimetaboada.com.
+Jede Unterseite verlinkt sie im Fuß (`.fuss-recht`). Die AGB gibt es zusätzlich als PDF je Fassung
+(`/agb/timatch-agb-JJJJ-MM-TT.pdf`) — die Kaufbestätigung von Timatch Web hängt genau diese Datei an
+(`worker/src/terms.js` im Repo `timatch-tisch`). Bei einer neuen Fassung neues PDF anlegen, das alte
+liegen lassen.
 
 ### `app.timatch.de`
 
@@ -191,7 +202,7 @@ Rechtstext-Adressen unter `app.timatch.de/…` fängt jetzt eine `_redirects`-Da
 und schickt sie nach `timatch.de`; die vier `meta refresh`-Seiten hier bleiben trotzdem, für
 Links, die direkt auf `timatch.de/hilfe.html` zeigen.
 
-Zur Geschichte — so war es vom 6. bis 18. September 2026:
+Zur Geschichte — so war es vom 6. bis 18. September 2026 (damals `A app 217.160.0.19`, proxied):
 
 Die alte Adresse zeigte **nicht mehr auf GitHub**, sondern wurde von
 Cloudflare beantwortet. Eine Redirect Rule schickte sie dauerhaft weiter:
@@ -211,11 +222,11 @@ Wurzelverzeichnis vier Weiterleitungsseiten (`hilfe.html`, `datenschutz.html`, `
 `/en/privacy/` zeigen. Sie tragen `noindex, follow` und ein `canonical` auf das Ziel.
 **Nicht löschen** — ohne sie enden die alten Adressen im 404.
 
-Prüfen:
+Prüfen (heute: `/` liefert 200 mit der Web-App, die vier alten Adressen 301 nach timatch.de):
 
 ```bash
 for p in / /hilfe.html /datenschutz.html /support.html /privacy.html; do
-  curl -sIo /dev/null -w "%{http_code} -> %{redirect_url}\n" "https://app.timatch.de$p"
+  curl -sIo /dev/null -w "$p %{http_code} -> %{redirect_url}\n" "https://app.timatch.de$p"
 done
 ```
 
