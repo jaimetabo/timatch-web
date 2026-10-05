@@ -5,7 +5,7 @@ Sie bewirbt die iOS-App **Timatch** (Repo `timatch-app`) mit vier kurzen Videos 
 und verweist auf die Web-App **Timatch Web** unter `app.timatch.de` (Repo `timatch-tisch`).
 
 Sie trägt Landingpage, Hilfe (`/hilfe/`, `/hilfe/tisch/`, `/en/support/`) und Rechtstexte
-(`/datenschutz/`, `/impressum/`, `/en/privacy/`, `/en/legal-notice/`). Das frühere Repo
+(`/datenschutz/`, `/impressum/`, `/agb/`, `/en/privacy/`, `/en/legal-notice/`, `/en/terms/`). Das frühere Repo
 `timatch-website` ist archiviert. `app.timatch.de` ist seit 18.09.2026 die Web-App; alte Hilfe-
 und Rechtstext-Adressen dort leitet deren `_redirects`-Datei hierher (siehe unten).
 
@@ -19,9 +19,11 @@ en/index.html         englische Landingpage
 hilfe/                Hilfe & FAQ (deutsch), hilfe/tisch/ für die Web-App
 datenschutz/          Datenschutzerklärung (deutsch)
 impressum/            Impressum (deutsch)
+agb/                  AGB, Widerrufsbelehrung, Muster-Widerrufsformular (deutsch) + PDF der Fassung
 en/support/           Support & FAQ (englisch)
 en/privacy/           Privacy Policy (englisch)
 en/legal-notice/      Impressum (englisch)
+en/terms/             Terms and Conditions (englisch) + PDF der Fassung
 hilfe.html, datenschutz.html, support.html, privacy.html
                       Auffangseiten für alte Adressen (meta refresh, nicht löschen)
 404.html              Fehlerseite (zweisprachig)
@@ -183,9 +185,12 @@ allgemein (Impressum, Datenschutz, security.txt, Absender der Anmelde-Mail). Bei
 Adresse ist bei Brevo als Absender der Anmelde-Mails verifiziert; timatch.de ist dort per DKIM
 authentifiziert (CNAMEs `brevo1/brevo2._domainkey`). DMARC steht auf `p=reject`.
 
-**Rechtstexte:** Impressum und Datenschutz liegen auf timatch.de (`/impressum/`, `/datenschutz/`,
-`/en/legal-notice/`, `/en/privacy/`), nicht mehr auf jaimetaboada.com. Jede Unterseite verlinkt beide
-im Fuß (`.fuss-recht`).
+**Rechtstexte:** Impressum, AGB und Datenschutz liegen auf timatch.de (`/impressum/`, `/agb/`,
+`/datenschutz/`, `/en/legal-notice/`, `/en/terms/`, `/en/privacy/`), nicht mehr auf jaimetaboada.com.
+Jede Unterseite verlinkt sie im Fuß (`.fuss-recht`). Die AGB gibt es zusätzlich als PDF je Fassung
+(`/agb/timatch-agb-JJJJ-MM-TT.pdf`) — die Kaufbestätigung von Timatch Web hängt genau diese Datei an
+(`worker/src/terms.js` im Repo `timatch-tisch`). Bei einer neuen Fassung neues PDF anlegen, das alte
+liegen lassen.
 
 ### `app.timatch.de`
 
