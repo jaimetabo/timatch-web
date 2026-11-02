@@ -1,44 +1,60 @@
-/* Timatch — Landingpage
+/* Timatch — Landingpage und Textseiten
  *
  * Bewusst ohne Framework und ohne Webfont: Die Seite lädt NICHTS von fremden Servern. Das ist
  * nicht nur schnell, sondern erlaubt die strenge Inhaltsrichtlinie in den HTML-Köpfen
- * (`default-src 'self'`) — und passt zu einer App, die im Store mit „Data Not Collected" steht.
- * Eine Landingpage, die drei Tracker mitbringt, würde dieses Versprechen an der Haustür brechen.
+ * (`default-src 'self'`) — und passt zu einer App, die ohne Tracking auskommt. Eine Landingpage,
+ * die drei Tracker mitbringt, würde dieses Versprechen an der Haustür brechen.
  *
  * Die Schrift ist die des Systems. Auf iPhone und Mac ist das San Francisco — dieselbe Schrift wie
  * in der App, ohne ein einziges Byte Download.
+ *
+ * WICHTIG: `style-src 'self'` verbietet auch `style`-Attribute im HTML. Jede Gestaltung gehört in
+ * diese Datei; ein `style="…"` im HTML wird vom Browser ersatzlos ignoriert.
+ *
+ * Aufbau: Grundlagen → Kopfleiste → Knöpfe → Geräterahmen → Landingpage-Abschnitte → Textseiten →
+ * Fußzeile → Einblenden.
  */
 
 :root {
-  --ink: #08080c;
-  --ink-2: #101017;
-  --ink-3: #17171f;
-  --line: rgba(255, 255, 255, 0.09);
-  --text: #f4f2ef;
-  --text-dim: rgba(244, 242, 239, 0.62);
-  --text-faint: rgba(244, 242, 239, 0.38);
+  --ink: #07070a;
+  --ink-2: #0d0d12;
+  --ink-3: #14141b;
+  --ink-4: #1b1b24;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-2: rgba(255, 255, 255, 0.14);
+  --text: #f5f3ef;
+  --text-dim: rgba(245, 243, 239, 0.66);
+  --text-faint: rgba(245, 243, 239, 0.42);
 
   /* Die Akzentfarbe der App (AccentColor.colorset: 1.000 / 0.655 / 0.286). */
   --orange: #ffa749;
   --orange-warm: #ff8a2b;
+  --orange-tief: #e8701c;
+  /* Das Lila der Karte „am Zug" aus der App — als zweites Licht in den Bühnen. */
+  --violett: #9a5cf5;
 
-  /* Die Spielerfarben aus der App — sie tauchen in der 3D-Szene und in den Akzenten wieder auf. */
+  /* Die Spielerfarben aus der App. */
   --spieler-1: #ff9500;
   --spieler-2: #34c759;
   --spieler-3: #af52de;
   --spieler-4: #5ac8fa;
 
-  --breite: 1180px;
-  --radius: 22px;
+  --breite: 1200px;
+  --radius: 24px;
   --schrift: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto,
              "Helvetica Neue", Arial, sans-serif;
+  --schrift-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto,
+             "Helvetica Neue", Arial, sans-serif;
+  --kurve: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 * { box-sizing: border-box; }
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 76px;
   -webkit-text-size-adjust: 100%;
+  background: var(--ink);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -58,7 +74,9 @@ body {
   font-size: 17px;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  text-rendering: optimizeLegibility;
 }
 
 img, video, canvas { max-width: 100%; display: block; }
@@ -72,8 +90,10 @@ a:hover { text-decoration: underline; }
   border-radius: 6px;
 }
 
+::selection { background: rgba(255, 167, 73, 0.32); color: #fff; }
+
 .huelle {
-  width: min(100% - 44px, var(--breite));
+  width: min(100% - 40px, var(--breite));
   margin-inline: auto;
 }
 
@@ -98,123 +118,107 @@ a:hover { text-decoration: underline; }
 
 .kopfleiste {
   position: sticky; top: 0; z-index: 50;
-  backdrop-filter: saturate(180%) blur(18px);
-  -webkit-backdrop-filter: saturate(180%) blur(18px);
-  background: rgba(8, 8, 12, 0.62);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  background: rgba(7, 7, 10, 0.55);
   border-bottom: 1px solid transparent;
   transition: border-color 0.3s, background 0.3s;
 }
 .kopfleiste.gescrollt {
   border-bottom-color: var(--line);
-  background: rgba(8, 8, 12, 0.85);
+  background: rgba(7, 7, 10, 0.82);
 }
 .kopfleiste .huelle {
-  display: flex; align-items: center; gap: 18px;
-  height: 62px;
+  display: flex; align-items: center; gap: 16px;
+  height: 64px;
 }
 .marke {
   display: flex; align-items: center; gap: 10px;
-  color: var(--text); font-weight: 650; letter-spacing: -0.01em;
+  color: var(--text); font-weight: 650; letter-spacing: -0.01em; font-size: 17px;
+  flex: none;
 }
 .marke:hover { text-decoration: none; }
 .marke img { width: 28px; height: 28px; border-radius: 7px; }
 
 .kopf-nav {
   margin-left: auto;
-  display: flex; align-items: center; gap: 22px;
+  display: flex; align-items: center; gap: 4px;
 }
-.kopf-nav a {
-  color: var(--text-dim); font-size: 15px; font-weight: 500;
+.kopf-nav > a {
+  color: var(--text-dim); font-size: 14.5px; font-weight: 520;
+  padding: 7px 11px; border-radius: 999px;
+  transition: color 0.2s, background 0.2s;
 }
-.kopf-nav a:hover { color: var(--text); text-decoration: none; }
+.kopf-nav > a:hover { color: var(--text); text-decoration: none; background: rgba(255, 255, 255, 0.06); }
+/* „FAQ" steht auf jeder Breite in der Kopfleiste — auch dann, wenn die Abschnitts-Links schon
+   ausgeblendet sind. Wer eine Frage hat, soll nicht erst scrollen müssen. */
+.kopf-nav > a.nav-faq { color: var(--text); }
 
 .sprachwahl {
-  display: inline-flex; gap: 2px;
+  display: inline-flex; gap: 2px; margin-left: 8px;
   border: 1px solid var(--line); border-radius: 999px; padding: 3px;
 }
 .sprachwahl a {
-  font-size: 13px; font-weight: 600; padding: 3px 10px; border-radius: 999px;
+  font-size: 12.5px; font-weight: 650; padding: 3px 10px; border-radius: 999px;
   color: var(--text-faint);
 }
 .sprachwahl a:hover { color: var(--text); text-decoration: none; }
 .sprachwahl a[aria-current="true"] { background: rgba(255, 255, 255, 0.1); color: var(--text); }
 
-@media (max-width: 800px) {
-  .kopf-nav a.nav-abschnitt { display: none; }
+.kopf-knopf {
+  margin-left: 10px;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 15px; border-radius: 999px;
+  background: linear-gradient(160deg, var(--orange), var(--orange-warm));
+  color: #1a0f03; font-size: 14px; font-weight: 680; letter-spacing: -0.01em;
+  box-shadow: 0 6px 20px -8px rgba(255, 138, 43, 0.8);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.kopf-knopf:hover { text-decoration: none; transform: translateY(-1px); box-shadow: 0 10px 26px -8px rgba(255, 138, 43, 0.9); }
+
+@media (max-width: 1120px) { .kopf-nav > a.nav-mehr { display: none; } }
+@media (max-width: 800px) { .kopf-nav > a.nav-abschnitt { display: none; } }
+@media (max-width: 440px) {
+  .kopf-knopf { display: none; }
+  .kopf-nav > a { padding: 7px 8px; }
 }
 
-/* ---------------------------------------------------------------- Bühne (3D) */
+/* ---------------------------------------------------------------- Typografie & Knöpfe */
 
-.buehne {
-  position: relative;
-  min-height: min(100svh, 900px);
-  display: grid; align-items: center;
-  padding: 40px 0 90px;
-  isolation: isolate;
-}
-
-/* Das WebGL-Bild liegt HINTER dem Text und deckt die ganze Bühne ab. */
-#szene {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  z-index: -2;
-}
-/* Zwei Schleier über der Szene.
- *
- * Nach unten, damit die Szene in den Seitengrund übergeht statt abzureißen — und nach LINKS, wo
- * der Text steht. Ohne den zweiten liefen die schwebenden Spielsteine quer durch die Überschrift;
- * hübsch anzusehen, aber die Überschrift ist wichtiger als die Deko. Auf schmalen Fenstern steht
- * der Text über der ganzen Breite, dort deckt der Schleier entsprechend alles ab. */
-.buehne::after {
-  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background:
-    linear-gradient(97deg, rgba(8, 8, 12, 0.93) 0%, rgba(8, 8, 12, 0.86) 26%,
-                    rgba(8, 8, 12, 0.45) 48%, transparent 66%),
-    radial-gradient(130% 90% at 62% 12%, transparent 52%, rgba(8, 8, 12, 0.4) 100%),
-    linear-gradient(180deg, transparent 55%, var(--ink) 100%);
-}
-@media (max-width: 860px) {
-  .buehne::after {
-    background:
-      linear-gradient(180deg, rgba(8, 8, 12, 0.62) 0%, rgba(8, 8, 12, 0.88) 45%, var(--ink) 100%);
-  }
-}
-
-.buehne-text { max-width: 660px; }
-
-.plakette {
-  display: inline-flex; align-items: center; gap: 8px;
-  border: 1px solid var(--line); border-radius: 999px;
-  padding: 6px 14px; margin-bottom: 22px;
-  font-size: 13px; font-weight: 600; letter-spacing: 0.01em;
-  color: var(--text-dim);
-  background: rgba(255, 255, 255, 0.03);
-}
-.plakette .punkt {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: var(--orange);
-  box-shadow: 0 0 0 4px rgba(255, 167, 73, 0.16);
-}
+h1, h2, h3 { font-family: var(--schrift-display); }
 
 h1 {
-  font-size: clamp(2.5rem, 7vw, 4.6rem);
-  line-height: 1.03;
-  letter-spacing: -0.035em;
-  font-weight: 700;
-  margin: 0 0 20px;
+  font-size: clamp(2.6rem, 4.7vw, 4.15rem);
+  line-height: 1;
+  letter-spacing: -0.045em;
+  font-weight: 750;
+  margin: 0 0 24px;
 }
-h1 em {
+h1 em, h2 em {
   font-style: normal;
-  background: linear-gradient(105deg, var(--orange) 10%, var(--orange-warm) 90%);
+  background: linear-gradient(100deg, var(--orange) 5%, var(--orange-warm) 60%, #ff6f3c 100%);
   -webkit-background-clip: text; background-clip: text;
   color: transparent;
 }
+h2 {
+  font-size: clamp(2.05rem, 4.6vw, 3.5rem);
+  line-height: 1.04; letter-spacing: -0.038em; font-weight: 730;
+  margin: 0 0 18px;
+}
+h3 { font-size: 1.2rem; letter-spacing: -0.02em; margin: 0 0 8px; font-weight: 650; line-height: 1.25; }
 
 .vorspann {
-  font-size: clamp(1.05rem, 2.1vw, 1.3rem);
+  font-size: clamp(1.08rem, 1.7vw, 1.28rem);
   color: var(--text-dim);
-  max-width: 52ch;
-  margin: 0 0 32px;
+  max-width: 50ch;
+  margin: 0 0 34px;
+  line-height: 1.5;
+}
+
+.ueberschrift-klein {
+  display: inline-flex; align-items: center; gap: 8px; margin-bottom: 16px;
+  font-size: 12.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--orange);
 }
 
 .knopfreihe { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
@@ -222,271 +226,767 @@ h1 em {
 .knopf {
   display: inline-flex; align-items: center; gap: 9px;
   padding: 13px 22px; border-radius: 14px;
-  font-size: 16px; font-weight: 600; letter-spacing: -0.01em;
+  font-size: 16px; font-weight: 620; letter-spacing: -0.01em;
   border: 1px solid transparent;
-  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
 }
 .knopf:hover { text-decoration: none; transform: translateY(-2px); }
+.knopf svg { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .knopf-haupt {
   background: linear-gradient(160deg, var(--orange), var(--orange-warm));
-  color: #180f04;
-  box-shadow: 0 10px 30px -10px rgba(255, 138, 43, 0.7);
+  color: #1a0f03;
+  box-shadow: 0 12px 34px -12px rgba(255, 138, 43, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.35);
 }
-.knopf-haupt:hover { box-shadow: 0 16px 40px -12px rgba(255, 138, 43, 0.85); }
+.knopf-haupt:hover { box-shadow: 0 18px 44px -14px rgba(255, 138, 43, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.35); }
 .knopf-still {
   background: rgba(255, 255, 255, 0.06);
-  border-color: var(--line);
+  border-color: var(--line-2);
   color: var(--text);
 }
-.knopf-still:hover { background: rgba(255, 255, 255, 0.1); }
+.knopf-still:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.22); }
 
-/* „Bald im App Store" ist KEIN Knopf, sondern eine Angabe — deshalb ohne Zeigefinger-Cursor und
-   ohne Schweben. Etwas, das aussieht wie ein Knopf und nichts tut, ärgert jeden. */
-.hinweis-store {
-  display: inline-flex; align-items: center; gap: 9px;
-  padding: 13px 20px; border-radius: 14px;
-  border: 1px dashed var(--line);
-  color: var(--text-faint);
-  font-size: 15px; font-weight: 550;
+/* Kleine Pille an Knöpfen, Karten und Tabellen („Beta", „Kostenlos", „Neu").
+   Ausgeglichener Innenabstand: Die Buchstaben-Sperrung hängt rechts eine Lücke an — ohne den
+   kleineren rechten Rand säße das Wort sichtbar links in der Pille. */
+.pille {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 3px 7px 3px 8.5px; border-radius: 999px; line-height: 1.2;
+  border: 1px solid currentColor;
+  font-size: 10.5px; font-weight: 720; letter-spacing: 0.1em; text-transform: uppercase;
+  white-space: nowrap;
 }
 
-.buehne-fuss {
-  margin-top: 30px;
-  display: flex; flex-wrap: wrap; gap: 8px 20px;
-  font-size: 14px; color: var(--text-faint);
-}
-.buehne-fuss span { display: inline-flex; align-items: center; gap: 7px; }
+/* ---------------------------------------------------------------- Geräterahmen
+ *
+ * Alle Rahmen sind mit CSS gezeichnet — KEINE Produktfotos und keine Gerätevorlagen von Apple oder
+ * aus Xcode. Sie bleiben bei jeder Auflösung scharf, kosten kein Byte und unterliegen keinen fremden
+ * Nutzungsbedingungen. Die Bildschirm-Inhalte sind echte Aufnahmen der App (Build 31) und von
+ * Timatch Web; siehe README → „Bildmaterial".
+ *
+ * Größe über `--w` (Breite des ganzen Geräts). Alle Maße hängen daran, damit die Proportionen in
+ * jeder Größe stimmen.
+ */
 
-/* ---------------------------------------------------------------- Abschnitte */
-
-section { padding: clamp(70px, 11vw, 130px) 0; position: relative; }
-
-.abschnitt-kopf { max-width: 640px; margin-bottom: 54px; }
-.ueberschrift-klein {
-  display: block; margin-bottom: 14px;
-  font-size: 13px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase;
-  color: var(--orange);
+.iphone {
+  --w: 300px;
+  position: relative; flex: none;
+  width: var(--w);
+  padding: calc(var(--w) * 0.026);
+  border: calc(var(--w) * 0.013) solid transparent;
+  border-radius: calc(var(--w) * 0.17);
+  background:
+    linear-gradient(#030304, #030304) padding-box,
+    linear-gradient(142deg, #9a9ca3 0%, #44464c 14%, #1c1d21 34%, #55575e 56%, #232428 76%, #8f9198 100%) border-box;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.85),
+    0 calc(var(--w) * 0.12) calc(var(--w) * 0.26) calc(var(--w) * -0.1) rgba(0, 0, 0, 0.95),
+    0 calc(var(--w) * 0.03) calc(var(--w) * 0.08) rgba(0, 0, 0, 0.5);
 }
-h2 {
-  font-size: clamp(1.9rem, 4.2vw, 3rem);
-  line-height: 1.08; letter-spacing: -0.03em; font-weight: 700;
-  margin: 0 0 16px;
+.bildschirm {
+  position: relative; overflow: hidden; isolation: isolate;
+  aspect-ratio: 1206 / 2622;
+  border-radius: calc(var(--w) * 0.135);
+  background: #000;
 }
-h3 { font-size: 1.22rem; letter-spacing: -0.02em; margin: 0 0 8px; font-weight: 650; }
-.abschnitt-kopf p, .lang { color: var(--text-dim); font-size: 1.06rem; margin: 0; }
+.bildschirm img, .bildschirm video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: top center;
+}
+/* Dynamic Island — über der Aufnahme, damit sie auch auf Bildern ohne laufende Live Activity da ist. */
+.insel {
+  position: absolute; z-index: 3; left: 50%; top: calc(var(--w) * 0.052);
+  width: 31.5%; height: calc(var(--w) * 0.083);
+  translate: -50% 0;
+  border-radius: 999px; background: #000;
+}
+/* Glanz auf dem Glas: ein schmaler Lichtstreif von links oben. */
+.iphone::after, .android::after, .duo-flach::after {
+  content: ""; position: absolute; z-index: 4; pointer-events: none;
+  inset: calc(var(--w) * 0.039);
+  border-radius: calc(var(--w) * 0.135);
+  background: linear-gradient(118deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.025) 22%, transparent 34%);
+}
+/* Seitentasten: links Aktionstaste und Lautstärke, rechts Seitentaste und Kamerasteuerung. */
+.tasten { position: absolute; inset: 0; pointer-events: none; }
+.tasten::before, .tasten::after {
+  content: ""; position: absolute;
+  width: calc(var(--w) * 0.012);
+  border-radius: 2px;
+  background: linear-gradient(90deg, #6d6f75, #2b2c30);
+}
+.tasten::before {
+  left: calc(var(--w) * -0.024); top: 18.5%; height: 5.5%;
+  box-shadow:
+    0 calc(var(--w) * 0.15) 0 0 #4b4d52,
+    0 calc(var(--w) * 0.15 + var(--w) * 0.12) 0 0 #4b4d52;
+}
+.tasten::after {
+  right: calc(var(--w) * -0.024); top: 27%; height: 10.5%;
+  background: linear-gradient(270deg, #6d6f75, #2b2c30);
+}
 
-/* Wechselnde Anordnung: Text und Gerät tauschen je Abschnitt die Seite. */
-.paar {
-  display: grid; gap: clamp(36px, 6vw, 80px);
-  grid-template-columns: 1fr;
-  align-items: center;
+.android {
+  --w: 240px;
+  position: relative; flex: none;
+  width: var(--w);
+  padding: calc(var(--w) * 0.024);
+  border: calc(var(--w) * 0.011) solid transparent;
+  border-radius: calc(var(--w) * 0.13);
+  background:
+    linear-gradient(#020203, #020203) padding-box,
+    linear-gradient(150deg, #6a6c72 0%, #232428 30%, #3d3f44 60%, #1a1b1e 100%) border-box;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.85),
+    0 calc(var(--w) * 0.12) calc(var(--w) * 0.24) calc(var(--w) * -0.1) rgba(0, 0, 0, 0.95);
 }
-@media (min-width: 900px) {
-  .paar { grid-template-columns: 1fr 1fr; }
-  .paar.gedreht .paar-text { order: 2; }
+.android .bildschirm { aspect-ratio: 1080 / 1920; border-radius: calc(var(--w) * 0.1); }
+.android::after { inset: calc(var(--w) * 0.035); border-radius: calc(var(--w) * 0.1); }
+.android .kamera {
+  position: absolute; z-index: 3; left: 50%; top: calc(var(--w) * 0.052);
+  width: calc(var(--w) * 0.04); height: calc(var(--w) * 0.04); translate: -50% 0;
+  border-radius: 50%; background: radial-gradient(circle at 40% 35%, #2a2d36 0 22%, #000 40%);
 }
-.paar-text h2 { margin-bottom: 18px; }
 
-.merkmale { list-style: none; padding: 0; margin: 26px 0 0; display: grid; gap: 14px; }
+/* iPhone Duo. Aufgeklappt: Innendisplay hochkant (natürliche Lage des Panels), mit Falz in der
+   Mitte. Halb aufgestellt („Laptop"): obere Hälfte steht, untere liegt — in echtem 3D. Zugeklappt:
+   das Außendisplay mit sichtbarer Scharnierkante. */
+.duo-flach {
+  --w: 380px;
+  position: relative;
+  width: var(--w);
+  padding: calc(var(--w) * 0.016);
+  border: calc(var(--w) * 0.009) solid transparent;
+  border-radius: calc(var(--w) * 0.075);
+  background:
+    linear-gradient(#020203, #020203) padding-box,
+    linear-gradient(142deg, #9a9ca3 0%, #3e4045 22%, #1c1d21 45%, #55575e 70%, #8f9198 100%) border-box;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.85),
+    0 calc(var(--w) * 0.1) calc(var(--w) * 0.2) calc(var(--w) * -0.08) rgba(0, 0, 0, 0.95);
+}
+.duo-flach .bildschirm { aspect-ratio: var(--duo-seiten, 1512 / 2316); border-radius: calc(var(--w) * 0.055); }
+.duo-flach::after { inset: calc(var(--w) * 0.025); border-radius: calc(var(--w) * 0.055); }
+/* Der Falz: kaum sichtbar, wie auf dem echten Panel — eine weiche Spiegelung quer über die Mitte. */
+.falz {
+  position: absolute; z-index: 3; left: 0; right: 0; top: 50%; height: 7%; translate: 0 -50%;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.035) 42%, rgba(0, 0, 0, 0.28) 50%, rgba(255, 255, 255, 0.035) 58%, transparent);
+}
+
+.duo-laptop {
+  --w: 400px;
+  position: relative;
+  width: var(--w);
+  perspective: calc(var(--w) * 4);
+  perspective-origin: 50% 10%;
+}
+.duo-laptop .haelfte {
+  position: relative; overflow: hidden;
+  aspect-ratio: var(--duo-halb, 1512 / 1158);
+  padding: calc(var(--w) * 0.016);
+  border: calc(var(--w) * 0.009) solid transparent;
+  background:
+    linear-gradient(#020203, #020203) padding-box,
+    linear-gradient(142deg, #9a9ca3 0%, #3e4045 22%, #1c1d21 45%, #55575e 70%, #8f9198 100%) border-box;
+}
+.duo-laptop .haelfte .bildschirm { aspect-ratio: auto; height: 100%; border-radius: calc(var(--w) * 0.04); }
+.duo-laptop .oben {
+  border-radius: calc(var(--w) * 0.075) calc(var(--w) * 0.075) calc(var(--w) * 0.02) calc(var(--w) * 0.02);
+  transform-origin: 50% 100%;
+  transform: rotateX(-6deg);
+  box-shadow: 0 -2px 0 rgba(255, 255, 255, 0.03) inset;
+}
+.duo-laptop .oben .bildschirm { border-bottom-left-radius: calc(var(--w) * 0.01); border-bottom-right-radius: calc(var(--w) * 0.01); }
+.duo-laptop .oben img { height: 200%; bottom: auto; }
+.duo-laptop .unten {
+  border-radius: calc(var(--w) * 0.02) calc(var(--w) * 0.02) calc(var(--w) * 0.075) calc(var(--w) * 0.075);
+  transform-origin: 50% 0%;
+  transform: rotateX(64deg);
+  box-shadow: 0 calc(var(--w) * 0.18) calc(var(--w) * 0.14) calc(var(--w) * -0.06) rgba(0, 0, 0, 0.9);
+}
+.duo-laptop .unten .bildschirm { border-top-left-radius: calc(var(--w) * 0.01); border-top-right-radius: calc(var(--w) * 0.01); }
+.duo-laptop .unten img { height: 200%; top: auto; bottom: 0; object-position: bottom center; }
+/* Das Scharnier zwischen den Hälften. */
+.duo-laptop .scharnier {
+  position: relative; z-index: 2; height: calc(var(--w) * 0.022); margin: calc(var(--w) * -0.011) 3% 0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #6f7177, #2a2b2f 45%, #18191c 55%, #55575d);
+}
+
+.duo-zu {
+  --w: 210px;
+  position: relative;
+  width: var(--w);
+  padding: calc(var(--w) * 0.026);
+  border: calc(var(--w) * 0.013) solid transparent;
+  border-radius: calc(var(--w) * 0.14);
+  background:
+    linear-gradient(#030304, #030304) padding-box,
+    linear-gradient(142deg, #9a9ca3 0%, #44464c 14%, #1c1d21 34%, #55575e 56%, #232428 76%, #8f9198 100%) border-box;
+  box-shadow:
+    /* die zweite Hälfte, die hinter dem Außendisplay liegt */
+    calc(var(--w) * -0.035) 0 0 calc(var(--w) * -0.004) #2a2b30,
+    calc(var(--w) * -0.04) 0 0 calc(var(--w) * -0.004) #0c0c0e,
+    0 0 0 1px rgba(0, 0, 0, 0.85),
+    0 calc(var(--w) * 0.12) calc(var(--w) * 0.24) calc(var(--w) * -0.1) rgba(0, 0, 0, 0.95);
+}
+.duo-zu .bildschirm { aspect-ratio: 1398 / 2034; border-radius: calc(var(--w) * 0.105); }
+/* Keine Dynamic Island: Das Außendisplay des Duo trägt Uhrzeit und Status am rechten Rand. */
+.duo-zu::after {
+  content: ""; position: absolute; z-index: 4; pointer-events: none;
+  inset: calc(var(--w) * 0.039); border-radius: calc(var(--w) * 0.105);
+  background: linear-gradient(118deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.025) 22%, transparent 34%);
+}
+
+/* Weiches Licht hinter Geräten. */
+.licht {
+  position: absolute; pointer-events: none; z-index: -1;
+  inset: -18% -30%;
+  background:
+    radial-gradient(38% 34% at 42% 46%, rgba(154, 92, 245, 0.34), transparent 70%),
+    radial-gradient(40% 36% at 62% 58%, rgba(255, 138, 43, 0.3), transparent 72%);
+  filter: blur(30px);
+}
+
+/* ---------------------------------------------------------------- Abschnitte (allgemein) */
+
+section { padding: clamp(56px, 7vw, 100px) 0; position: relative; }
+
+.abschnitt-kopf { max-width: 680px; margin-bottom: clamp(40px, 6vw, 64px); }
+.abschnitt-kopf.mittig { margin-inline: auto; text-align: center; }
+.abschnitt-kopf.mittig .ueberschrift-klein { justify-content: center; }
+.abschnitt-kopf p, .lang { color: var(--text-dim); font-size: 1.1rem; margin: 0; line-height: 1.55; }
+.abschnitt-kopf.mittig p { margin-inline: auto; max-width: 56ch; }
+
+.merkmale { list-style: none; padding: 0; margin: 30px 0 0; display: grid; gap: 16px; }
 .merkmale li {
-  display: grid; grid-template-columns: 22px 1fr; gap: 12px;
-  color: var(--text-dim); font-size: 1rem;
+  display: grid; grid-template-columns: 24px 1fr; gap: 14px;
+  color: var(--text-dim); font-size: 1rem; line-height: 1.5;
 }
-.merkmale li b { color: var(--text); font-weight: 600; }
+.merkmale li b { color: var(--text); font-weight: 620; }
 .haken {
-  width: 20px; height: 20px; margin-top: 2px; border-radius: 50%;
+  width: 22px; height: 22px; margin-top: 1px; border-radius: 50%;
   background: rgba(255, 167, 73, 0.14);
   display: grid; place-items: center;
 }
 .haken svg { width: 11px; height: 11px; stroke: var(--orange); }
 
-/* ---------------------------------------------------------------- Gerät */
+/* ---------------------------------------------------------------- Bühne (Hero) */
 
-/* Der Rahmen ist mit CSS gezeichnet und KEIN Produktfoto von Apple. Zwei Gründe: Er bleibt bei
-   jeder Auflösung scharf und kostet kein einziges Byte — und Apples Produktbilder unterliegen
-   eigenen Nutzungsbedingungen, an denen eine Landingpage nichts gewinnt. */
-.geraet {
+.held {
   position: relative;
-  width: min(300px, 78vw);
-  margin-inline: auto;
-  aspect-ratio: 414 / 900;
-  border-radius: 46px;
-  padding: 11px;
-  background: linear-gradient(150deg, #3a3a44, #16161c 42%, #2c2c34);
-  box-shadow:
-    0 2px 0 rgba(255, 255, 255, 0.12) inset,
-    0 50px 90px -40px rgba(0, 0, 0, 0.95),
-    0 0 0 1px rgba(0, 0, 0, 0.6);
-  transform-style: preserve-3d;
+  padding: clamp(36px, 6vw, 72px) 0 clamp(70px, 9vw, 120px);
+  overflow: hidden;
+  isolation: isolate;
 }
-.geraet::before {
-  /* Die Pille oben — nicht als Nachbau eines bestimmten Geräts, sondern damit der Rahmen nicht
-     wie ein leeres Rechteck wirkt. */
-  content: ""; position: absolute; z-index: 3;
-  top: 22px; left: 50%; transform: translateX(-50%);
-  width: 31%; height: 15px; border-radius: 999px;
-  background: #05050a;
+/* Hintergrund: zwei Lichter und ein feines Raster, das nach unten ausläuft. */
+.held::before {
+  content: ""; position: absolute; inset: 0; z-index: -2; pointer-events: none;
+  background:
+    radial-gradient(60% 60% at 78% 30%, rgba(154, 92, 245, 0.16), transparent 70%),
+    radial-gradient(50% 55% at 70% 72%, rgba(255, 138, 43, 0.13), transparent 70%),
+    radial-gradient(45% 40% at 8% 0%, rgba(255, 167, 73, 0.07), transparent 70%);
 }
-.geraet video, .geraet img {
-  width: 100%; height: 100%;
-  border-radius: 36px;
-  object-fit: cover;
-  background: var(--ink-2);
+.held::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(80% 70% at 60% 30%, #000 20%, transparent 75%);
+  mask-image: radial-gradient(80% 70% at 60% 30%, #000 20%, transparent 75%);
 }
-.geraet-schein {
-  position: absolute; inset: -14% -22%;
-  z-index: -1; pointer-events: none;
-  background: radial-gradient(50% 45% at 50% 50%, rgba(255, 138, 43, 0.28), transparent 70%);
-  filter: blur(28px);
+.held-raster {
+  display: grid; align-items: center; gap: clamp(40px, 5vw, 72px);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 980px) {
+  .held-raster { grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr); }
+}
+.held-text { min-width: 0; }
+
+.neu-pille {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-bottom: 26px; padding: 6px 14px 6px 7px;
+  border: 1px solid var(--line-2); border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-dim); font-size: 13.5px; font-weight: 560;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+.neu-pille:hover { text-decoration: none; border-color: rgba(255, 167, 73, 0.5); color: var(--text); background: rgba(255, 167, 73, 0.07); }
+.neu-pille .pille { border: 0; background: linear-gradient(160deg, var(--orange), var(--orange-warm)); color: #1a0f03; padding: 3px 8px 3px 9.5px; }
+.neu-pille .pfeil { color: var(--orange); transition: transform 0.2s; }
+.neu-pille:hover .pfeil { transform: translateX(3px); }
+
+.h1-schlagwort {
+  display: block; margin-bottom: 18px;
+  font-family: var(--schrift);
+  font-size: clamp(0.98rem, 1.6vw, 1.12rem); font-weight: 640; letter-spacing: 0.005em; line-height: 1.3;
+  color: var(--orange);
 }
 
-/* Sanftes Kippen beim Scrollen — reine Zugabe, deshalb hinter einer Abfrage auf Bewegungswunsch. */
+/* Die beiden Wege: gleich groß, gleich hoch, nebeneinander — der orange ist der Hauptweg, der
+   gläserne der zweite. Vorher lag der orange Kasten über die ganze Breite und die App-Karte nur
+   halb so breit darunter; rechts daneben klaffte ein Loch. */
+.held-knoepfe {
+  display: grid; gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 600px;
+}
+@media (max-width: 560px) { .held-knoepfe { grid-template-columns: 1fr; } }
+.weg {
+  position: relative; min-width: 0;
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 2px 14px;
+  padding: 16px 18px; border-radius: 18px;
+  color: var(--text);
+  transition: transform 0.2s var(--kurve), box-shadow 0.2s, border-color 0.2s, background 0.2s;
+}
+.weg:hover { text-decoration: none; transform: translateY(-2px); }
+.weg-zeichen {
+  grid-row: 1 / 3;
+  width: 42px; height: 42px; border-radius: 12px;
+  display: grid; place-items: center;
+}
+.weg-zeichen svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.weg-titel { font-size: 16.5px; font-weight: 680; letter-spacing: -0.015em; line-height: 1.25; }
+.weg-unter { grid-column: 2; font-size: 13px; line-height: 1.35; }
+.weg-pfeil { grid-row: 1 / 3; grid-column: 3; font-size: 18px; transition: transform 0.2s; }
+.weg:hover .weg-pfeil { transform: translateX(3px); }
+
+.weg-haupt {
+  background: linear-gradient(150deg, #ffb25c 0%, var(--orange) 35%, var(--orange-warm) 100%);
+  color: #1a0f03;
+  box-shadow: 0 18px 40px -18px rgba(255, 138, 43, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+.weg-haupt:hover { box-shadow: 0 24px 50px -18px rgba(255, 138, 43, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.4); }
+.weg-haupt .weg-zeichen { background: rgba(26, 15, 3, 0.12); }
+.weg-haupt .weg-unter { color: rgba(26, 15, 3, 0.7); }
+.weg-haupt .weg-pfeil { color: #1a0f03; }
+
+.weg-glas {
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid var(--line-2);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+}
+.weg-glas:hover { border-color: rgba(255, 167, 73, 0.5); background: rgba(255, 167, 73, 0.07); }
+.weg-glas .weg-zeichen { background: rgba(255, 167, 73, 0.12); color: var(--orange); }
+.weg-glas .weg-unter { color: var(--text-dim); }
+.weg-glas .weg-pfeil { color: var(--orange); }
+.weg-titel .pille { margin-left: 6px; vertical-align: 2px; color: var(--orange); font-size: 9.5px; padding: 2px 6px 2px 7.5px; }
+
+.held-fakten {
+  list-style: none; padding: 0; margin: 30px 0 0;
+  display: flex; flex-wrap: wrap; gap: 10px 22px;
+  color: var(--text-faint); font-size: 14px;
+}
+.held-fakten li { display: inline-flex; align-items: center; gap: 8px; }
+.held-fakten svg { width: 15px; height: 15px; fill: none; stroke: var(--orange); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.held-hinweis { margin: 14px 0 0; color: var(--text-faint); font-size: 13.5px; max-width: 60ch; line-height: 1.5; }
+
+/* Die Komposition rechts: iPhone vorn, Timatch Web auf einem Android-Handy dahinter. */
+.held-bild {
+  position: relative; min-width: 0;
+  display: grid; place-items: center;
+  min-height: clamp(520px, 52vw, 680px);
+}
+.held-bild .iphone { --w: clamp(250px, 23vw, 312px); z-index: 2; translate: 13% 0; }
+.held-bild .android { --w: clamp(205px, 18.5vw, 252px); position: absolute; z-index: 1; translate: -54% 7%; rotate: -7deg; }
+.held-bild .android .bildschirm img { opacity: 0.92; }
+.geraet-schild {
+  position: absolute; z-index: 5;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 12px 7px 9px; border-radius: 999px;
+  background: rgba(18, 18, 24, 0.72); border: 1px solid var(--line-2);
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  color: var(--text); font-size: 12.5px; font-weight: 600; white-space: nowrap;
+  box-shadow: 0 12px 30px -12px rgba(0, 0, 0, 0.8);
+}
+.geraet-schild .punkt { width: 8px; height: 8px; border-radius: 50%; background: var(--spieler-2); box-shadow: 0 0 0 4px rgba(52, 199, 89, 0.18); }
+/* Sitzt auf der Ecke des Android-Handys, damit es nichts auf dem iPhone verdeckt. */
+.geraet-schild.links { left: -7%; bottom: 20%; }
+@media (max-width: 979px) {
+  .held-bild { min-height: 0; padding: 30px 0 10px; }
+  .held-bild .iphone { --w: min(64vw, 290px); translate: 16% 0; }
+  .held-bild .android { --w: min(50vw, 230px); translate: -50% 6%; }
+  .geraet-schild.links { left: 0; bottom: 16%; }
+}
 @media (prefers-reduced-motion: no-preference) {
-  .geraet { transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
-  .paar:not(.gedreht) .geraet { transform: perspective(1400px) rotateY(-11deg) rotateX(3deg); }
-  .paar.gedreht .geraet { transform: perspective(1400px) rotateY(11deg) rotateX(3deg); }
-  .paar:hover .geraet { transform: perspective(1400px) rotateY(0deg) rotateX(0deg) translateY(-6px); }
+  .held-bild .iphone { animation: schweben 9s ease-in-out infinite; }
+  .held-bild .android { animation: schweben 9s ease-in-out -4.5s infinite; }
+}
+@keyframes schweben {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
-/* ---------------------------------------------------------------- Karten */
+/* ---------------------------------------------------------------- Drei Fragen */
 
-.karten {
-  display: grid; gap: 18px;
-  grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
-}
-.karte {
+.fragen { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); }
+.frage {
+  position: relative; overflow: hidden;
+  padding: 30px 28px 32px; border-radius: var(--radius);
   background: linear-gradient(170deg, var(--ink-3), var(--ink-2));
   border: 1px solid var(--line);
+  transition: transform 0.35s var(--kurve), border-color 0.35s;
+}
+.frage:hover { transform: translateY(-4px); border-color: rgba(255, 167, 73, 0.3); }
+.frage .nummer {
+  display: block; margin-bottom: 22px;
+  font-family: var(--schrift-display); font-size: 13px; font-weight: 700; letter-spacing: 0.1em; color: var(--text-faint);
+}
+.frage h3 { font-size: 1.42rem; letter-spacing: -0.03em; margin-bottom: 12px; }
+.frage p { color: var(--text-dim); margin: 0; font-size: 0.99rem; }
+.frage::after {
+  content: ""; position: absolute; right: -40px; top: -40px; width: 140px; height: 140px; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 167, 73, 0.12), transparent);
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------- Timer: zentrale Bühne */
+
+.timer-buehne {
+  position: relative; isolation: isolate;
+  display: grid; align-items: center; gap: 28px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 1000px) {
+  .timer-buehne { grid-template-columns: 1fr auto 1fr; gap: 40px; }
+}
+.timer-handys {
+  position: relative; display: flex; justify-content: center; align-items: flex-end;
+  padding: 10px 0 0;
+}
+.timer-handys .iphone { --w: clamp(220px, 21vw, 280px); }
+.timer-handys .iphone + .iphone { margin-left: calc(var(--w) * -0.28); translate: 0 9%; z-index: -1; scale: 0.92; filter: brightness(0.82); }
+.timer-spalte { display: grid; gap: 14px; }
+.punkt-merkmal {
+  padding: 20px 22px; border-radius: 20px;
+  background: rgba(255, 255, 255, 0.03); border: 1px solid var(--line);
+}
+.punkt-merkmal .zeichen {
+  width: 36px; height: 36px; border-radius: 10px; margin-bottom: 12px;
+  display: grid; place-items: center; background: rgba(255, 167, 73, 0.12);
+}
+.punkt-merkmal .zeichen svg { width: 19px; height: 19px; fill: none; stroke: var(--orange); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.punkt-merkmal h3 { font-size: 1.04rem; margin-bottom: 4px; }
+.punkt-merkmal p { margin: 0; color: var(--text-dim); font-size: 0.94rem; line-height: 1.5; }
+@media (max-width: 999px) {
+  .timer-spalte { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+  .timer-handys { order: -1; margin-bottom: 18px; }
+}
+
+/* ---------------------------------------------------------------- Paar: Text und Geräte */
+
+.paar {
+  display: grid; gap: clamp(40px, 6vw, 90px);
+  grid-template-columns: 1fr;
+  align-items: center;
+}
+@media (min-width: 940px) {
+  .paar { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .paar.gedreht .paar-text { order: 2; }
+}
+.paar-text { min-width: 0; }
+.paar-text h2 { margin-bottom: 20px; }
+
+.faecher {
+  position: relative; isolation: isolate;
+  display: flex; justify-content: center; align-items: center;
+  min-height: clamp(460px, 48vw, 620px);
+}
+.faecher .iphone { --w: clamp(230px, 21vw, 284px); }
+.faecher .iphone.vorn { z-index: 2; translate: -16% 0; rotate: -3deg; }
+.faecher .iphone.hinten { position: absolute; z-index: 1; translate: 32% -4%; rotate: 5deg; filter: brightness(0.8); }
+
+/* ---------------------------------------------------------------- iPhone Duo */
+
+.duo-abschnitt { padding-top: clamp(40px, 6vw, 80px); }
+.duo-panel {
+  position: relative; overflow: hidden; isolation: isolate;
+  border-radius: clamp(26px, 3vw, 40px);
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(70% 80% at 85% 20%, rgba(154, 92, 245, 0.22), transparent 70%),
+    radial-gradient(60% 70% at 70% 100%, rgba(255, 138, 43, 0.16), transparent 70%),
+    linear-gradient(160deg, #121219, #09090d 60%);
+  padding: clamp(36px, 6vw, 80px);
+  display: grid; gap: clamp(36px, 5vw, 64px); align-items: center;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 1000px) { .duo-panel { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); } }
+.duo-panel::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 22px 22px;
+  -webkit-mask-image: linear-gradient(90deg, transparent 30%, #000 80%);
+  mask-image: linear-gradient(90deg, transparent 30%, #000 80%);
+}
+.duo-text { min-width: 0; }
+.duo-text .lang { margin-bottom: 26px; }
+
+.haltungen {
+  display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 4px;
+  border-radius: 999px; border: 1px solid var(--line-2); background: rgba(0, 0, 0, 0.3);
+}
+.haltungen button {
+  font: inherit; font-size: 14px; font-weight: 600; color: var(--text-dim);
+  padding: 8px 16px; border-radius: 999px; border: 0; background: transparent; cursor: pointer;
+  transition: color 0.2s, background 0.2s;
+}
+.haltungen button:hover { color: var(--text); }
+.haltungen button[aria-selected="true"] { color: #1a0f03; background: linear-gradient(160deg, var(--orange), var(--orange-warm)); }
+.haltung-text { margin: 16px 0 0; color: var(--text-faint); font-size: 14.5px; min-height: 3em; max-width: 46ch; }
+
+.duo-buehne {
+  position: relative; min-width: 0;
+  display: grid; place-items: center;
+  min-height: clamp(440px, 46vw, 620px);
+}
+.duo-buehne .licht { inset: -10% -20%; }
+.duo-ansicht {
+  grid-area: 1 / 1;
+  display: grid; place-items: center;
+  transition: opacity 0.5s var(--kurve), transform 0.6s var(--kurve);
+}
+.duo-ansicht[hidden] { display: grid; opacity: 0; transform: translateY(18px) scale(0.97); pointer-events: none; visibility: hidden; }
+/* Ohne JavaScript gibt es keine Umschalter — dann stehen alle drei Ansichten untereinander. */
+.ohne-js .duo-buehne { display: flex; flex-direction: column; gap: 40px; }
+.ohne-js .duo-ansicht[hidden] { opacity: 1; transform: none; visibility: visible; }
+.ohne-js .haltungen { display: none; }
+.duo-flach { --w: clamp(260px, 27vw, 360px); rotate: -2deg; }
+.duo-laptop { --w: clamp(280px, 30vw, 400px); margin-top: -6%; }
+.duo-zu { --w: clamp(190px, 17vw, 228px); }
+.duo-zu-reihe { display: flex; align-items: center; gap: clamp(18px, 3vw, 40px); }
+.duo-zu-reihe .iphone-ersatz { color: var(--text-faint); font-size: 13.5px; max-width: 20ch; line-height: 1.45; }
+
+/* ---------------------------------------------------------------- Bento: Sammlung & Statistik */
+
+.bento {
+  display: grid; gap: 16px;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+.kachel {
+  position: relative; overflow: hidden; isolation: isolate;
   border-radius: var(--radius);
-  padding: 28px 26px;
-  position: relative; overflow: hidden;
-  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s;
+  border: 1px solid var(--line);
+  background: linear-gradient(170deg, var(--ink-3), var(--ink-2));
+  padding: 30px 30px 0;
+  grid-column: span 6;
 }
-.karte:hover { transform: translateY(-4px); border-color: rgba(255, 167, 73, 0.35); }
-.karte p { color: var(--text-dim); margin: 0; font-size: 0.99rem; }
-.karten-zeichen {
-  width: 42px; height: 42px; border-radius: 12px;
-  display: grid; place-items: center; margin-bottom: 18px;
-  background: rgba(255, 167, 73, 0.12);
+@media (min-width: 900px) {
+  .kachel.gross { grid-column: span 3; }
+  .kachel.klein { grid-column: span 2; padding-bottom: 28px; }
 }
-.karten-zeichen svg { width: 21px; height: 21px; stroke: var(--orange); fill: none; stroke-width: 1.7; }
+@media (min-width: 620px) and (max-width: 899px) {
+  .kachel.klein { grid-column: span 3; padding-bottom: 28px; }
+}
+.kachel.klein { padding-bottom: 28px; }
+.kachel h3 { font-size: 1.3rem; letter-spacing: -0.025em; }
+.kachel p { margin: 0; color: var(--text-dim); font-size: 0.98rem; max-width: 46ch; }
+.kachel .ueberschrift-klein { margin-bottom: 12px; }
+.kachel-bild {
+  position: relative; margin-top: 30px; height: clamp(300px, 30vw, 380px);
+  display: flex; justify-content: center;
+}
+.kachel-bild .iphone { --w: clamp(240px, 22vw, 290px); position: absolute; top: 0; }
+.kachel-bild::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 40%; z-index: 3;
+  background: linear-gradient(180deg, transparent, var(--ink-2));
+}
+.kachel.gross::before {
+  content: ""; position: absolute; z-index: -1; left: 50%; bottom: -30%; width: 80%; height: 70%; translate: -50% 0;
+  background: radial-gradient(closest-side, rgba(255, 138, 43, 0.18), transparent);
+  filter: blur(10px);
+}
+.kachel.gross.violett::before { background: radial-gradient(closest-side, rgba(154, 92, 245, 0.24), transparent); }
+.kachel .zeichen {
+  width: 40px; height: 40px; border-radius: 12px; margin-bottom: 16px;
+  display: grid; place-items: center; background: rgba(255, 167, 73, 0.12);
+}
+.kachel .zeichen svg { width: 20px; height: 20px; fill: none; stroke: var(--orange); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 
 /* ---------------------------------------------------------------- Geräte-Reihe */
 
 .geraetereihe {
-  display: grid; gap: 16px;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  display: grid; gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
 }
 .geraetekachel {
-  border: 1px solid var(--line); border-radius: 18px; padding: 22px;
-  background: rgba(255, 255, 255, 0.02);
+  position: relative;
+  border: 1px solid var(--line); border-radius: 20px; padding: 24px 22px;
+  background: rgba(255, 255, 255, 0.025);
+  transition: border-color 0.3s, background 0.3s, transform 0.3s var(--kurve);
 }
-.geraetekachel h3 { font-size: 1.02rem; margin-bottom: 5px; }
-.geraetekachel p { color: var(--text-faint); font-size: 0.92rem; margin: 0; }
-.geraetekachel svg { width: 26px; height: 26px; stroke: var(--orange); fill: none; stroke-width: 1.6; margin-bottom: 14px; }
+.geraetekachel:hover { border-color: rgba(255, 167, 73, 0.3); background: rgba(255, 167, 73, 0.04); transform: translateY(-3px); }
+.geraetekachel h3 { font-size: 1.04rem; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.geraetekachel h3 .pille { color: var(--orange); font-size: 9.5px; padding: 2px 6px 2px 7.5px; }
+.geraetekachel p { color: var(--text-faint); font-size: 0.92rem; margin: 0; line-height: 1.5; }
+.geraetekachel svg { width: 28px; height: 28px; stroke: var(--orange); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; margin-bottom: 16px; }
 
-/* ---------------------------------------------------------------- Preise */
+/* ---------------------------------------------------------------- Zwei Wege: Timatch Web */
 
-.preise { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
-.preis {
-  border: 1px solid var(--line); border-radius: var(--radius);
-  padding: 30px 26px;
-  background: linear-gradient(170deg, var(--ink-3), var(--ink-2));
-  display: flex; flex-direction: column;
+.web-streifen {
+  position: relative; isolation: isolate;
+  display: flex; justify-content: center; align-items: flex-end; gap: clamp(14px, 3vw, 34px);
+  margin: 0 0 clamp(44px, 6vw, 70px);
+  padding-top: 10px;
 }
-.preis.hervor { border-color: rgba(255, 167, 73, 0.5); }
-.preis .etikett {
-  font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--orange); margin-bottom: 12px;
+.web-streifen .android { --w: clamp(150px, 17vw, 220px); }
+.web-streifen .android:nth-child(2) { --w: clamp(170px, 19vw, 246px); translate: 0 -6%; }
+.web-streifen .licht { inset: -10% 0; }
+@media (max-width: 620px) {
+  .web-streifen .android:nth-child(3) { display: none; }
 }
-.preis .zahl { font-size: 2.3rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
-.preis .zahl small { font-size: 0.95rem; font-weight: 500; color: var(--text-faint); letter-spacing: 0; }
-.preis ul { list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 10px; }
-.preis li { color: var(--text-dim); font-size: 0.96rem; padding-left: 20px; position: relative; }
-.preis li::before {
-  content: "·"; position: absolute; left: 6px; color: var(--orange); font-weight: 700;
+
+.vergleich-huelle { border-radius: 22px; border: 1px solid var(--line); background: rgba(255, 255, 255, 0.02); overflow: hidden; }
+.vergleich { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.vergleich th, .vergleich td { padding: 15px 18px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+.vergleich tbody tr:last-child th, .vergleich tbody tr:last-child td { border-bottom: 0; }
+.vergleich thead th { background: rgba(255, 255, 255, 0.03); font-weight: 600; }
+.vergleich tbody th { font-weight: 600; color: var(--text); width: 24%; }
+.vergleich td { color: var(--text-dim); width: 38%; }
+.vergleich tbody tr { transition: background 0.2s; }
+.vergleich tbody tr:hover { background: rgba(255, 255, 255, 0.02); }
+.v-kopf { display: inline-flex; align-items: center; gap: 10px; }
+.v-kopf svg { width: 22px; height: 22px; fill: none; stroke: var(--orange); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.v-kopf small { display: block; font-weight: 500; color: var(--text-faint); font-size: 12px; margin-top: 2px; }
+.v-ja { color: var(--orange); font-weight: 700; margin-right: 8px; }
+.v-nein { color: var(--text-faint); }
+.v-text { color: var(--text-dim); }
+.wege-knoepfe { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+/* Schmal: keine Tabelle zum Seitwärtsschieben, sondern je Funktion ein Block mit zwei Zeilen. */
+@media (max-width: 680px) {
+  .vergleich { font-size: 0.92rem; }
+  .vergleich thead { display: none; }
+  .vergleich, .vergleich tbody, .vergleich tr, .vergleich th, .vergleich td { display: block; width: auto; }
+  .vergleich tr { padding: 14px 16px; border-bottom: 1px solid var(--line); }
+  .vergleich tbody tr:last-child { border-bottom: 0; }
+  .vergleich th, .vergleich td { padding: 0; border: 0; }
+  .vergleich tbody th { margin-bottom: 6px; }
+  .vergleich td { padding: 4px 0 6px; }
+  .vergleich td::before { content: attr(data-l); display: block; margin-bottom: 2px; color: var(--text-faint); font-size: 11.5px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+  .v-ja { margin-right: 6px; }
 }
 
 /* ---------------------------------------------------------------- Datenschutz-Block */
 
 .ruhe {
+  position: relative; overflow: hidden;
   border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: clamp(30px, 5vw, 56px);
+  border-radius: clamp(26px, 3vw, 36px);
+  padding: clamp(32px, 5vw, 64px);
   background:
-    radial-gradient(90% 120% at 100% 0%, rgba(255, 167, 73, 0.09), transparent 60%),
+    radial-gradient(90% 120% at 100% 0%, rgba(255, 167, 73, 0.1), transparent 60%),
     linear-gradient(170deg, var(--ink-3), var(--ink-2));
 }
-.ruhe-liste { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-top: 34px; }
-.ruhe-liste h3 { font-size: 1rem; }
-.ruhe-liste p { color: var(--text-faint); font-size: 0.93rem; margin: 0; }
+.ruhe h2 { max-width: 16ch; }
+.ruhe-liste { display: grid; gap: 26px 30px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-top: 40px; }
+.ruhe-liste h3 { font-size: 1.02rem; }
+.ruhe-liste p { color: var(--text-faint); font-size: 0.94rem; margin: 0; }
+.ruhe-liste > div { padding-top: 18px; border-top: 1px solid var(--line); }
+
+/* ---------------------------------------------------------------- Preise */
+
+.preise { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.preis {
+  position: relative;
+  border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 30px 26px;
+  background: linear-gradient(170deg, var(--ink-3), var(--ink-2));
+  display: flex; flex-direction: column;
+}
+.preis.hervor {
+  border-color: rgba(255, 167, 73, 0.55);
+  background:
+    radial-gradient(100% 70% at 50% 0%, rgba(255, 167, 73, 0.12), transparent 70%),
+    linear-gradient(170deg, var(--ink-3), var(--ink-2));
+  box-shadow: 0 30px 60px -30px rgba(255, 138, 43, 0.35);
+}
+.preis .etikett {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--orange); margin-bottom: 14px;
+}
+.preis .zahl { font-family: var(--schrift-display); font-size: 2.4rem; font-weight: 730; letter-spacing: -0.035em; line-height: 1; }
+.preis .zahl small { font-size: 0.95rem; font-weight: 500; color: var(--text-faint); letter-spacing: 0; }
+.preis ul { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 11px; }
+.preis li { color: var(--text-dim); font-size: 0.96rem; padding-left: 24px; position: relative; line-height: 1.45; }
+.preis li::before {
+  content: ""; position: absolute; left: 2px; top: 0.45em; width: 11px; height: 6px;
+  border-left: 2px solid var(--orange); border-bottom: 2px solid var(--orange);
+  rotate: -45deg;
+}
+.preis-hinweis {
+  margin-top: 28px;
+  color: var(--text-faint);
+  font-size: 0.92rem;
+  max-width: 76ch;
+}
+
+/* ---------------------------------------------------------------- Häufige Fragen */
+
+.faq { display: grid; gap: 10px; max-width: 860px; }
+.faq-eintrag {
+  border: 1px solid var(--line); border-radius: 18px;
+  background: rgba(255, 255, 255, 0.025); padding: 0 22px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.faq-eintrag[open] { border-color: var(--line-2); background: rgba(255, 255, 255, 0.04); }
+.faq-eintrag summary {
+  cursor: pointer; list-style: none; padding: 18px 34px 18px 0; position: relative;
+  font-weight: 620; font-size: 1.04rem;
+}
+.faq-eintrag summary::-webkit-details-marker { display: none; }
+.faq-eintrag summary::after {
+  content: ""; position: absolute; right: 2px; top: 50%; width: 10px; height: 10px; translate: 0 -70%;
+  border-right: 2px solid var(--orange); border-bottom: 2px solid var(--orange);
+  rotate: 45deg; transition: rotate 0.25s var(--kurve), translate 0.25s var(--kurve);
+}
+.faq-eintrag[open] summary::after { rotate: 225deg; translate: 0 -25%; }
+.faq-eintrag p { margin: 0 0 20px; color: var(--text-dim); line-height: 1.6; }
+.faq-weiter { margin-top: 22px; color: var(--text-faint); font-size: 0.95rem; }
+
+/* ---------------------------------------------------------------- Schluss-Aufruf */
+
+.schluss {
+  position: relative; overflow: hidden; isolation: isolate; text-align: center;
+  border-radius: clamp(26px, 3vw, 40px);
+  border: 1px solid rgba(255, 167, 73, 0.25);
+  padding: clamp(48px, 8vw, 100px) clamp(24px, 5vw, 60px);
+  background:
+    radial-gradient(60% 90% at 50% 0%, rgba(255, 138, 43, 0.22), transparent 70%),
+    radial-gradient(50% 80% at 50% 110%, rgba(154, 92, 245, 0.2), transparent 70%),
+    linear-gradient(170deg, #15131a, #0b0a0e);
+}
+.schluss h2 { max-width: 18ch; margin-inline: auto; }
+.schluss p { color: var(--text-dim); max-width: 50ch; margin: 0 auto 34px; font-size: 1.1rem; }
+.schluss .knopfreihe { justify-content: center; }
 
 /* ---------------------------------------------------------------- Fußzeile */
 
 footer {
   border-top: 1px solid var(--line);
-  padding: 56px 0 44px;
+  padding: 60px 0 46px;
   color: var(--text-faint); font-size: 0.93rem;
 }
-.fuss-oben { display: flex; flex-wrap: wrap; gap: 30px; justify-content: space-between; margin-bottom: 34px; }
-.fuss-spalten { display: flex; flex-wrap: wrap; gap: 44px; }
+.fuss-oben { display: flex; flex-wrap: wrap; gap: 30px; justify-content: space-between; margin-bottom: 38px; }
+.fuss-spalten { display: flex; flex-wrap: wrap; gap: 48px; }
 .fuss-spalte h4 {
-  font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em;
-  color: var(--text-dim); margin: 0 0 12px; font-weight: 700;
+  font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--text-dim); margin: 0 0 14px; font-weight: 700;
 }
-.fuss-spalte ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 9px; }
+.fuss-spalte ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
 .fuss-spalte a { color: var(--text-faint); }
 .fuss-spalte a:hover { color: var(--text); }
 .fuss-unten { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; align-items: center; }
-.fuss-hinweis { max-width: 62ch; line-height: 1.5; }
+.fuss-hinweis { max-width: 64ch; line-height: 1.5; }
 .fuss-recht { display: flex; flex-wrap: wrap; gap: 8px 18px; width: 100%; }
 .fuss-recht a { color: var(--text-faint); }
 .fuss-recht a:hover { color: var(--text); }
-
-/* ---------------------------------------------------------------- Einblenden */
-
-@media (prefers-reduced-motion: no-preference) {
-  .auftritt {
-    opacity: 0;
-    transform: translateY(26px);
-    transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
-                transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .auftritt.sichtbar { opacity: 1; transform: none; }
-}
-
-/* ---------------------------------------------------------------- Nachträge
- *
- * Diese Klassen ersetzen `style`-Attribute, die vorher direkt im HTML standen. Sie MUSSTEN hier
- * her: Die Inhaltsrichtlinie der Seite erlaubt Stile nur aus eigenen Dateien (`style-src 'self'`),
- * und ein `style`-Attribut ist für den Browser ein Inline-Stil wie jeder andere. Er wird dann
- * ersatzlos ignoriert — beim ersten Aufruf lag deshalb das Video, das eigentlich nur die Textur
- * für die 3D-Szene liefert, in voller Größe über dem Kopfbereich.
- *
- * Die Regel gelockert zu haben (`'unsafe-inline'`) wäre der bequeme Weg gewesen und hätte genau
- * die Lücke aufgemacht, gegen die die Richtlinie schützt.
- */
-
-/* Liefert nur die Textur für das Gerät in der 3D-Szene. Es muss im Dokument stehen, damit der
-   Browser es lädt und abspielt — sichtbar sein muss es nicht. Bewusst NICHT `display:none`:
-   Ein ausgeblendetes Video dekodiert in manchen Browsern nicht, und die Textur bliebe schwarz. */
-.szene-quelle {
-  position: absolute;
-  width: 1px; height: 1px;
-  opacity: 0;
-  pointer-events: none;
-}
-
 .marke-zeile { margin: 12px 0 0; max-width: 34ch; }
-.preis-hinweis {
-  margin-top: 26px;
-  color: var(--text-faint);
-  font-size: 0.92rem;
-  max-width: 70ch;
-}
-.eng { max-width: 56ch; }
 
-/* 404 */
+/* ---------------------------------------------------------------- 404 */
+
 .mitte {
   min-height: 100svh;
   display: grid; align-content: center; gap: 20px;
@@ -495,10 +995,11 @@ footer {
 .mitte h1 { font-size: clamp(2rem, 6vw, 3.4rem); letter-spacing: -0.03em; margin: 0; }
 .mitte .vorspann { margin: 0; }
 .zweitsprache { color: var(--text-faint); }
+.eng { max-width: 56ch; }
 
 /* ---------------------------------------------------------------- Textseiten
  *
- * Hilfe und Datenschutz. Bewusst dieselbe Grundlage wie die Landingpage — dieselben Farben,
+ * Hilfe und Rechtstexte. Bewusst dieselbe Grundlage wie die Landingpage — dieselben Farben,
  * dieselbe Kopfleiste, dieselbe Fußzeile —, aber eine ruhige, schmale Spalte statt Bühnenbild.
  * Wer auf einer Rechtsseite landet, will lesen und nicht bewundert werden.
  */
@@ -509,8 +1010,11 @@ footer {
 }
 .blatt h1 {
   font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
   margin-bottom: 10px;
 }
+.blatt .lede { color: var(--text-dim); font-size: 1.12rem; margin: 0 0 30px; }
 .blatt .stand {
   color: var(--text-faint);
   font-size: 0.92rem;
@@ -518,6 +1022,7 @@ footer {
 }
 .blatt h2 {
   font-size: clamp(1.3rem, 2.6vw, 1.7rem);
+  letter-spacing: -0.02em;
   margin: 52px 0 14px;
   scroll-margin-top: 80px;
 }
@@ -525,6 +1030,7 @@ footer {
   font-size: 1.08rem;
   margin: 32px 0 8px;
   color: var(--text);
+  scroll-margin-top: 80px;
 }
 .blatt p, .blatt li {
   color: var(--text-dim);
@@ -606,115 +1112,21 @@ footer {
 .sprungliste a { color: var(--text-dim); }
 .sprungliste a:hover { color: var(--orange); }
 
-/* ---------------------------------------------------------------- Zwei Wege (Beta gleichwertig)
-   Die beiden Fassungen — App über TestFlight und Timatch Web im Browser — stehen im Hero als
-   gleich große Karten nebeneinander, nicht mehr als Haupt- und Nebenknopf. Gleiche Optik, gleiche
-   Beta-Pille; nur der Inhalt unterscheidet sie. */
-.wege {
-  display: grid; gap: 14px;
-  grid-template-columns: 1fr 1fr;
-  max-width: 640px; min-width: 0;
-}
-/* Das Hero ist ein Grid; ohne min-width: 0 nähme der Textblock die Mindestbreite der Karten an
-   und liefe auf schmalen Bildschirmen rechts hinaus. */
-.buehne-text { min-width: 0; }
-.weg { min-width: 0; }
-@media (max-width: 620px) { .wege { grid-template-columns: 1fr; } }
-.weg {
-  position: relative; display: flex; flex-direction: column; gap: 6px;
-  padding: 18px 20px 18px; border-radius: 18px;
-  background: rgba(255, 255, 255, 0.05); border: 1px solid var(--line);
-  color: var(--text);
-  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
-}
-.weg:hover, .weg:focus-visible {
-  text-decoration: none; transform: translateY(-3px);
-  border-color: rgba(255, 167, 73, 0.55); background: rgba(255, 167, 73, 0.07);
-  box-shadow: 0 18px 40px -18px rgba(255, 138, 43, 0.6);
-}
-.weg-kopf { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
-.weg-kopf svg { width: 26px; height: 26px; fill: none; stroke: var(--orange); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-.weg-titel { font-size: 17px; font-weight: 650; letter-spacing: -0.01em; }
-.weg-unter { font-size: 13.5px; color: var(--text-dim); }
-.weg-pfeil { position: absolute; right: 18px; bottom: 16px; color: var(--orange); font-size: 18px; transition: transform 0.18s ease; }
-.weg:hover .weg-pfeil { transform: translateX(3px); }
-.beta-pille {
-  display: inline-flex; align-items: center; padding: 2px 9px; border-radius: 999px;
-  border: 1px solid rgba(255, 167, 73, 0.7); color: var(--orange);
-  font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-}
-.wege-hinweis {
-  margin: 18px 0 0; display: flex; align-items: flex-start; gap: 8px;
-  max-width: 640px; font-size: 14px; color: var(--text-faint); line-height: 1.45;
-}
-.wege-hinweis svg { flex: none; margin-top: 2px; }
+/* ---------------------------------------------------------------- Einblenden */
 
-/* Vergleichstabelle */
-.vergleich-huelle { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 18px; border: 1px solid var(--line); background: rgba(255, 255, 255, 0.02); }
-.vergleich { width: 100%; border-collapse: collapse; font-size: 0.95rem; min-width: 560px; }
-.vergleich th, .vergleich td { padding: 14px 16px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
-.vergleich tbody tr:last-child th, .vergleich tbody tr:last-child td { border-bottom: 0; }
-.vergleich thead th { background: rgba(255, 255, 255, 0.03); font-weight: 600; }
-.vergleich tbody th { font-weight: 600; color: var(--text); width: 24%; }
-.vergleich td { color: var(--text-dim); width: 38%; }
-.v-kopf { display: inline-flex; align-items: center; gap: 10px; }
-.v-kopf svg { width: 22px; height: 22px; fill: none; stroke: var(--orange); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; flex: none; }
-.v-kopf small { display: block; font-weight: 500; color: var(--text-faint); font-size: 12px; margin-top: 2px; }
-.v-ja { color: var(--orange); font-weight: 700; margin-right: 8px; }
-.v-nein { color: var(--text-faint); }
-.v-text { color: var(--text-dim); }
-.wege-knoepfe { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
-.wege-knoepfe .knopf svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-/* Schmal: keine Tabelle zum Seitwärtsschieben, sondern je Funktion ein Block mit zwei Zeilen. */
-@media (max-width: 620px) {
-  .vergleich { font-size: 0.92rem; min-width: 0; }
-  .vergleich thead { display: none; }
-  .vergleich, .vergleich tbody, .vergleich tr, .vergleich th, .vergleich td { display: block; width: auto; }
-  .vergleich tr { padding: 12px 14px; border-bottom: 1px solid var(--line); }
-  .vergleich tbody tr:last-child { border-bottom: 0; }
-  .vergleich th, .vergleich td { padding: 0; border: 0; }
-  .vergleich tbody th { margin-bottom: 6px; }
-  .vergleich td { padding: 4px 0 6px; }
-  .vergleich td::before { content: attr(data-l); display: block; margin-bottom: 2px; color: var(--text-faint); font-size: 11.5px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
-  .v-ja { margin-right: 6px; }
+@media (prefers-reduced-motion: no-preference) {
+  .auftritt {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.9s var(--kurve), transform 0.9s var(--kurve);
+  }
+  .auftritt.sichtbar { opacity: 1; transform: none; }
+  /* Gestaffelt: Elemente mit `data-stufe` kommen nacheinander. */
+  .auftritt [data-stufe] { opacity: 0; transform: translateY(18px); transition: opacity 0.8s var(--kurve), transform 0.8s var(--kurve); }
+  .auftritt.sichtbar [data-stufe] { opacity: 1; transform: none; }
+  .auftritt.sichtbar [data-stufe="2"] { transition-delay: 0.08s; }
+  .auftritt.sichtbar [data-stufe="3"] { transition-delay: 0.16s; }
+  .auftritt.sichtbar [data-stufe="4"] { transition-delay: 0.24s; }
+  .auftritt.sichtbar [data-stufe="5"] { transition-delay: 0.32s; }
+  .auftritt.sichtbar [data-stufe="6"] { transition-delay: 0.4s; }
 }
-
-/* SEO-Überarbeitung 02.11.2026: Timatch Web steht als Hauptweg oben (volle Breite, orange),
-   die App als zweiter Weg darunter. Das Schlagwort über der H1 trägt die Suchbegriffe
-   („Brettspiel-Timer & Punktezettel"), ohne die Wort-Marke der Überschrift zu verdrängen. */
-.weg-haupt {
-  grid-column: 1 / -1;
-  background: linear-gradient(105deg, var(--orange) 10%, var(--orange-warm) 90%);
-  border-color: transparent; color: var(--ink);
-  padding: 20px 22px;
-}
-.weg-haupt .weg-titel { font-size: 19px; font-weight: 700; }
-.weg-haupt .weg-unter { color: rgba(8, 8, 12, 0.72); }
-.weg-haupt .weg-kopf svg, .weg-haupt .weg-pfeil { stroke: var(--ink); color: var(--ink); }
-.weg-haupt .beta-pille { border-color: rgba(8, 8, 12, 0.55); color: var(--ink); }
-.weg-haupt:hover, .weg-haupt:focus-visible {
-  background: linear-gradient(105deg, var(--orange) 0%, var(--orange-warm) 100%);
-  border-color: transparent; box-shadow: 0 18px 40px -14px rgba(255, 138, 43, 0.75);
-}
-.h1-schlagwort {
-  display: block; margin-bottom: 14px;
-  font-size: clamp(0.95rem, 1.8vw, 1.15rem); font-weight: 650; letter-spacing: 0.02em;
-  color: var(--orange);
-}
-
-/* Häufige Fragen */
-.faq { display: grid; gap: 10px; max-width: 820px; }
-.faq-eintrag {
-  border: 1px solid var(--line); border-radius: 16px;
-  background: rgba(255, 255, 255, 0.03); padding: 0 20px;
-}
-.faq-eintrag summary {
-  cursor: pointer; list-style: none; padding: 16px 28px 16px 0; position: relative;
-  font-weight: 620; font-size: 1.02rem;
-}
-.faq-eintrag summary::-webkit-details-marker { display: none; }
-.faq-eintrag summary::after {
-  content: "+"; position: absolute; right: 0; top: 13px; font-size: 1.3rem; color: var(--orange);
-}
-.faq-eintrag[open] summary::after { content: "–"; }
-.faq-eintrag p { margin: 0 0 18px; color: var(--text-dim); line-height: 1.55; }

@@ -7,6 +7,9 @@
 (function () {
   "use strict";
 
+  // Ohne JavaScript stehen die drei Duo-Ansichten untereinander (siehe `.ohne-js` in site.css).
+  document.body.classList.remove("ohne-js");
+
   // ------------------------------------------------------------ Kopfleiste
   const kopf = document.querySelector(".kopfleiste");
   if (kopf) {
@@ -55,6 +58,40 @@
       });
     }, { threshold: 0.25 });
     videos.forEach((v) => schauer.observe(v));
+  }
+
+  // ------------------------------------------------------------ iPhone Duo: Haltungen
+  //
+  // Drei Reiter (Aufgestellt · Aufgeklappt · Zugeklappt) schalten die Ansicht um — nach dem
+  // WAI-ARIA-Muster für Reiter: Pfeiltasten wandern, nur der aktive Reiter ist per Tab erreichbar.
+  const leiste = document.querySelector(".haltungen");
+  if (leiste) {
+    const reiter = Array.from(leiste.querySelectorAll('[role="tab"]'));
+    const text = document.querySelector("[data-haltung-text]");
+    const zeige = (aktiv, fokus) => {
+      reiter.forEach((r) => {
+        const an = r === aktiv;
+        r.setAttribute("aria-selected", String(an));
+        r.tabIndex = an ? 0 : -1;
+        const feld = document.getElementById(r.getAttribute("aria-controls"));
+        if (feld) {
+          feld.hidden = !an;
+          if (an && text && feld.dataset.text) text.textContent = feld.dataset.text;
+        }
+      });
+      if (fokus) aktiv.focus();
+    };
+    reiter.forEach((r, i) => {
+      r.addEventListener("click", () => zeige(r, false));
+      r.addEventListener("keydown", (e) => {
+        let ziel = null;
+        if (e.key === "ArrowRight") ziel = reiter[(i + 1) % reiter.length];
+        if (e.key === "ArrowLeft") ziel = reiter[(i - 1 + reiter.length) % reiter.length];
+        if (e.key === "Home") ziel = reiter[0];
+        if (e.key === "End") ziel = reiter[reiter.length - 1];
+        if (ziel) { e.preventDefault(); zeige(ziel, true); }
+      });
+    });
   }
 
   // ------------------------------------------------------------ Jahreszahl
