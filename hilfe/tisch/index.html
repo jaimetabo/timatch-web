@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Timatch Web — Hilfe</title>
-<meta name="description" content="Hilfe zur Web-Version Timatch Web für Android und jeden Browser: installieren, Partie einrichten, Zeitkonto und Strafpunkte, Wertungsblöcke, Partie übergeben, Sicherung und häufige Fragen.">
+<meta name="description" content="Hilfe zu Timatch Web für Android und jeden Browser: installieren, Partie einrichten, Zeitkonto und Strafpunkte, Wertungsblöcke, Tisch-Display, Sammlung, Konto, Partie übergeben und häufige Fragen.">
 <link rel="canonical" href="https://timatch.de/hilfe/tisch/">
 <link rel="alternate" hreflang="de" href="https://timatch.de/hilfe/tisch/">
 <link rel="alternate" hreflang="en" href="https://timatch.de/en/support/table/">
@@ -14,7 +14,7 @@
 <meta name="theme-color" content="#08080c">
 <link rel="icon" href="/assets/img/icon-64.png" sizes="any">
 <link rel="apple-touch-icon" href="/assets/img/icon-180.png">
-<link rel="stylesheet" href="/assets/css/site.css?v=11">
+<link rel="stylesheet" href="/assets/css/site.css?v=20">
 </head>
 <body>
 
@@ -25,6 +25,7 @@
     <a class="marke" href="/"><img src="/assets/img/icon-64.png" alt="" width="28" height="28">Timatch</a>
     <nav class="kopf-nav" aria-label="Navigation">
       <a class="nav-abschnitt" href="/hilfe/">Hilfe zur iPhone-App</a>
+      <a class="nav-faq" href="#haeufige-fragen">FAQ</a>
       <span class="sprachwahl">
         <a href="/hilfe/tisch/" aria-current="true" lang="de">DE</a>
         <a href="/en/support/table/" lang="en">EN</a>
@@ -35,11 +36,12 @@
 
 <main id="inhalt" class="huelle blatt">
 <h1>Timatch Web — Hilfe</h1>
-  <p class="lede">Die Web-Version von Timatch: der Spieltisch zum Mitnehmen, für Android und jeden Browser.</p>
+  <p class="lede">Timatch im Browser: für Android, Laptop, Tablet und jedes andere Gerät — mit Timer, Punktezettel, Sammlung, Statistik und Tisch-Display.</p>
 
 <div class="merkkasten">
 <p><strong>Adresse:</strong> <a href="https://app.timatch.de">app.timatch.de</a> — kein Konto nötig, kostenlos nutzbar.</p>
-<p>Ohne Konto bleibt alles in deinem Browser. Nur wenn du selbst ein Timatch-Konto anlegst, einen Live-Tisch startest oder ein Spiel bei BoardGameGeek suchst, geht etwas an unseren Server (<a href="/datenschutz/#timatch-tisch">Datenschutz</a>). Die iPhone-, iPad-, Apple-Watch- und Apple-TV-App ist das „große“ Timatch mit Spielesammlung, Tisch-Display und Synchronisierung — <a href="/hilfe/">Hilfe zur iPhone-App</a>. Timatch Web ist der Spieltisch daraus, zum Mitnehmen.</p>
+<p>Ohne Konto bleibt alles in deinem Browser. Nur wenn du selbst ein Timatch-Konto anlegst, ein Tisch-Display startest, eine Cloud-Sicherung anlegst oder ein Spiel bei BoardGameGeek suchst, geht etwas an unseren Server (<a href="/datenschutz/#timatch-tisch">Datenschutz</a>).</p>
+<p>Timatch Web kann fast alles, was die App für iPhone und iPad kann. Was nur dort geht, hängt an der Plattform: Apple Watch, Widgets, Live Activity, Siri, die Apple-TV-App und das iPhone Duo — <a href="/hilfe/">Hilfe zur iPhone-App</a>. Mit demselben Timatch-Konto gleichen sich beide ab.</p>
 </div>
 
 <h2 id="installieren">Installieren</h2>
@@ -83,28 +85,50 @@
 <h2 id="beenden">Partie beenden</h2>
 <p>„Beenden“ oben rechts führt zum Punkte-Eintragen. Mit einem Wertungsblock trägst du je Person die Werte der Kategorien ein, die Summe läuft mit. Zeitstrafen werden abgezogen — bei „niedrigste Punktzahl gewinnt“ draufgeschlagen.</p>
 <p>Die Zusammenfassung zeigt Plätze und Sieger (bei Gleichstand geteilt), die Aufschlüsselung nach Kategorien, Spielzeit, Pausen und Runden sowie die Denkzeit je Person. Dort trägst du Notizen, den Ort und eine Stichentscheid-Notiz ein, bearbeitest Punkte nachträglich und öffnest den Zug-Verlauf.</p>
-<p><strong>Export:</strong> „Timatch-Datei“ erzeugt eine Timatch-Session-Datei, die die iPhone-App unter Einstellungen → „Session-Datei importieren“ einliest. „CSV“ liefert eine Tabelle für Tabellenprogramme, „Teilen“ öffnet das Teilen-Menü des Geräts.</p>
+<p><strong>Export:</strong> „Timatch-Datei“ erzeugt eine Timatch-Session-Datei, die die iPhone-App unter Einstellungen → „Session-Datei importieren“ einliest. „CSV“ liefert eine Tabelle für Tabellenprogramme, „PDF“ einen Bericht über die Druckfunktion des Browsers, „Teilen“ öffnet das Teilen-Menü des Geräts. Mit eigenem KI-Schlüssel schreibt Timatch auf Wunsch einen kurzen Bericht zur Partie.</p>
 
 <h2 id="partie-uebergeben">Partie übergeben</h2>
-<p>Wird der Akku knapp, kann ein anderes Gerät die laufende Partie übernehmen: Am Tisch „Partie übergeben“ wählen — die Partie wird pausiert und als QR-Code angezeigt. Auf dem anderen Android- oder Browser-Gerät in den Einstellungen „Partie übernehmen“ öffnen und den Code mit der Kamera scannen. Die Partie kommt dort pausiert an und läuft mit „Weiter“ weiter, mit allen Zeiten und dem ganzen Verlauf.</p>
-<p>Ohne Kamera geht es über eine Datei: die Partie teilen und auf dem anderen Gerät importieren.</p>
-<p>Eine Übergabe an das iPhone (Timatch-App) ist noch nicht möglich. Beendete Partien lassen sich als Session-Datei dorthin bringen.</p>
+<p>Wird der Akku knapp, kann ein anderes Gerät die laufende Partie übernehmen: Am Tisch „Partie übergeben“ wählen — die Partie wird pausiert und als QR-Code angezeigt. Auf dem anderen Gerät „Partie übernehmen“ öffnen und den Code mit der Kamera scannen. Die Partie kommt dort pausiert an und läuft mit „Weiter“ weiter, mit allen Zeiten und dem ganzen Verlauf.</p>
+<p>Ohne Kamera geht es als Text oder als Datei: die Partie teilen und auf dem anderen Gerät einfügen oder importieren.</p>
+<p><strong>Zwischen Browser und iPhone geht das in beide Richtungen.</strong> In der iPhone-App: in der Partie „…“ → „Session übertragen“ → „An Timatch Web abgeben“ — den QR-Code scannt Timatch Web unter „Partie übernehmen“. Umgekehrt zeigt Timatch Web den Code, und die iPhone-App liest ihn auf dem Startbildschirm unter „Fortsetzen“. Zeiten, Züge, Runde, Pässe, Punkte und Strafen kommen mit.</p>
+
+<h2 id="tisch-display">Tisch-Display und mitspielende Geräte</h2>
+<p>„Tisch-Display“ am Tisch erzeugt einen sechsstelligen Code und einen QR-Code. Jedes andere Gerät — ein Fernseher mit Browser, ein Tablet, die Handys der anderen — öffnet damit den Tisch und sieht live, wer dran ist und wie viel Zeit bleibt. Wer dort seinen Namen antippt, wird mit einer Vibration geweckt, wenn er an der Reihe ist.</p>
+<ul>
+<li><strong>Gäste tippen selbst:</strong> Erlaubt der Gastgeber es, beenden Mitspielende ihren Zug auf dem eigenen Gerät, passen oder tippen „Fertig“ in der Denkphase.</li>
+<li><strong>Auf Fernseher zeigen:</strong> schickt den Tisch per Chromecast auf einen Fernseher, wo der Browser das unterstützt.</li>
+<li><strong>Mit der iPhone-App:</strong> Ein Tisch-Display aus der iPhone-App lässt sich hier ebenfalls mit dem Code öffnen.</li>
+</ul>
+
+<h2 id="sammlung">Sammlung</h2>
+<p>Deine Spiele mit Titelbild, Spielerzahl, Dauer, Gewicht und Beschreibung — von Hand angelegt oder von BoardGameGeek übernommen: einzeln über die Suche oder die ganze Sammlung über deinen BGG-Nutzernamen bzw. die BGG-CSV-Datei.</p>
+<ul>
+<li><strong>Wie in der App:</strong> Besitzstatus, Favorit, eigene Bewertung, Erklär- und eigene Spielzeit, Maße, Tags und Metadaten, Erweiterungen am Grundspiel.</li>
+<li><strong>Verliehen:</strong> an wen und seit wann, mit Erinnerungsdatum.</li>
+<li><strong>Regal-Planer:</strong> rechnet aus, was in dein Regal passt — auf dem Gerät, ohne Server.</li>
+<li><strong>„Was spielen wir?“:</strong> Vorschläge nach Rundengröße, Zeit und Lust, mit eigenem KI-Schlüssel auch in Worten.</li>
+<li><strong>Orte:</strong> wo ihr spielt, mit Karte und den Partien je Ort.</li>
+</ul>
+
+<h2 id="konto">Konto und Abgleich</h2>
+<p>Unter Einstellungen → Konto meldest du dich ohne Passwort an: mit einem Link oder achtstelligen Code per Mail, mit Apple oder mit Google. Danach gleichen sich Partien, Personen, Sammlung, Wertungsblöcke, Orte, „Das bin ich“ und Einstellungen von selbst ab — mit anderen Browsern und mit der iPhone-App. Die neuere Änderung gewinnt, Gelöschtes bleibt gelöscht. In der Geräteliste siehst du, wo du angemeldet bist; dort lädst du auch alle Daten herunter oder löschst das Konto (<a href="/hilfe/#konto-loeschen">so geht's</a>).</p>
+<p>Ohne Konto gibt es die <strong>Cloud-Sicherung mit Code</strong>: Ein Code, den nur du kennst, verschlüsselt alles im Browser; auf einem anderen Gerät gibst du denselben Code ein und hast alles wieder. Der Server sieht nur verschlüsselte Bytes.</p>
 
 <h2 id="personen-statistik">Personen, Statistik, alle Partien</h2>
 <ul>
 <li><strong>Personen:</strong> Das Verzeichnis entsteht von selbst beim Spielen. Je Person siehst du Farbe, Partien, Siege, Siegquote, durchschnittliche und längste Zugzeit sowie die gespielten Partien. Umbenennen behält die alten Partien.</li>
-<li><strong>Statistik:</strong> Partien, Spielzeit, Züge, Siege je Person, Grübler und Blitz, längster Zug, Siegesserie, meistgespielte Spiele, Orte und die letzten zwölf Monate — für alles, dieses Jahr oder die letzten zwölf Monate.</li>
+<li><strong>Statistik:</strong> Partien, Spielzeit, Züge, Siege je Person, Grübler und Blitz, längster Zug, Siegesserie, meistgespielte Spiele, Orte und die letzten zwölf Monate — für alles, dieses Jahr oder die letzten zwölf Monate. Dazu Auszeichnungen, Rekorde (meiste Siege, höchste Punktzahl, größter Vorsprung) und die Heatmap „Wann ihr spielt“. Mit eigenem KI-Schlüssel gibt es eine Auswertung in ganzen Sätzen.</li>
 <li><strong>Alle Partien:</strong> Suche über Spiel, Person, Ort und Notiz, dazu ein Filter je Person.</li>
 </ul>
 
 <h2 id="daten">Deine Daten</h2>
-<p>Alles liegt nur in diesem Browser. Unter Einstellungen (Zahnrad) → Daten findest du:</p>
+<p>Ohne Konto liegt alles nur in diesem Browser. Unter Einstellungen (Zahnrad) → Daten findest du:</p>
 <ul>
 <li><strong>Sicherung erstellen / Sicherung teilen:</strong> eine Datei mit allen Partien, Personen und Einstellungen — für den Gerätewechsel oder für alle Fälle.</li>
 <li><strong>Datei importieren:</strong> liest eine Sicherung, eine Timatch-Session-Datei aus der iPhone-App oder eine übergebene Partie ein. Bereits bekannte Partien werden nicht doppelt angelegt.</li>
 <li><strong>Alle Daten löschen:</strong> setzt die App zurück.</li>
 </ul>
-<p><strong>Wichtig:</strong> Wer die Browser-Daten dieser Seite löscht, löscht damit auch die App-Daten. Vorher eine Sicherung erstellen.</p>
+<p><strong>Wichtig:</strong> Wer die Browser-Daten dieser Seite löscht, löscht damit auch die App-Daten — außer, sie liegen im Timatch-Konto. Vorher eine Sicherung erstellen.</p>
 <p>Die installierte App erscheint im Android-Teilen-Menü: Timatch-Dateien aus WhatsApp, Mail oder Drive lassen sich direkt an „Timatch“ teilen und landen im Verlauf.</p>
 
 <h2 id="haeufige-fragen">Häufige Fragen</h2>
@@ -113,19 +137,19 @@
 <p>Nein. Timatch Web funktioniert ohne Konto. Freiwillig kannst du ein Timatch-Konto anlegen (Anmelde-Mail, Apple oder Google), dann erscheinen deine Daten auf all deinen Geräten, auch in der iPhone-App.</p>
 
 <h3>Wo sind meine Daten?</h3>
-<p>Ausschließlich in deinem Browser auf diesem Gerät. Es gibt keinen Server und keine Synchronisierung. Für den Gerätewechsel gibt es die Sicherung.</p>
+<p>Ohne Konto ausschließlich in deinem Browser auf diesem Gerät. Mit Timatch-Konto zusätzlich auf unserem Server, damit sie auf allen deinen Geräten erscheinen; mit der Cloud-Sicherung verschlüsselt, ohne dass wir sie lesen können. Was genau wo liegt, steht in der <a href="/datenschutz/#timatch-tisch">Datenschutzerklärung</a>.</p>
 
 <h3>Warum gibt es keinen Ton, wenn die App im Hintergrund ist?</h3>
 <p>Browser dürfen im Hintergrund keinen Ton abspielen und keine Uhren laufen lassen. Deshalb bleibt der Bildschirm während der Partie an. Kommst du zurück, sind alle Zeiten trotzdem richtig — sie werden aus Zeitstempeln berechnet, nicht mitgezählt.</p>
 
 <h3>Kann ich mit Freunden am iPhone zusammen spielen?</h3>
-<p>Beendete Partien lassen sich als Timatch-Session-Datei austauschen: Die iPhone-App exportiert sie, Timatch Web liest sie ein — und umgekehrt. Eine laufende Partie live ans iPhone zu übergeben ist noch nicht möglich.</p>
+<p>Ja. Startet eine Person ein Tisch-Display, öffnen alle anderen es mit dem Code — egal ob iPhone, Android oder Laptop — und sehen live, wer dran ist; auf Wunsch beenden sie ihren Zug dort selbst. Eine laufende Partie wandert außerdem per QR-Code, Text oder Datei zwischen Timatch Web und der iPhone-App, in beide Richtungen (siehe <a href="#partie-uebergeben">Partie übergeben</a>).</p>
 
 <h3>Gibt es die App im Play Store?</h3>
 <p>Noch nicht. Installiert wird über den Browser, siehe <a href="#installieren">Installieren</a>. Danach verhält sie sich wie eine App.</p>
 
 <h3>Was kann die iPhone-App mehr?</h3>
-<p>Die Spielesammlung mit BoardGameGeek-Anbindung, Apple TV und iPad als Tisch-Display, die Apple Watch, iCloud-Synchronisierung, KI-Auswertungen und PDF-Berichte. Timatch Web konzentriert sich auf den Tisch selbst.</p>
+<p>Nur das, was ein Browser nicht hergibt: die Apple Watch, Widgets, Live Activity und Dynamic Island, Siri und Kurzbefehle, die Apple-TV-App, die eigene Ansicht fürs iPhone Duo, iCloud, KI direkt auf dem Gerät ohne eigenen Schlüssel und das Fotografieren des Punktezettels. Sammlung, Statistik, Tisch-Display, Konto und Export gibt es hier genauso.</p>
 
 <h2 id="fehler-melden">Fehler melden</h2>
 <p>Bitte per E-Mail an <a href="mailto:support@timatch.de">support@timatch.de</a> mit:</p>
@@ -147,6 +171,6 @@
   </div>
 </footer>
 
-<script src="/assets/js/site.js?v=10" defer></script>
+<script src="/assets/js/site.js?v=20" defer></script>
 </body>
 </html>

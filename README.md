@@ -1,8 +1,9 @@
 # timatch-web — die Landingpage für timatch.de
 
 Statische Seite, zweisprachig (Deutsch unter `/`, Englisch unter `/en/`), gehostet auf GitHub Pages.
-Sie bewirbt die iOS-App **Timatch** (Repo `timatch-app`) mit vier kurzen Videos aus der echten App
-und verweist auf die Web-App **Timatch Web** unter `app.timatch.de` (Repo `timatch-tisch`).
+Sie bewirbt die iOS-App **Timatch** (Repo `timatch-app`) und die Web-App **Timatch Web** unter
+`app.timatch.de` (Repo `timatch-tisch`) — mit echten Aufnahmen beider Apps in selbst gezeichneten
+Geräterahmen (iPhone, Android, iPhone Duo).
 
 Sie trägt Landingpage, Hilfe (`/hilfe/`, `/hilfe/tisch/`, `/en/support/`) und Rechtstexte
 (`/datenschutz/`, `/impressum/`, `/agb/`, `/en/privacy/`, `/en/legal-notice/`, `/en/terms/`). Das frühere Repo
@@ -28,10 +29,9 @@ hilfe.html, datenschutz.html, support.html, privacy.html
                       Auffangseiten für alte Adressen (meta refresh, nicht löschen)
 404.html              Fehlerseite (zweisprachig)
 assets/css/site.css   das gesamte Aussehen — eine Datei, kein Framework
-assets/js/site.js     Einblenden beim Scrollen, Videos nur im Bild abspielen
-assets/js/scene.js    die 3D-Szene im Kopfbereich
-assets/vendor/        Three.js + Zusatzmodule, lokal (siehe unten)
-assets/video/         vier Videos aus der App + je ein Standbild als Poster
+assets/js/site.js     Einblenden beim Scrollen, Video nur im Bild abspielen, Duo-Umschalter
+assets/app/           Aufnahmen der iPhone-App (WebP, DE/EN) + das Partie-Video im Hero
+assets/web/           Aufnahmen von Timatch Web (WebP, DE/EN)
 assets/img/           App-Symbol (Favicon, Vorschaubild fürs Teilen)
 robots.txt, sitemap.xml, .well-known/security.txt
 ```
@@ -76,67 +76,58 @@ Weiter:
   2027-08-23** — läuft es ab, gilt die Datei als ungültig. Spätestens im Sommer 2027 um ein Jahr
   hochsetzen.
 
-### Three.js
-
-`assets/vendor/three.module-0.185.1.min.js` und `three.core-0.185.1.min.js` stammen aus dem
-npm-Paket `three@0.185.1`. Die Prüfsumme des heruntergeladenen Pakets stimmte mit der Angabe der
-Registry überein (`sha512-5aojFCXKwnjBRZvUnt3WFfEcvUJgkN5LlijRFN95hMy8WVkG4I0QNcJE+OuWvuJ0bOdStrbfXn0pkd6/QyiAlg==`).
-
-```
-SHA-256 three.module-0.185.1.min.js  86bcee248b64f44bcfc23c331ae74619061957d59cab040171dcb6fb5900beb6
-SHA-256 three.core-0.185.1.min.js    05b2609338c76cd65daf74f3ac515bc9a5045e1b3b33edc07d8c9bd55250fa90
-```
-
-Im Modul ist genau eine Zeile geändert: der Import zeigt auf die versionierte Kerndatei
-(`./three.core-0.185.1.min.js` statt `./three.core.min.js`). Beim Aktualisieren beide Dateien
-tauschen, den Import erneut umbiegen und die Prüfsummen hier nachtragen.
-
-Unter `assets/vendor/three-addons/` liegen sechs Zusatzmodule aus demselben Paket
-(`examples/jsm`): `RoomEnvironment`, `RoundedBoxGeometry`, `EffectComposer`, `RenderPass`,
-`UnrealBloomPass`, `OutputPass` samt ihren Abhängigkeiten. Sie importieren im Original `from
-'three'` bzw. `from 'three/addons/…'`; beides zeigt hier auf relative Pfade. **Eine Importkarte
-(`<script type="importmap">`) wäre der übliche Weg gewesen — sie ist ein Inline-Skript und würde
-eine Ausnahme in der Inhaltsrichtlinie erzwingen.** Umgebogene Pfade kosten nichts und lassen die
-Richtlinie streng.
-
 ## Fassungsnummern an CSS und JS
 
-Die Verweise tragen `?v=N`. **Beim Ausliefern einer Änderung an `site.css`, `site.js` oder
-`scene.js` diese Zahl in allen drei HTML-Dateien hochzählen** — sonst liefern Browser die alte
+Die Verweise tragen `?v=N` (Stand: `v=20`). **Beim Ausliefern einer Änderung an `site.css` oder
+`site.js` diese Zahl in ALLEN HTML-Dateien hochzählen** — sonst liefern Browser die alte
 Datei aus ihrem Zwischenspeicher aus. Genau das hat beim Bauen eine Viertelstunde gekostet, weil
 eine Korrektur nach der anderen unsichtbar blieb.
 
 ```bash
-sed -i '' 's/?v=3"/?v=4"/g' index.html en/index.html 404.html
+grep -rl 'site\.css?v=20' --include=index.html --include='*.html' . \
+  | xargs sed -i '' -e 's/site\.css?v=20/site.css?v=21/' -e 's/site\.js?v=20/site.js?v=21/'
 ```
 
-## Die Videos
+## Bildmaterial
 
-Sie entstehen im App-Repo, nicht hier:
+Alle Bildschirme sind **echte Aufnahmen**, keine Nachbauten: die iPhone-App (Build 31, Dunkelmodus,
+Testdaten aus `Timatch-Testdaten.json`) und Timatch Web (die Play-Store-Aufnahmen aus
+`timatch-tisch/play-store/grafiken/`). Die Geräterahmen sind reines CSS (`.iphone`, `.android`,
+`.duo-flach`, `.duo-laptop`, `.duo-zu` in `site.css`) — keine Produktfotos und keine
+Gerätevorlagen von Apple oder aus Xcode.
 
-```bash
-cd ~/Developer/Timatch/timatch-app
-bash tools/website_footage.sh          # alle vier Szenen
-```
+| Datei | Inhalt | Entstanden |
+|---|---|---|
+| `assets/app/partie-film-*.mp4` | Hero-Video: Zugwechsel Anna → Ben → Cleo → David, Ring zählt herunter | Simulator, `simctl io recordVideo`, 10,5 s geschnitten, H.264 720 px |
+| `assets/app/partie-film-*.webp` | Standbild = erstes Bild des Videos (kein Sprung beim Start) | aus dem Video |
+| `assets/app/budget-*.webp`, `denken-*` | Schachuhr, gleichzeitige Denkphase | `SCREENSHOT_PARTIE=4,budget` / `4,denken` |
+| `assets/app/zettel-*`, `zusammenfassung-*` | Agricola-Wertungsblock, „Anna hat gewonnen" | jüngste abgeschlossene Agricola-Partie |
+| `assets/app/sammlung-*`, `statistik-*`, `start-*`, `partie-*` | Bereiche der App | `SCREENSHOT_SECTION=…`, `SCREENSHOT_PARTIE=4,limit` |
+| `assets/app/duo-aussen-*` | iPhone Duo zugeklappt, Außendisplay | echter Duo-Simulator (iOS 27.2), Screen 1 |
+| `assets/app/duo-flach-*`, `duo-laptop-*` | Duo-Tisch aufgeklappt / halb aufgestellt | Duo-Prüfstand der App (`DUO_SIMULIEREN=1`, `SCREENSHOT_FALZ=waagerecht`) auf iPad mini, siehe unten |
+| `assets/web/*` | Timatch Web | `timatch-tisch/play-store/grafiken/{de,en}` |
 
-Das Skript führt die App über einen UI-Prüfstand vor und nimmt dabei auf. Ergebnis liegt in
-`build/website-video/`; von dort werden die Dateien hierher kopiert:
+**Erneuern** (Mac mit Xcode 27.2): im App-Repo einen Debug-Build für den Simulator bauen, die App
+mit `SIMCTL_CHILD_SEED_TESTDATA=1` und `Timatch-Testdaten.json` im Dokumente-Ordner einmal starten
+(wie `tools/seed_robust.sh`), Statusleiste auf 9:41 stellen (`simctl status_bar … override`),
+Erscheinungsbild dunkel (`simctl ui … appearance dark`), dann je Zustand mit
+`SIMCTL_CHILD_SCREENSHOT_PRO=1 SIMCTL_CHILD_<ZUSTAND> xcrun simctl launch <gerät> com.timatch.app
+-AppleLanguages "(de)"` starten, rund 25 Sekunden warten und `simctl io … screenshot` aufnehmen.
+Umrechnen: `cwebp -q 84 -m 6 -sharp_yuv -resize 720 0`.
 
-| Datei | Szene |
-|---|---|
-| `timer.mp4` | Der Zug-Timer läuft, die Runde wird weitergeschaltet |
-| `punkte.mp4` | Punkte werden Zeile für Zeile eingetragen, die Summe rechnet mit |
-| `sammlung.mp4` | Durch die Spielesammlung scrollen |
-| `statistik.mp4` | Die Auswertung |
-
-Das `timer.mp4` läuft zusätzlich als Textur auf dem Gerät in der 3D-Szene.
+**Duo-Innendisplay:** Der Duo-Simulator lässt sich per Befehl nicht aufklappen (nur im Device Hub
+von Hand). Die Bilder des aufgeklappten Duo-Tischs stammen deshalb aus dem Duo-Prüfstand der App,
+der genau dieselbe Duo-Ansicht auf einem iPad mini zeigt (vom App-Code selbst als nächstliegende
+Größe empfohlen: 744 × 1133 pt gegenüber 669 × 951 pt beim Duo). Wer den „Website iPhone Duo"-
+Simulator einmal im Device Hub aufklappt, kann sie mit `simctl io … screenshot --display=3` durch
+Aufnahmen vom echten Innendisplay ersetzen.
 
 ## Lokal ansehen
 
 ```bash
 cd ~/Developer/Timatch/timatch-web
-python3 -m http.server 8765 --bind 127.0.0.1
-# http://127.0.0.1:8765/
+python3 -m http.server 8790 --bind 127.0.0.1
+# http://127.0.0.1:8790/  (nicht 8765 — dort läuft Timatch Web mit Service Worker)
 ```
 
 Ein Hinweis aus der Praxis: Chrome hält CSS und JS hartnäckig fest. Wenn eine Änderung nicht

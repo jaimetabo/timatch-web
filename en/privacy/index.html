@@ -14,7 +14,7 @@
 <meta name="theme-color" content="#08080c">
 <link rel="icon" href="/assets/img/icon-64.png" sizes="any">
 <link rel="apple-touch-icon" href="/assets/img/icon-180.png">
-<link rel="stylesheet" href="/assets/css/site.css?v=11">
+<link rel="stylesheet" href="/assets/css/site.css?v=20">
 </head>
 <body>
 
@@ -25,6 +25,7 @@
     <a class="marke" href="/en/"><img src="/assets/img/icon-64.png" alt="" width="28" height="28">Timatch</a>
     <nav class="kopf-nav" aria-label="Navigation">
       <a class="nav-abschnitt" href="/en/">Back to start</a>
+      <a class="nav-faq" href="/en/#faq">FAQ</a>
       <span class="sprachwahl">
         <a href="/datenschutz/" lang="de">DE</a>
         <a href="/en/privacy/" aria-current="true" lang="en">EN</a>
@@ -98,7 +99,7 @@ Email: <a href="mailto:hello@timatch.de">hello@timatch.de</a></p>
 <p>The web version is served by <b>Cloudflare, Inc.</b> (101 Townsend St, San Francisco, CA 94107, USA) through Cloudflare Pages; the service <code>api.timatch.de</code> runs on Cloudflare Workers. Cloudflare necessarily processes your IP address and request data to do so; Cloudflare is certified under the EU-US Data Privacy Framework, and EU Standard Contractual Clauses apply in addition. The service counts requests per IP address for one minute to limit abuse; beyond that, no access logs containing personal data are kept. The legal basis is our legitimate interest in running the service securely (Art. 6(1)(f) GDPR).</p>
 
 <h3>Timatch account (optional)</h3>
-<p>The Timatch account is available in the web version and in the iPhone app; both use the same account. To create one, you sign in with your email address and receive a sign-in email with a link and an 8-digit code (no password), or you sign in with Apple or Google (see below). With an account, your plays (including one in progress), players, games, places, score sheets, settings and photos are stored on our server at Cloudflare (D1 database and KV storage), so they appear on every device you sign in on. For each device session we store a device name (for example "Chrome · Mac"), so you can recognise it in the settings and sign it out on its own. The legal basis is the performance of the user agreement (Art. 6(1)(b) GDPR).</p>
+<p>The Timatch account is available in the web version and in the iPhone app; both use the same account. To create one, you sign in with your email address and receive a sign-in email with a link and an 8-digit code (no password), or you sign in with Apple or Google (see below). With an account, your plays (including one in progress), players, games, places, score sheets, settings and photos are stored on our server at Cloudflare (D1 database, KV and R2 storage), so they appear on every device you sign in on. For each device session we store a device name (for example "Chrome · Mac"), so you can recognise it in the settings and sign it out on its own. The legal basis is the performance of the user agreement (Art. 6(1)(b) GDPR).</p>
 <p>The link and code are valid for 15 minutes and can be used once; after five wrong code entries the code expires. Device sessions last 90 days. In the web version, signing out removes your data from the browser; it stays in the account. You can sign out individual devices at any time, download your data as a file, and delete the account with all its data in the settings. Everything on the server is then deleted, an active web subscription is cancelled, and the data stays on your device.</p>
 <p>The sign-in email is sent on our behalf by <b>Brevo</b> (Sendinblue GmbH, Köpenicker Straße 126, 10179 Berlin, Germany), which receives your email address for this purpose.</p>
 
@@ -155,6 +156,6 @@ Email: <a href="mailto:hello@timatch.de">hello@timatch.de</a></p>
   </div>
 </footer>
 
-<script src="/assets/js/site.js?v=10" defer></script>
+<script src="/assets/js/site.js?v=20" defer></script>
 </body>
 </html>
