@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src https://jaimetaboada.com; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Privacy Policy — Timatch</title>
 <meta name="description" content="Timatch collects no data about you. What the app stores, where it lives, and which connections it makes.">
@@ -14,7 +14,7 @@
 <meta name="theme-color" content="#08080c">
 <link rel="icon" href="/assets/img/icon-64.png" sizes="any">
 <link rel="apple-touch-icon" href="/assets/img/icon-180.png">
-<link rel="stylesheet" href="/assets/css/site.css?v=20">
+<link rel="stylesheet" href="/assets/css/site.css?v=21">
 </head>
 <body>
 
@@ -36,11 +36,11 @@
 
 <main id="inhalt" class="huelle blatt">
 <h1>Privacy Policy</h1>
-  <p class="stand">Last updated: 25 September 2026</p>
+  <p class="stand">Last updated: 3 November 2026</p>
 
 
 <div class="merkkasten">
-<p><strong>The short version.</strong> Without an account, everything you enter in Timatch stays on your device — and, if you switch it on, in your own private iCloud account, which the developer cannot access. Only if you choose to create a Timatch account is your data also stored on our server, so it shows up on all your devices, in the iPhone app and in the web version (section 7). Timatch Pro is paid through Apple or, in the web version, through Stripe; we never see your payment details. There are no analytics, no advertising and no tracking.</p>
+<p><strong>The short version.</strong> Without an account, everything you enter in Timatch stays on your device — and, if you switch it on, in your own private iCloud account, which the developer cannot access. Only if you choose to create a Timatch account is your data also stored on our server, so it shows up on all your devices, in the iPhone app and in the web version (section 7). Timatch Pro is paid through Apple or, in the web version, through Stripe; we never see your payment details. The iPhone app contains no analytics, no advertising and no tracking. On timatch.de and in the web version we count which pages are opened, using our own Matomo: no cookies, a shortened IP address and nothing passed to third parties. You can opt out with one click (section 8).</p>
 </div>
 
 <h2 id="who-is-responsible">1. Who is responsible</h2>
@@ -55,7 +55,7 @@ Email: <a href="mailto:hello@timatch.de">hello@timatch.de</a></p>
 <p>The app talks to the developer's server (<code>api.timatch.de</code>) in only three cases, each started by you: when you use a Timatch account, when you start or join a live table (table display), and when you restore a cloud backup with a code. Section 7 covers all of them.</p>
 
 <h2 id="data-the-developer-receives">3. Data the developer receives</h2>
-<p>Without an account: nothing that is kept. A live table stays on the server for at most 24 hours (section 7). With an account: the data listed in section 7, used only for the purpose stated there. Timatch contains no analytics SDK, no crash reporting service, no advertising SDK and no third-party tracking of any kind. No advertising identifier, device identifier or usage statistic is transmitted to the developer.</p>
+<p>Without an account: nothing that is kept. A live table stays on the server for at most 24 hours (section 7). With an account: the data listed in section 7, used only for the purpose stated there. The iPhone app contains no analytics SDK, no crash reporting service, no advertising SDK and no third-party tracking of any kind. It transmits no advertising identifier, device identifier or usage statistic to the developer. For the timatch.de website and the web version, the audience measurement in section 8 applies.</p>
 
 <h2 id="connections-the-app-makes">4. Connections the iPhone app makes</h2>
 
@@ -131,18 +131,38 @@ Email: <a href="mailto:hello@timatch.de">hello@timatch.de</a></p>
 <h3>Photos</h3>
 <p>Table photos, player photos and game photos are stored on your device or in browser storage; with an account, also in your account on our server (see above). They are not uploaded anywhere else.</p>
 
-<h2 id="children">8. Children</h2>
-<p>Timatch is rated 4+ and is suitable for all ages. Without an account it collects no data, contains no advertising and offers no communication with strangers. The optional Timatch account and purchases of Timatch Pro are intended for adults.</p>
+<h2 id="website-and-audience-measurement">8. This website and audience measurement</h2>
 
-<h2 id="your-rights">9. Your rights</h2>
-<p>Without an account the developer holds no personal data about you. With an account you have the rights of access, rectification, erasure, restriction, data portability and objection (Art. 15–21 GDPR): download the complete file under Settings → Account → Download my data, and delete the account with all server-side data there. For anything else, email <a href="mailto:hello@timatch.de">hello@timatch.de</a>. On your device you stay in full control anyway:</p>
+<h3>Hosting of timatch.de</h3>
+<p>The <code>timatch.de</code> website is served by <b>GitHub, Inc.</b> (88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA) via GitHub Pages. When you open it, GitHub necessarily processes your IP address and request data to deliver the page and protect it from attacks. GitHub is certified under the EU-US Data Privacy Framework. The website loads no fonts, scripts or images from other servers. The legal basis is our legitimate interest in a secure, fast website (Art. 6(1)(f) GDPR).</p>
+
+<h3 id="matomo">Audience measurement with Matomo</h3>
+<p>On <code>timatch.de</code> and in the web version at <code>app.timatch.de</code> we use the open-source software <b>Matomo</b> to count how often each page is opened. Matomo runs on our own web space at <b>Strato AG</b> (Otto-Ostrowski-Straße 7, 10249 Berlin) in Germany, which operates it for us as a processor. The data goes to no one else and is not combined with other data. The iPhone app measures nothing.</p>
+<p>Counting is done by a few lines of our own code, not the Matomo script. Nothing is stored on your device, and nothing is read from it beyond what your browser sends with every page request anyway. There are no cookies, no device identifier and no fingerprint from screen size or the like. What is transmitted:</p>
+<ul>
+<li>the page opened, without parameters, and its title; in the web version only the name of the view (such as “Statistics”), never names, scores, table codes or account data;</li>
+<li>the page you came from, without parameters;</li>
+<li>on <code>timatch.de</code>, the destination when you click a link to another site (such as the App Store);</li>
+<li>in the web version, a few events such as “game started” or “live table opened”, again without any content;</li>
+<li>browser, operating system, device type and language as your browser sends them, and the time;</li>
+<li>your IP address. Matomo shortens it right away by its last two bytes (192.168.12.34 becomes 192.168.0.0) and stores only the shortened form. The country is also derived from the shortened address only.</li>
+</ul>
+<p>This tells us which pages are helpful and whether interested people find their way to the app. We cannot identify an individual person in this data. The legal basis is our legitimate interest in a website and app that meet people's needs (Art. 6(1)(f) GDPR). Individual page views are kept for at most 25 months. After that only aggregated figures remain, such as visits per week.</p>
+<p><strong>Opting out.</strong> If your browser sends “Do Not Track” or “Global Privacy Control”, you are not counted at all. You can also switch counting off for this browser here. The browser then remembers just that choice (in browser storage, not a cookie). The web version has the same switch under Settings → Privacy.</p>
+<p class="messung-wahl"><button type="button" class="knopf knopf-still" data-messung-schalter hidden>Stop counting me</button> <span data-messung-stand aria-live="polite">Without JavaScript nothing is counted.</span></p>
+
+<h2 id="children">9. Children</h2>
+<p>Timatch is rated 4+ and is suitable for all ages. Without an account the iPhone app collects no data, and the web version only counts its page views anonymously (section 8). Timatch contains no advertising and offers no communication with strangers. The optional Timatch account and purchases of Timatch Pro are intended for adults.</p>
+
+<h2 id="your-rights">10. Your rights</h2>
+<p>Without an account the developer holds no personal data about you. We cannot link the figures from audience measurement (section 8) to any person. With an account you have the rights of access, rectification, erasure, restriction, data portability and objection (Art. 15–21 GDPR): download the complete file under Settings → Account → Download my data, and delete the account with all server-side data there. For anything else, email <a href="mailto:hello@timatch.de">hello@timatch.de</a>. On your device you stay in full control anyway:</p>
 <ul>
 <li><strong>Export:</strong> export sessions and your full database as PDF, CSV or a Timatch file from within the app.</li>
 <li><strong>Delete:</strong> use the factory reset in the app's settings, or delete the app, to remove all local data. Turning off iCloud sync and deleting the app's iCloud data in your iOS settings removes the synced copy.</li>
 </ul>
 <p>Under the GDPR you also have the right to lodge a complaint with a supervisory authority. If you have any question about this policy, write to <a href="mailto:hello@timatch.de">hello@timatch.de</a>.</p>
 
-<h2 id="changes">10. Changes</h2>
+<h2 id="changes">11. Changes</h2>
 <p>If the app's data practices change, this page will be updated and the date at the top will change with it.</p>
 </main>
 
@@ -157,5 +177,6 @@ Email: <a href="mailto:hello@timatch.de">hello@timatch.de</a></p>
 </footer>
 
 <script src="/assets/js/site.js?v=20" defer></script>
+<script src="/assets/js/messung.js?v=21" defer></script>
 </body>
 </html>

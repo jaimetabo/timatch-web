@@ -39,21 +39,36 @@ robots.txt, sitemap.xml, .well-known/security.txt
 ## Sicherheit
 
 Die Seite ist bewusst so gebaut, dass sie **nichts von fremden Servern lädt** — kein CDN, kein
-Webfont, kein Analysewerkzeug, keine Cookies, kein Formular. Das ist keine Zierde: Timatch steht im
+Webfont, kein fremdes Skript, keine Cookies, kein Formular. Das ist keine Zierde: Timatch steht im
 App Store mit „Data Not Collected". Eine Landingpage mit drei Trackern würde dieses Versprechen an
 der Haustür brechen.
+
+**Reichweitenmessung (seit 03.11.2026).** Gezählt wird mit unserem eigenen Matomo auf Jaimes
+Strato-Webspace (`https://jaimetaboada.com/matomo/`, Website-ID **2** = timatch.de, **3** =
+app.timatch.de). Bewusst *nicht* mit `matomo.js`: `assets/js/messung.js` (≈ 60 Zeilen) schickt
+Seitenaufruf und Klicks nach draußen direkt an `matomo.php`, ohne Parameter in den Adressen
+(nur `mtm_`/`utm_`-Kampagnen bleiben), ohne Cookies, ohne Geräteeigenschaften. Matomo selbst ist für
+diese Websites auf „immer ohne Cookies", IP −2 Bytes (auch für den Standort) und Referrer ohne
+Query eingestellt — nur für diese Sites, nicht für die ganze Instanz. Do Not Track / Global Privacy
+Control und der Schalter auf der Datenschutzseite (`localStorage["timatch-messung"] = "aus"`)
+schalten die Zählung ab. Darum steht in der CSP `connect-src https://jaimetaboada.com` statt
+`'none'`; `script-src` bleibt `'self'`. Die iPhone-App misst nichts, „Data Not Collected" bleibt.
+Jeden Sonntag holt `.github/workflows/zahlen.yml` die Wochenwerte (Secret `MATOMO_TOKEN`, Benutzer
+`timatch-bericht`, nur Lesezugriff auf 2 und 3) in das Issue mit dem Label `zahlen-daten`; eine
+Claude-Routine fasst sie danach zusammen und schickt eine Push-Nachricht.
 
 Seit es das freiwillige Timatch-Konto, Anmelden mit Apple/Google und Pro-Käufe übers Konto gibt
 (September 2026), stimmt „Data Not Collected" für die App nur noch ohne Konto. Die Angaben zum
 Datenschutz in App Store Connect müssen vor dem Release mit dem Konto angepasst werden (E-Mail,
 Nutzerinhalte, Käufe — jeweils „mit dir verknüpft", kein Tracking). Die Datenschutzerklärung
-(`/datenschutz/`, `/en/privacy/`) beschreibt den Stand vom 25.09.2026.
+(`/datenschutz/`, `/en/privacy/`) beschreibt den Stand vom 03.11.2026 (Abschnitt 8: Hosting und
+Reichweitenmessung).
 
 Daraus folgt die Inhaltsrichtlinie im Kopf jeder Seite:
 
 ```
 default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:;
-media-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none';
+media-src 'self'; font-src 'self'; connect-src https://jaimetaboada.com; object-src 'none';
 base-uri 'none'; form-action 'none'; upgrade-insecure-requests
 ```
 
@@ -78,7 +93,7 @@ Weiter:
 
 ## Fassungsnummern an CSS und JS
 
-Die Verweise tragen `?v=N` (Stand: `v=20`). **Beim Ausliefern einer Änderung an `site.css` oder
+Die Verweise tragen `?v=N` (Stand: `site.css?v=21`, `site.js?v=20`, `messung.js?v=21`). **Beim Ausliefern einer Änderung an `site.css` oder
 `site.js` diese Zahl in ALLEN HTML-Dateien hochzählen** — sonst liefern Browser die alte
 Datei aus ihrem Zwischenspeicher aus. Genau das hat beim Bauen eine Viertelstunde gekostet, weil
 eine Korrektur nach der anderen unsichtbar blieb.
