@@ -6,7 +6,7 @@
 
 <!-- See the German page for why this policy lives in a <meta> tag and why `frame-ancestors`
      is deliberately absent. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src https://jaimetaboada.com; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 
 <title>Timatch – Board game timer &amp; score sheet, free in your browser</title>
@@ -110,7 +110,7 @@
 <link rel="icon" href="../assets/img/icon-64.png" sizes="any">
 <link rel="apple-touch-icon" href="../assets/img/icon-180.png">
 <link rel="preload" as="image" href="../assets/app/partie-film-en.webp" fetchpriority="high">
-<link rel="stylesheet" href="../assets/css/site.css?v=20">
+<link rel="stylesheet" href="../assets/css/site.css?v=21">
 </head>
 <body class="ohne-js">
 
@@ -165,7 +165,7 @@
       <ul class="held-fakten">
         <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6"/></svg>No account needed</li>
         <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6"/></svg>Works offline</li>
-        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6"/></svg>No tracking</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6"/></svg>No ads</li>
         <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6"/></svg>English &amp; German</li>
       </ul>
       <p class="held-hinweis">Both are in beta — the app is coming to the App&nbsp;Store soon, Timatch Web to the Play&nbsp;Store later.</p>
@@ -516,8 +516,9 @@
     <span class="ueberschrift-klein">Your data</span>
     <h2 id="ruhe-titel">Stays where it is.</h2>
     <p class="lang eng">
-      Timatch needs no account and no sign-in. There is no analytics kit in the app and no advertising
-      identifier. Your game nights only end up on our server if you create an account yourself.
+      Timatch needs no account and no sign-in. The iPhone app has no analytics kit and no advertising
+      identifier. On the website and in Timatch Web we only count which pages are opened, anonymously,
+      without cookies and on our own server. Your game nights only end up on our server if you create an account yourself.
     </p>
     <div class="ruhe-liste">
       <div data-stufe="1">
@@ -705,5 +706,6 @@
 </footer>
 
 <script src="../assets/js/site.js?v=20" defer></script>
+<script src="../assets/js/messung.js?v=21" defer></script>
 </body>
 </html>

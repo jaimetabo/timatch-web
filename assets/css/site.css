@@ -1037,6 +1037,9 @@ footer {
   font-size: 1.02rem;
 }
 .blatt p { margin: 0 0 16px; }
+/* Widerspruch gegen die Reichweitenmessung (Datenschutz, Abschnitt 8) */
+.blatt .messung-wahl { display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: center; margin: 4px 0 24px; }
+.blatt .messung-wahl span { color: var(--text-dim); }
 .blatt ul { margin: 0 0 18px; padding-left: 22px; }
 .blatt li { margin-bottom: 8px; }
 .blatt strong, .blatt b { color: var(--text); font-weight: 620; }

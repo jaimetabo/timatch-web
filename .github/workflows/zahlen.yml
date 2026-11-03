@@ -1,0 +1,55 @@
+name: Zahlen der Woche
+
+# Holt sonntags früh die Wochenwerte von timatch.de und app.timatch.de aus unserem Matomo und
+# legt sie als Kommentar in das Issue mit dem Label `zahlen-daten`. Die Claude-Routine
+# „Timatch: Zahlen der Woche" liest sie danach, schreibt den Bericht und schickt die Push-Nachricht.
+# Das Lese-Token (Matomo-Benutzer `timatch-bericht`, nur Ansicht auf Website 2 und 3) liegt als
+# Secret MATOMO_TOKEN im Repo — nie im Code und nie im Prompt der Routine.
+
+on:
+  schedule:
+    - cron: "30 5 * * 0"   # sonntags 05:30 UTC = 06:30 Berlin (Winter) / 07:30 (Sommer)
+  workflow_dispatch:
+
+concurrency: { group: zahlen, cancel-in-progress: false }
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  zahlen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with: { sparse-checkout: .github/zahlen }
+
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+
+      - name: Token vorhanden?
+        env: { MATOMO_TOKEN: "${{ secrets.MATOMO_TOKEN }}" }
+        run: |
+          if [ -z "$MATOMO_TOKEN" ]; then
+            echo "::error::Secret MATOMO_TOKEN fehlt (siehe README, Abschnitt Sicherheit)."; exit 1
+          fi
+
+      - name: Wochenwerte aus Matomo holen
+        env: { MATOMO_TOKEN: "${{ secrets.MATOMO_TOKEN }}" }
+        run: node .github/zahlen/zahlen.mjs
+
+      - name: In das Daten-Issue schreiben
+        env: { GH_TOKEN: "${{ github.token }}", GH_REPO: "${{ github.repository }}" }
+        run: |
+          gh label create zahlen-daten --color 0e8a16 --description "Wochenwerte aus Matomo (Datenquelle des Sonntagsberichts)" 2>/dev/null || true
+          nr=$(gh issue list --label zahlen-daten --state open --limit 1 --json number --jq '.[0].number // empty')
+          if [ -z "$nr" ]; then
+            nr=$(gh issue create --label zahlen-daten \
+              --title "Zahlen: Wochenwerte aus Matomo (Datenquelle)" \
+              --body "Hier legt die Action **Zahlen der Woche** jeden Sonntag die Werte von timatch.de und app.timatch.de ab (je ein Kommentar). Die Claude-Routine *Timatch: Zahlen der Woche* liest den neuesten Kommentar und schreibt daraus den Bericht. Bitte offen lassen." \
+              | grep -o '[0-9]*$')
+          fi
+          gh issue comment "$nr" --body-file zahlen.md
+          echo "Kommentar in #$nr geschrieben." >> "$GITHUB_STEP_SUMMARY"
+          cat zahlen.md | head -12 >> "$GITHUB_STEP_SUMMARY"
